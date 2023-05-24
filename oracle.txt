@@ -1,0 +1,117 @@
+##11g
+docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+
+docker run  -itd -p 1521:1521 --name oracle0 --restart=always --mount source=oracle_vol,target=/home/oracle/app/oracle/oradata registry.aliyuncs.com/helowin/oracle_11g
+
+docker stop oracle0 && docker rm oracle0
+docker volume rm oracle_vol
+docker run  -itd -p 1521:1521 --name oracle0 -v /tmp:/tmp -v `pwd`/data:/home/oracle/app/oracle/oradata -e ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_2 -e ORACLE_SID=helowin -e PATH=$ORACLE_HOME/bin:$PATH registry.aliyuncs.com/helowin/oracle_11g
+docker run  -itd -p 1521:1521 --name oracle0 -v /tmp:/tmp --mount source=oracle_vol,target=/home/oracle/app/oracle/oradata -e ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_2 -e ORACLE_SID=helowin -e PATH=$ORACLE_HOME/bin:$PATH registry.aliyuncs.com/helowin/oracle_11g
+docker logs -f --tail 1000 oracle0
+docker volume inspect oracle_vol
+docker volume rm oracle_vol
+docker exec -it oracle0 bash
+root helowin
+su root
+vi /etc/profile
+export ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_2
+export ORACLE_SID=helowin
+export PATH=$ORACLE_HOME/bin:$PATH
+su - oracle
+sqlplus /nolog
+conn /as sysdba;
+alter user system identified by oracle;
+alter user sys identified by oracle;
+alter profile default limit PASSWORD_LIFE_TIME UNLIMITED;
+create user root identified by 123456;
+grant connect,resource,dba to root;
+show user;      # 查看当前用户
+USER is "SYS"
+10.0.0.108:1521/helowin
+
+
+username:root
+password:123456
+database:10.0.0.108:1521/helowin
+connect as:Normal
+
+-------------------------------
+##os dir
+root />mkdir -p /u01/oradata
+root />mkdir -p /u02/oradata
+root />mkdir -p /u03/oradata
+chmod 777 -R /u03
+##tablespace
+sql>@/tmp/20230117/01.sql
+sql>@/tmp/20230117/02.sql
+sql>@/tmp/20230117/09.sql
+ls /u01/oradata
+##create oracle directory
+create directory ds_data as '&PATH';
+/tmp/20230117
+select * from dba_directories;
+grant read,write on directory ds_data to system;
+[oracle@3a5dfc318b34 20230117]$
+impdp system/oracle@helowin directory=ds_data schemas=HISTORYSETTLEMENT,WF,PLM_DATA_PROVIDER,DMS,LDM,SOURCETMP,SYSOPERATOR,SETTLEMENT,RISK,ONLYQUERY dumpfile=CRMSDB1.dmp,CRMSDB2.dmp,CRMSDB3.dmp,CRMSDB4.dmp,CRMSDB5.dmp,CRMSDB6.dmp logfile=expdp_20230117.log parallel=6 job_name=impd_job1 TRANSFORM=segment_attributes:n
+impdp system/oracle@helowin directory=ds_data schemas=HISTORYSETTLEMENT,WF,PLM_DATA_PROVIDER,DMS,SOURCETMP,SYSOPERATOR,SETTLEMENT,RISK,ONLYQUERY dumpfile=CRMSDB1.dmp,CRMSDB2.dmp,CRMSDB3.dmp,CRMSDB4.dmp,CRMSDB5.dmp,CRMSDB6.dmp logfile=expdp_20230117.log parallel=6 job_name=impd_job1 TRANSFORM=segment_attributes:n
+
+select username from dba_users;
+
+----------------------------------
+--限制session
+alter system enable restricted session;
+--查询相关参数并修改（防止有任务自动启动执行，一般不做也没关系）
+show parameter job_queue_processes; -- 记下这个值
+show parameter aq_tm_processes; -- 记下这个值
+alter system set job_queue_processes=0;
+alter system set aq_tm_processes=0;
+Alter database open;
+
+-- 按需修改nls_characterset，其中INTERNAL_USE表示跳过字符集检查
+alter database character set internal_use AL32UTF8;
+-- 按需修改nls_nchar_characterset
+ALTER DATABASE NATIONAL CHARACTER SET INTERNAL_USE UTF8;
+-- 查看修改后字符集
+select * from nls_database_parameters;
+
+SQL>shutdown immediate;
+SQL>startup mount;
+
+-----------------------------------------------------------------------------
+# 下载镜像 oracle.19c
+docker pull registry.cn-hangzhou.aliyuncs.com/zhuyijun/oracle:19c
+
+mkdir -p data
+chmod -R a+rwx data
+
+ # ORACLE_CHARACTERSET=AL32UTF8 or ZHS16GBK
+docker run -itd --name oracle0 \
+-p 1521:1521 -p 5500:5500 \
+-e ORACLE_SID=orcl \
+-e ORACLE_PDB=pdbtt \
+-e ORACLE_PWD=oracle \
+-e INIT_SGA_SIZE=512 \
+-e INIT_PGA_SIZE=128 \
+-e ORACLE_EDITION=enterprise \
+-e ORACLE_CHARACTERSET=ZHS16GBK \
+-e ENABLE_ARCHIVELOG=true \
+-v `pwd`/data:/opt/oracle/oradata \
+oracle/database:19.3.0-ee
+
+docker exec -it oracle0 bash
+sqlplus / as sysdba;
+alter user system identified by 123456;
+alter user sys identified by 123456;
+alter profile default limit PASSWORD_LIFE_TIME UNLIMITED;
+alter pluggable database pdbtt open;
+alter session set container=pdbtt;
+create user root identified by 123456;
+grant connect,session,resource,dba to root;
+grant create session to root;
+show user;      # 查看当前用户
+show pdbs;
+sqlplus / as sysdba
+conn root/123456@pdbtt;
+10.0.0.110:1521/pdbtt
+
+---------------------------------------------------------------------------------------------------------
