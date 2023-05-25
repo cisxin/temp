@@ -10,6 +10,7 @@
 - [nc](#nc)
 - [for](#for)
 - [while](#while)
+- [fsck](#fsck)
 - [git](#git)
 - [g++](#g++)
 - [samba](#samba)
@@ -162,6 +163,16 @@
     mkdir $(pwd)/freeswitch_config/sip_profiles/external2
     rm -rf $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml
     sed -e "s/%gw_fix_phone%/${gw_fix_phone}/;s/%gw_username%/${gw_username}/;s/%gw_auth_username%/${gw_auth_username}/;s/%gw_realm%/${gw_realm}/;s/%gw_from_domain%/${gw_from_domain}/;s/%gw_outbound_proxy%/${gw_outbound_proxy}/" $(pwd)/template/external2_00000000.xml > $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml;
+
+#fsck
+
+    fsck /dev/mapper/ubuntu--vg-ubuntu--lv
+    fsck /dev/sda1
+    fsck -fvy /
+    chkdsk c: /f
+    sudo mount -o remount,rw /partition/identifier /mount/point
+    sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
+    mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
 
 #git
 
