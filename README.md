@@ -24,7 +24,7 @@
 - [network](#network)
 - [docker](#docker)
 - [python3](#python3)
-
+- [iis](#iis)
 
 #grep
 
@@ -390,4 +390,28 @@
     python -m pip install --upgrade pip --force-reinstall
     //////////////////////////////
     pip3 install --upgrade pip
+
+#iis
+
+    # 导出所有应用程序池
+    C:\Windows\System32\inetsrv\appcmd.exe list apppool /config /xml > d:\temp\apppools.xml
+
+    # 导入所有应用程序池
+    C:\Windows\System32\inetsrv\appcmd.exe add apppool /in < d:\temp\apppools.xml
+
+    # 导出所有站点
+    C:\Windows\System32\inetsrv\appcmd.exe list site /config /xml > d:\temp\sites.xml
+
+    # 导入所有站点
+    C:\Windows\System32\inetsrv\appcmd.exe add site /in < d:\temp\sites.xml
+
+
+    # 导出单独的应用程序池
+    C:\Windows\System32\inetsrv\appcmd.exe list apppool "应用程序池名称" /config /xml > c:myapppool.xml
+    # 导入单独的应用程序池
+    C:\Windows\System32\inetsrv\appcmd.exe add apppool /in < c:myapppool.xml
+    # 导出单独站点
+    C:\Windows\System32\inetsrv\appcmd.exe list site "站点名称" /config /xml > c:mywebsite.xml
+    # 导入单独站点
+    C:\Windows\System32\inetsrv\appcmd.exe add site /in < c:mywebsite.xml
 
