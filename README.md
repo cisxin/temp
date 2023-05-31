@@ -24,6 +24,7 @@
 - [network](#network)
 - [docker](#docker)
 - [python3](#python3)
+- [kernel](#kernel)
 - [iis](#iis)
 
 #grep
@@ -374,7 +375,7 @@
     curl -k -sSl https://get.docker.com | sudo sh
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
-    sudo usermod -aG ${USER}
+    sudo usermod -aG ${USER} 
     or >sudo usermod -aG docker $USER
 
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
@@ -390,6 +391,16 @@
     python -m pip install --upgrade pip --force-reinstall
     //////////////////////////////
     pip3 install --upgrade pip
+
+#kernel
+
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300_6.3.0-060300.202304232030_all.deb
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-image-unsigned-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-modules-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
+    sudo dpkg --install *.deb
+    sudo reboot
+    uname -r
 
 #iis
 
