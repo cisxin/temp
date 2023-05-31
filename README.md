@@ -56,6 +56,11 @@
     sed -i 's/1\.1\.1\.1/0\.0\.0\.0/g' a.txt
     sed -i "s/qh0/$qh0/g" `grep -rl 'qh0' --include="*.sh" --include="*.conf" --include="*.yml" --exclude="*.bash" ./`
 
+    替换\r\n->\n
+    sed -i "s/\r//" file_name
+    find /home/test -name "*.sh" | xargs dos2unix
+    dos2unix file_name
+
 
 #vim
 
@@ -66,9 +71,18 @@
     b 移动到上一个word
     0: 移动到行首
     $: 移动到行尾
+    
     vim -b xx.so 二进制打开
+    :set display=uhex 或者 :set dy=uhex
     :%!xxd -g 1  十六进制
+
     :%s/aa/bb/g  替换
+    :%s/\r//g    ##\r\n->\n
+    TAB 键替换为空格
+    :set ts=4
+    :set expandtab
+    :%retab!
+
 
 #时区
 
@@ -381,6 +395,20 @@
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
     sudo docker images | grep none | awk '{print $3}'| xargs docker rmi
+
+    #!/bin/bash
+    sum=`docker images| wc -l`
+    echo images:$sum
+    COUNT=`expr $sum - 1`
+    echo count:$COUNT
+    TAG=`docker images |grep -v REPOSITORY|awk '{print $1":" $2}'|awk 'ORS=NR%"'$COUNT'"?" ":"\n"{print}'`
+    echo TAG:$TAG
+    docker save $TAG > ./test.tar
+    echo endend
+    ######################
+    #!/bin/bash
+    docker load -i test.tar
+
 
 #python3
 
