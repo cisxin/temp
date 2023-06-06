@@ -43,6 +43,21 @@
     
     sudo mv -f /app/msg/`date -d "2 days ago" +%Y%m%d`.txt /app//msg.bak/
 
+    -----------------------------------
+    #!/bin/bash
+    t1=$1
+    t2=$2
+    p0=$3
+    n0=$4
+    echo $t1 $t2
+    #cd /app/msg.bak
+    cd $p0
+    find ./* -newermt $t1 ! -newermt $t2 | xargs -exec tar -cvf /tmp/$n0
+    ------------------------
+    #!/bin/bash
+    bash msgbak.sh '20230501' '20230606' '/app/msg.bak' '20230606msg.tar'
+    -----------------------------------
+
 ##不可见字符
 
     grep --color='auto' -P -n "[^\x00-\x7F]" file.xml
