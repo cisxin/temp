@@ -133,6 +133,9 @@
     sudo apt-get install sshpass
     sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
 
+    sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
+    echo `date` "rsync test end ....." >> /tmp/log.txt
+
 #nc
 
     nc -l 127.0.0.1 5300
