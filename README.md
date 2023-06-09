@@ -50,10 +50,16 @@
     t2=$2
     p0=$3
     n0=$4
-    echo $t1 $t2
-    #cd /app/msg.bak
+    echo $t1 $t2 $p0 $n0
     cd $p0
-    find ./* -newermt $t1 ! -newermt $t2 | xargs -exec tar -cvf /tmp/$n0
+    #find ./ -name "*"  -newermt $t1 ! -newermt $t2 | xargs -exec  tar -cvf /tmp/$n0
+    find_result=$(find ./ -name "*"  -newermt $t1 ! -newermt $t2 | grep -wv "./")
+    #echo "find_result:" $find_result
+    if [ -n "$find_result" ]; then
+        find ./ -name "*"  -newermt $t1 ! -newermt $t2 | grep -wv "./" | xargs -exec  tar -cvf /tmp/$n0
+    else
+        echo "no file"
+    fi
     ------------------------
     #!/bin/bash
     bash msgbak.sh '20230501' '20230606' '/app/msg.bak' '20230606msg.tar'
