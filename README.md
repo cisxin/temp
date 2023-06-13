@@ -122,6 +122,11 @@
 
     sudo vim /etc/default/locale
     LC_TIME="en_DK.UTF-8"
+    
+    --------
+    sudo timedatectl set-timezone Asia/Shanghai
+    timedatectl
+
 
 #ln
 
