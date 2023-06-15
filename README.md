@@ -449,6 +449,18 @@
     #!/bin/bash
     docker load -i test.tar
 
+    #!/bin/sh
+    echo 123456 | sudo su << "EOF"
+    echo "======== docker containers logs file size ========"  
+    logs=$(find /var/lib/docker/containers/ -name *-json.log)  
+    for log in $logs  
+    do 
+        echo `date` "clean logs : $log" >> /tmp/cleanlog.txt
+        cat /dev/null > $log
+        echo `date` "clean logs : $log"    
+    done
+    exit
+
 
 #python3
 
