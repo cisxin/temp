@@ -65,6 +65,9 @@
     bash msgbak.sh '20230501' '20230606' '/app/msg.bak' '20230606msg.tar'
     -----------------------------------
 
+    find ./ -type f -regextype posix-extended -regex '.*/[^/]{32,}$'
+    find ./ -type f -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{8,}'
+
 ##不可见字符
 
     grep --color='auto' -P -n "[^\x00-\x7F]" file.xml
