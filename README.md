@@ -67,6 +67,7 @@
 
     find ./ -type f -regextype posix-extended -regex '.*/[^/]{32,}$'
     find ./ -type f -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{8,}'
+    find ./ -type f -mtime +30 -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{32,}' -exec rm -rf {} \;
 
 ##不可见字符
 
