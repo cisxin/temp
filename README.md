@@ -8,6 +8,7 @@
 - [时区](#时区)
 - [ln](#ln)
 - [rsync](#rsync)
+- [crontab](#crontab)
 - [nc](#nc)
 - [for](#for)
 - [while](#while)
@@ -150,6 +151,11 @@
 
     sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
     echo `date` "rsync test end ....." >> /tmp/log.txt
+
+#crontab
+    
+    etc/init.d/crond status
+    59 23 * * * (cd /app; bash test.sh)
 
 #nc
 
