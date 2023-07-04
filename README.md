@@ -156,6 +156,7 @@
     
     etc/init.d/crond status
     59 23 * * * (cd /app; bash test.sh)
+    10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
 #nc
 
