@@ -472,6 +472,10 @@
     done
     exit
 
+    su - root
+    su -
+    sudo -i root 
+
 
 #python3
 
