@@ -153,6 +153,23 @@
     sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
     echo `date` "rsync test end ....." >> /tmp/log.txt
 
+#ssh
+
+    ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
+    scp -i
+
+    //在 ~/.ssh 目录下生成密钥对文件
+    ssh-keygen -t rsa
+    //自动复制公钥到目标主机上指定用户的 ~/.ssh/authorized_keys 文件
+    ssh-copy-id user@hostname
+
+    //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
+    vim ~/.ssh/config
+    Host host1
+        HostName <hostname or IP>
+        User <username>
+        IdentityFile ~/.ssh/id_rsa1
+
 #crontab
     
     etc/init.d/crond status
@@ -259,6 +276,8 @@
 
     回退到某个版本
     git checkout 7cd0386bd67e7f240b55fd037159ff7fe8f7063b seg_sensitive.txt
+
+    git remote set-url origin https://ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@github.com/username/test.git
 
 #g++
 
