@@ -25,6 +25,7 @@
 - [ubunt_disk_4TB](#ubunt_disk_4TB)
 - [network](#network)
 - [docker](#docker)
+- [su_id](#su_id)
 - [python3](#python3)
 - [kernel](#kernel)
 - [iis](#iis)
@@ -472,10 +473,31 @@
     done
     exit
 
+#su_id
     su - root
     su -
     sudo -i root 
 
+    id root
+    id -g root
+
+    groups test
+
+    adduser test
+
+    usermod -u new_uid username
+    ::用户 username 的GID修改为 new_gid
+    usermod -g new_gid username
+
+    chown user filename
+    chgrp groupname filename
+
+    chmod
+    400 -r--------   拥有者能够读 其他任何人不能进行任何操作；
+    644 -rw-r--r--   拥有者都能够读，但只有拥有者可以编辑；
+    666 -rw-rw-rw-   所有用户都有文件读、写权限
+    755 -rwxr-xr-x   所有人都能读和执行，但只有拥有者才能编辑；
+    777 -rwxrwxrwx   所有人都能读、写和执行（该设置通常不是好想法）。
 
 #python3
 
