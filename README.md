@@ -474,6 +474,7 @@
     exit
 
 #su_id
+
     su - root
     su -
     sudo -i root 
