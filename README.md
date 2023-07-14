@@ -157,6 +157,11 @@
 
     ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
     scp -i
+    scp -P port 01.py user@remote:Desktop/01.py
+    scp -P port user@remote:Desktop/01.py 01.py
+    scp -r demo user@remote:Desktop
+    scp -r user@remote:Desktop demo
+    shpass -p "123456" scp -P port 01.py user@remote:Desktop/01.py
 
     //在 ~/.ssh 目录下生成密钥对文件
     ssh-keygen -t rsa
