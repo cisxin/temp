@@ -354,13 +354,15 @@
     lvm>pvcreate /dev/sda3      这是初始化刚才的分区，必须的(将物理分区创建为物理卷)(in linux lvm(ext4))
     lvm>vgextend ubuntu-vg /dev/sda3  将初始化过的分区加入到虚拟卷组ubuntu-vg (卷和卷组的命令可以通过  vgdisplay, vgextend ubuntu-vg /dev/sda3)
     lvm>vgdisplay -v
-    lvm>lvextend -l+953861 /dev/mapper/ubuntu--vg-ubuntu--lv //扩展已有卷的容量（953861 是通过vgdisplay查看的Free  PE / Size的大小） 
+    lvm>lvextend -l+953861 /dev/mapper/ubuntu--vg-ubuntu--lv //扩展已有卷的容量（953861 是通过vgdisplay查看的Free  PE / Size的大小） //redhat:lvextend -l+100%FREE /dev/mapper/rhel-opt 
     lvm>pvdisplay                            查看卷容量，这时你会看到一个很大的卷了
     lvm>quit                                  退出
+    //lvdisplay /dev/mapper/rhel-opt
 
     3以上只是卷扩容了，下面是文件系统的真正扩容，输入以下命令：
 
     sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv (系统安装后，扩容默认大小)
+    //redhat:xfs_growfs /dev/mapper/rhel-opt
 
     4查看新的磁盘空间
     df -h
