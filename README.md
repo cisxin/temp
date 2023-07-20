@@ -415,6 +415,9 @@
     pstree -p 进程号
     //memory
     ps -aux
+    
+    //进程<=>端口号
+    netstat -nap | grep 端口号
 
 #unicode_to_utf-8
     
