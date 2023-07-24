@@ -465,6 +465,16 @@
         nameservers:
             addresses: [114.114.114.114,10.10.8.1]
 
+
+    //iperf:
+    TCP服务端命令：iperf -s -i 1 -p 3389
+    TCP客户端命令：iperf -c 172.19.16.97 -p 3389 -i 1
+
+    UDP服务端命令:iperf -u -s -i 1 -p 3389
+    UDP客户端命令:
+    1、iperf -u -c 172.19.16.97 -p 3389 -b 1500M -i 1
+    2、iperf -u -c 172.19.16.97 -p 3389 -b 2000M -i 1
+
 #docker
 
     curl -k -sSl https://get.docker.com | sudo sh
