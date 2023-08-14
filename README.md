@@ -37,6 +37,15 @@
     grep -rn "#include <assert" *
     docker ps -as | grep -E "cc-|ccc"
 
+    echo 'Hello $USER'
+    echo "Hello $USER"
+    `echo "Hello $USER"`
+    "`echo "Hello $USER"`"
+    `echo "echo $USER"`
+    echo "`echo "echo $USER"`"
+    (echo 'Hello $USER';echo "Hello $USER")
+    {echo 'Hello $USER';echo "Hello $USER"}
+
 ##删除100天前文件
 
     find ./xml_cdr -mtime +100 -type f -name *.xml -exec rm -rf {} \;
