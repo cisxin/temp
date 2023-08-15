@@ -424,6 +424,9 @@
     pstree -p 进程号
     //memory
     ps -aux
+
+    kill 142 157
+    kill -9 -- -117
     
     //进程<=>端口号
     netstat -nap | grep 端口号
