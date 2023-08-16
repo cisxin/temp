@@ -3,6 +3,7 @@
 ##Contents
 
 - [grep](#grep)
+- [awk](#awk)
 - [sed](#sed)
 - [vim](#vim)
 - [时区](#时区)
@@ -73,6 +74,23 @@
     else
         echo "You chose to cancel."
     fi
+
+    set | grep -E "^[A-Za-z_]+="
+
+#awk
+
+    awk -F',' '{ print $1, $3 }' filename
+    //数值计算，求和...
+    awk '{ total += $1 } END { print "Total:", total }' filename
+    awk 'END { print NR, NF }' filename
+
+    awk '$3 > 50 { print $1, $2 }' filename
+    awk '{ printf "Name: %-10s Age: %d\n", $1, $2 }' filename
+    //自定义变量
+    awk -v threshold=50 '$3 > threshold { print $1, $2 }' filename
+
+    awk '/pattern/ { print $1, $3 }' logfile.txt | perl -ne 'print if /regex/'
+    perl -pe 's/pattern/replacement/g' file.txt | awk '{ printf "Processed: %s\n", $0 }'
 
 
 ##删除100天前文件
