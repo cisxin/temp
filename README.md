@@ -191,7 +191,12 @@
 
     //在 ~/.ssh 目录下生成密钥对文件
     ssh-keygen -t rsa
-    //自动复制公钥到目标主机上指定用户的 ~/.ssh/authorized_keys 文件
+    //ssh-keygen -m PEM -t rsa -b 4096
+    #id_rsa id_rsa.pub
+    //复制id_rsa.pub到主机上指定用户的 ~/.ssh/authorized_keys
+    cat id_rsa.pub >> authorized_keys
+    //chmod 600 .ssh/authorized_keys #注意权限！
+    //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息
     ssh-copy-id user@hostname
 
     //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
