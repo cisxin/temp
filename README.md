@@ -63,6 +63,17 @@
         echo "Condition is true"
     fi
 
+    echo "Please enter your name: "
+    read name
+    echo "Hello, $name!"
+    read -n1 -p "Do you want to continue? (y/n): " choice
+    echo
+    if [ "$choice" == "y" ] || [ "$choice" == "Y" ]; then
+        echo "You chose to continue."
+    else
+        echo "You chose to cancel."
+    fi
+
 
 ##删除100天前文件
 
