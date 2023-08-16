@@ -46,6 +46,23 @@
     (echo 'Hello $USER';echo "Hello $USER")
     {echo 'Hello $USER';echo "Hello $USER"}
 
+    $#：表示传递给脚本或函数的参数数量。
+    $*：所有参数列表，作为一个单独的字符串。参数之间使用第一个字符的值作为分隔符（通常是空格）。
+    $@：所有参数列表，每个参数都作为一个独立的字符串。每个参数都保留了它们各自的引号（如果有的话）。
+    $?：上一个命令的退出状态码。0表示成功
+    $()：命令替换语法，允许你将一个命令的输出嵌入到另一个命令中。例如：result=$(ls) 会将 ls 命令的输出存储在 result 变量中。=``
+    ${}：用于在变量名周围进行扩展和操作的语法。例如：${variable} 将会扩展为变量的值。
+
+    []:test（0表示真，1表示假）。在方括号内，条件表达式和运算符之间需要用空格分隔。例如：
+    if [ "$var" = "value" ]; then
+        echo "Condition is true"
+    fi
+    [[]]:支持更复杂的逻辑操作，字符串比较等
+    if [[ "$var"== "value" ]]; then
+        echo "Condition is true"
+    fi
+
+
 ##删除100天前文件
 
     find ./xml_cdr -mtime +100 -type f -name *.xml -exec rm -rf {} \;
