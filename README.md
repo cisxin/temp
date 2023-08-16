@@ -8,6 +8,7 @@
 - [时区](#时区)
 - [ln](#ln)
 - [rsync](#rsync)
+- [ssh](#ssh)
 - [crontab](#crontab)
 - [nc](#nc)
 - [for](#for)
