@@ -483,6 +483,9 @@
     //进程<=>端口号
     netstat -nap | grep 端口号
 
+    //启动时间
+    ps -eo pid,cmd,lstart | grep "example_process"
+
 #unicode_to_utf-8
     
     file -i s.txt
