@@ -590,6 +590,9 @@
 
     groups test
 
+    cat /etc/passwd | less
+    cat /etc/group    
+
     adduser test
 
     usermod -u new_uid username
