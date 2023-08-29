@@ -167,6 +167,9 @@
     :set expandtab
     :%retab!
 
+    head -n 1000 a.txt | tail -n +100
+    tail -n +100 -n 900 a.txt
+
 
 #时区
 
