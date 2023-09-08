@@ -30,6 +30,7 @@
 - [su_id](#su_id)
 - [python3](#python3)
 - [kernel](#kernel)
+- [rhel9](#rhel9)
 - [iis](#iis)
 
 #grep
@@ -634,6 +635,34 @@
     sudo dpkg --install *.deb
     sudo reboot
     uname -r
+
+#rhel9
+    //dnf yum
+    1、挂载系统光盘到/mnt/cdrom目录
+    mkdir -p /mnt/cdrom
+    mount /dev/sr0 /mnt/cdrom
+
+    2、设置系统启动后将光盘自动挂载到/mnt/cdrom
+    echo "/dev/sr0 /mnt/cdrom iso9660 defaults 0 0" >> /etc/fstabcat /etc/fstab
+
+    3、切换到/etc/yum.repos.d/目录
+    cd /etc/yum.repos.d/
+    vim RHEL8.repo #vim redhat.repo #RHEL9
+
+    4、按下i键，输入以下内容
+    [BaseOS]
+    name=BaseOS
+    baseurl=file:///mnt/cdrom/BaseOS
+    enabled=1
+    gpgcheck=0
+    [AppStream]
+    name=AppStream
+    baseurl=file:///mnt/cdrom/AppStream
+    enabled=1
+    gpgcheck=0
+
+    5、测试Yum配置是否可用
+    yum -y install nginx或者dnf -y install nginx
 
 #iis
 
