@@ -232,6 +232,12 @@
     //chmod 600 .ssh/authorized_keys #注意权限！
     //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息
     ssh-copy-id user@hostname
+    $rhel9
+    ecdsa-sha2-nistp256
+    ssh-keygen -t ecdsa
+    ssh-copy-id -i id_ecdsa.pub trade@ip
+    ssh-copy-id trade@ip
+
 
     //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
     vim ~/.ssh/config
@@ -663,6 +669,23 @@
 
     5、测试Yum配置是否可用
     yum -y install nginx或者dnf -y install nginx
+    yum install net-tools -y
+
+    -------------------------------------
+    //SELINUX
+    /usr/sbin/sestatus -v
+
+    修改/etc/selinux/config 文件
+    将SELINUX=enforcing改为SELINUX=disabled
+    reboot
+
+    systemctl stop firewalld
+    systemctl disable firewalld
+    systemctl status firewalld  //Active: inactive (dead) 关闭
+
+    service iptables stop
+    chkconfig iptables off
+    systemctl status iptables.service
 
 #iis
 
