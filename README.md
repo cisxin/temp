@@ -246,6 +246,32 @@
         User <username>
         IdentityFile ~/.ssh/id_rsa1
 
+    //putty
+    @echo off & setlocal enabledelayedexpansion
+    title wework
+    set /p d1=startdate:
+    echo %d1%
+    set /a d1=%d1%
+    set date_format="YYYYMMDD"
+    echo !d1! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+    if %errorlevel% == 1 (
+    echo 日期1格式不正确，应为 %date_format%
+    exit /b 1
+    )
+    set /p d2=enddate:
+    echo %d2%
+    set date_format="YYYYMMDD"
+    echo !d2! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+    if %errorlevel% == 1 (
+    echo 日期2格式不正确，应为 %date_format%
+    exit /b 1
+    )
+    plink.exe -ssh -no-antispoof -P 2244 -i E:\temp\id_rsa_putty.ppk ubuntu@x.x.x.x /tmp/run.sh !d1! !d2!
+    echo download...
+    pscp.exe -sftp -P 2244 -i E:\temp\id_rsa_putty.ppk -r ubuntu@x.x.x.x:/tmp/test ./
+    echo end
+    exit
+
 #crontab
     
     etc/init.d/crond status
