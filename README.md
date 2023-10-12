@@ -411,6 +411,24 @@
     sudo smbpasswd -a test
     sudo service smbd restart
 
+    ////rhel9
+    rpm -qa | grep samba
+    yum install samba
+    rpm -qa | grep samba
+    pdbedit -a -u trade
+    pdbedit -L
+    vim /etc/samba/smb.conf
+    [bankfut]
+            comment = bankfut
+            path = /home/trade/asptools/bankfut
+            writeable = yes
+            browseable = yes
+            read only = No
+            create mask = 0664
+            directory mask = 0775
+            valid users = trade
+    systemctl restart smb.service
+
 #mac
     
     locate tf-keras-datasets
