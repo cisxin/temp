@@ -172,7 +172,11 @@
 
     head -n 1000 a.txt | tail -n +100
     tail -n +100 -n 900 a.txt
-
+    
+    :vim gbk utf-8
+    vim ~/.vimrc
+    let &termencoding=&encoding
+    set fileencodings=utf-8,gb18030,gb2312,gbk,big5
 
 #时区
 
