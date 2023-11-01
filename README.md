@@ -93,6 +93,8 @@
     awk '/pattern/ { print $1, $3 }' logfile.txt | perl -ne 'print if /regex/'
     perl -pe 's/pattern/replacement/g' file.txt | awk '{ printf "Processed: %s\n", $0 }'
 
+    ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
+
 
 ##删除100天前文件
 
