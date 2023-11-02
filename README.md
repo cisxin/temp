@@ -40,6 +40,9 @@
     grep -rn "#include <assert" *
     docker ps -as | grep -E "cc-|ccc"
 
+    findstr "hello there" ".\*.*"
+    findstr /s /i /c:"hello there" /f:aa.txt
+
     echo 'Hello $USER'
     echo "Hello $USER"
     `echo "Hello $USER"`
