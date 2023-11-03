@@ -103,6 +103,8 @@
 
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
 
+    ls -l --time-style=+"%Y-%m-%dT%H:%M:%S" | grep 2023-08 | awk '{print $7}' | xargs ls -lah
+
 
 ##删除100天前文件
 
