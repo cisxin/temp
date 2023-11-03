@@ -111,7 +111,7 @@
     find ./xml_cdr -mtime +100 -type f -name *.xml -exec rm -rf {} \;
 
     //mv所有media下2天前文件
-    find /app/media -type f -mtime +2 |xargs -i sudo mv -f {} /app/media.bak
+    find /app/media -type f -mtime +2 |xargs -i mv -f {} /app/media.bak
     
     sudo mv -f /app/msg/`date -d "2 days ago" +%Y%m%d`.txt /app//msg.bak/
 
