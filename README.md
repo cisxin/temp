@@ -154,7 +154,7 @@
     sed -i "s/qh0/$qh0/g" `grep -rl 'qh0' --include="*.sh" --include="*.conf" --include="*.yml" --exclude="*.bash" ./`
 
     替换\r\n->\n
-    sed -i "s/\r//" file_name
+    sed -i "s/\r//g" file_name
     find /home/test -name "*.sh" | xargs dos2unix
     dos2unix file_name
 
