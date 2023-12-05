@@ -530,6 +530,13 @@
     /dev/sdb                /SDB1    ext4   defaults        0 0
     -----------------------------------------------------------------------------
 
+    //rhel
+    sudo lvs # 查看逻辑卷
+    sudo vgs # 查看卷组
+    sudo umount /dev/mapper/rhel-trade # 卸载逻辑卷
+    sudo rm -rf dev/mapper/rhel-trade # 删除相关目录
+    sudo lvremove dev/mapper/rhel-trade # 删除逻辑卷
+
 #disk速度测试
 
     sudo time dd if=/dev/zero of=test.dat bs=8k count=130000
@@ -564,6 +571,7 @@
     file -i s.txt
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
     iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8
+    cat ko.txt | iconv -f GBK -t UTF-8
 
 #ubunt_disk_4TB
 
@@ -731,6 +739,13 @@
     yum -y install nginx或者dnf -y install nginx
     yum install net-tools -y
 
+    ----rhel7
+    mount -o loop /rhel-server-7.9-x86_64-dev.iso /mnt/cdrom
+    [base]
+    name=base
+    baseurl=file:///mnt/cdrom
+    enabled=1
+    gpgcheck=0
     -------------------------------------
     //SELINUX
     /usr/sbin/sestatus -v
