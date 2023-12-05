@@ -132,9 +132,6 @@
         echo "no file"
     fi
     ------------------------
-    #!/bin/bash
-    bash msgbak.sh '20230501' '20230606' '/app/msg.bak' '20230606msg.tar'
-    -----------------------------------
 
     find ./ -maxdepth 1 -type f -regextype posix-extended -regex '.*/[^/]{32,}$'
     find ./ -maxdepth 1 -type f -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{8,}'
