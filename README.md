@@ -533,6 +533,18 @@
     sudo umount /dev/mapper/rhel-trade # 卸载逻辑卷
     sudo rm -rf dev/mapper/rhel-trade # 删除相关目录
     sudo lvremove dev/mapper/rhel-trade # 删除逻辑卷
+    /////////////////////
+    mdadm --zero-superblock /dev/sdh
+    fdisk /dev/sdh //t fd
+    mdadm -Cv /dev/md0 -n 6 -l 10 /dev/sd[h-m]
+    mdadm -S /dev/md0
+    mdadm -D /dev/md0
+    mkfs.xfs /dev/md0
+    //mkfs.xfs -f /dev/md0
+    mount /dev/md0 /u02
+    vim /etc/fstabl
+    /dev/md0                /u02                    xfs     defaults        0 0
+    //////////////////////
 
 #disk速度测试
 
