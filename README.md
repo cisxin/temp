@@ -568,6 +568,9 @@
 
     kill 142 157
     kill -9 -- -117
+
+    //强制关闭指定用户
+    pkill -KILL -u username //who w
     
     //进程<=>端口号
     netstat -nap | grep 端口号
