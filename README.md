@@ -32,7 +32,7 @@
 - [kernel](#kernel)
 - [rhel9](#rhel9)
 - [iis](#iis)
-- [java_.keystore](#java_.keystore)
+- [java　.keystore](#java　.keystore)
 
 #grep
 
@@ -799,7 +799,7 @@
     # 导入单独站点
     C:\Windows\System32\inetsrv\appcmd.exe add site /in < c:mywebsite.xml
 
-#java_.keystore
+#java　.keystore
 
     //生成密钥对
     /home/tomcat /jdk1.8.0_201/bin/keytool -genkey -alias tomcat -keyalg RSA -keySize 4096 -sigAlg SHA256withRSA -keystore /home/tomcat/ccttpp2/apache-tomcat-9.0.44/conf/cert/ssffiitt.keystore
