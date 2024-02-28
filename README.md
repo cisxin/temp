@@ -31,6 +31,7 @@
 - [python3](#python3)
 - [kernel](#kernel)
 - [rhel9](#rhel9)
+- [python](#python)
 - [iis](#iis)
 - [java　.keystore](#java　.keystore)
 
@@ -774,6 +775,11 @@
     service iptables stop
     chkconfig iptables off
     systemctl status iptables.service
+
+#python
+
+    python3.exe -m pip install --upgrade pip
+    pip3 install --upgrade pip
 
 #iis
 
