@@ -701,7 +701,7 @@
     #RUN g++ -I/usr/local/include -I/usr/include -I/usr/local/curl -L./ -std=c++14 -w -o test test.cpp ./libcossdk.a -lpthread -ldl 
     #RUN rm -f Dockerfile.* *.a *.h *.cpp *.o *.out docker.sh build.sh
     #CMD ["./test"]
-
+    
     CMD ["python3 test.py"]
     ####################################################################################
 
