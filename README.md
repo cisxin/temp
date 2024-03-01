@@ -31,7 +31,6 @@
 - [python3](#python3)
 - [kernel](#kernel)
 - [rhel9](#rhel9)
-- [python](#python)
 - [iis](#iis)
 - [java　.keystore](#java　.keystore)
 
@@ -674,6 +673,38 @@
     done
     exit
 
+    dockerfile:
+    FROM ubuntu:latest
+    RUN apt-get update -y
+    RUN apt-get upgrade -y
+    RUN apt-get install -y gcc g++ gdb make vim git wget  curl openssl libssl-dev
+    RUN apt-get install -y python3 python3-pip
+    RUN pip3 install --upgrade pip
+    WORKDIR /app
+    ADD ./ /app
+    #COPY data /app/data
+    #EXPOSE 80
+    #VOLUME [ "/tmp":/tmp ]
+
+    #cd docker
+    #docker build --no-cache=true -t test -f Dockerfile.test ./
+    #docker save test > ./test.tar
+    #docker load < test.tar
+    #docker push test
+    #docker pull test
+    #docker commit 1825ebfd3d19 test0
+    #docker tag test testtest
+    #docker run -dit --name test0 test /bin/bash
+    #docker stop test0 && docker rm test0
+
+    #RUN mv libcossdk.a.bak libcossdk.a
+    #RUN g++ -I/usr/local/include -I/usr/include -I/usr/local/curl -L./ -std=c++14 -w -o test test.cpp ./libcossdk.a -lpthread -ldl 
+    #RUN rm -f Dockerfile.* *.a *.h *.cpp *.o *.out docker.sh build.sh
+    #CMD ["./test"]
+
+    CMD ["python3 test.py"]
+    ####################################################################################
+
 #su_id
 
     su - root
@@ -710,7 +741,7 @@
     apt-get install python3-pip
     //////////////////////////////
     or windows
-    python -m pip install --upgrade pip --force-reinstall
+    python3 -m pip install --upgrade pip --force-reinstall
     //////////////////////////////
     pip3 install --upgrade pip
 
@@ -775,11 +806,6 @@
     service iptables stop
     chkconfig iptables off
     systemctl status iptables.service
-
-#python
-
-    python3.exe -m pip install --upgrade pip
-    pip3 install --upgrade pip
 
 #iis
 
