@@ -648,6 +648,12 @@
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
     sudo docker images | grep none | awk '{print $3}'| xargs docker rmi
 
+    //2
+    curl -fsSL  https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
+    sudo add-apt-repository "deb [arch=amd64]  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
+    sudo apt-get update
+    sudo apt-get install docker-ce
+
     #!/bin/bash
     sum=`docker images| wc -l`
     echo images:$sum
