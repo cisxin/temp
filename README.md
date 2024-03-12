@@ -610,21 +610,29 @@
     重启电
 
 #network
+    
+    ip link
 
     cis@ubuntu:~$ cat /etc/netplan/01-netcfg.yaml 
-    # This file describes the network interfaces available on your system
-    # For more information, see netplan(5).
+    # This is the network config written by 'subiquity'
     network:
-    version: 2
-    renderer: networkd
-    ethernets:
-        ens33:
-        dhcp4: no
-        dhcp6: no
-        addresses: [10.10.8.150/21]
-        gateway4: 10.10.8.1
-        nameservers:
-            addresses: [114.114.114.114,10.10.8.1]
+      ethernets:
+        ens160:
+          addresses:
+          - 10.23.0.107/16
+          gateway4: 10.23.0.1
+          nameservers:
+            addresses: []
+            search:
+            - 114.114.114.114
+            - 114.114.114.114
+        ens192:
+          addresses:
+          - 172.20.20.114/24
+          nameservers:
+            addresses: []
+            search: []
+      version: 2
 
 
     //iperf:
