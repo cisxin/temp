@@ -26,6 +26,7 @@
 - [unicode_to_utf-8](#unicode_to_utf-8)
 - [ubunt_disk_4TB](#ubunt_disk_4TB)
 - [network](#network)
+- [curl](#curl)
 - [docker](#docker)
 - [su_id](#su_id)
 - [python3](#python3)
@@ -393,6 +394,8 @@
     git whatchanged --stat 每次修改的文件列表, 统计
     git show commitid 显示某个 commitid 改变的具体内容
 
+    git config --local credential.helper store 保存用户名密码
+
     回退到某个版本
     git checkout 7cd0386bd67e7f240b55fd037159ff7fe8f7063b seg_sensitive.txt
 
@@ -643,6 +646,16 @@
     UDP客户端命令:
     1、iperf -u -c 172.19.16.97 -p 3389 -b 1500M -i 1
     2、iperf -u -c 172.19.16.97 -p 3389 -b 2000M -i 1
+
+    ip link show
+    sudo ip link set eno4 up
+    sudo ip link set eno4 down
+
+#curl
+    curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
+
+    ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
+    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
 
 #docker
 
