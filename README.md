@@ -32,6 +32,7 @@
 - [python3](#python3)
 - [kernel](#kernel)
 - [rhel9](#rhel9)
+- [llm](#llm)
 - [iis](#iis)
 - [java　.keystore](#java　.keystore)
 
@@ -400,6 +401,9 @@
     git checkout 7cd0386bd67e7f240b55fd037159ff7fe8f7063b seg_sensitive.txt
 
     git remote set-url origin https://ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@github.com/username/test.git
+    
+    中断 继续
+    git clone --recursive https://huggingface.co/THUDM/chatglm3-6b
 
 #g++
 
@@ -637,6 +641,9 @@
             search: []
       version: 2
 
+    sudo vim  /etc/systemd/resolved.conf
+    DNS=114.114.114.114 8.8.8.8
+    sudo systemctl restart systemd-resolved
 
     //iperf:
     TCP服务端命令：iperf -s -i 1 -p 3389
@@ -834,6 +841,56 @@
     service iptables stop
     chkconfig iptables off
     systemctl status iptables.service
+
+#llm
+    
+    //Langchain-Chatchat
+    sudo apt install python3-pip
+    python3 -m pip install --upgrade pip
+    wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
+    bash Anaconda3-2024.02-1-Linux-x86_64.sh
+    vim ~/.bashrc
+    export PATH="~/anaconda3/bin":$PATH
+    source ~/anaconda3/bin/activate
+    >source ~/.bashrc
+
+    conda update -n base conda #update最新版本的conda
+    #source activate #conda deactivate
+    conda create -n langchain python==3.11.7
+    conda activate langchain
+    conda env list
+    conda info --envs
+
+    git clone https://github.com/chatchat-space/Langchain-Chatchat.git
+    cd Langchain-Chatchat
+    python3 -m pip install -r requirements.txt
+    python3 -m pip install -r requirements_api.txt
+    python3 -m pip install -r requirements_webui.txt
+
+    sudo apt-get install git-lfs
+    git lfs install
+    $ git clone https://huggingface.co/THUDM/chatglm3-6b
+    $ git clone https://huggingface.co/BAAI/bge-large-zh
+
+    python copy_config_example.py
+
+    vim configs/model_config.py
+    MODEL_PATH = {
+        "embed_model": {
+            "bge-large-zh": "/data/BAAI/bge-large-zh",
+            "m3e-base": "/data/datasets/m3e-base"}, 
+        "llm_model": {
+            "chatglm2-6b": "/data/THUDM/chatglm2-6b",
+            "chatglm3-6b": "/data/THUDM/chatglm3-6b",
+    }}
+    python init_database.py --recreate-vs
+
+    #startup.py "cpu" model_config.py "cpu" server_config.py "cpu"
+    python startup.py -a
+    http://127.0.0.1:8501
+
+
+    
 
 #iis
 
