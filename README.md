@@ -889,7 +889,38 @@
     python startup.py -a
     http://127.0.0.1:8501
 
+//////
 
+    //llm ollama langchain streamlit webui RAG
+    curl https://ollama.ai/install.sh | sh
+    //localhost:11434
+    ollama serve
+    ollama run llama2
+    ollama pull llama2:13b
+    ollama run codellama
+    ollama run llama2:70b
+    ollama run qwen:14b
+    ollama pull mixtral:8x7b
+    ollama run llama2-chinese
+    ollama run mistral
+
+    Downloaded from Hugging Face https://huggingface.co/TheBloke/finance-LLM-GGUF/tree/main FROM "./finance-llm-13b.Q4_K_M.gguf" PARAMETER temperature 0.001 PARAMETER top_k 20 TEMPLATE """ {{.Prompt}} """ # set the system message SYSTEM """ You are Warren Buffet. Answer as Buffet only, and do so in short sentences. """
+    ollama create arjunrao87/financellm -f Modelfile
+
+    sudo systemctl status ollama
+    pip3 install langchain
+    //docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+    //docker exec -it ollama ollama run <參數>
+    //docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v ollama-webui:/app/backend/data --name ollama-webui --restart always ghcr.io/ollama-webui/ollama-webui:main
+    //docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+    docker run -d -p 3000:8080 -e OLLAMA_API_BASE_URL=http://your_host:11434/api -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+    ollama run llama2-chinese "天空为什么是蓝色的？"
+
+    pip3 install chromadb langchain BeautifulSoup4 gpt4all langchainhub pypdf chainlit
+
+    启动之后可以访问 http://localhost:8080
+
+//////
     
 
 #iis
