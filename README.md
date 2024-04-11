@@ -858,6 +858,8 @@
     #source activate #conda deactivate
     conda create -n langchain python==3.11.7
     conda activate langchain
+    conda deactivate langchain
+    conda remove langchain
     conda env list
     conda info --envs
 
