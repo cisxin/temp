@@ -780,6 +780,9 @@
     //////////////////////////////
     pip3 install --upgrade pip
 
+    pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+    pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
+
 #kernel
 
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
