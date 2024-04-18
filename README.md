@@ -33,6 +33,7 @@
 - [kernel](#kernel)
 - [rhel9](#rhel9)
 - [llm](#llm)
+- [jenkins](#jenkins)
 - [iis](#iis)
 - [java　.keystore](#java　.keystore)
 
@@ -410,7 +411,7 @@
     第四步：Github账号上添加公钥
     进入Settings设置 -> SSH and GPG keys -> New SSH key - > 复制id_rsa.pub内容 -> 粘贴保存
     第五步：验证是否设置成功
-    $ssh -T git@github.com
+    $ ssh -T git@github.com
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
@@ -948,7 +949,25 @@
 
     git pull origin
 
-    
+#jenkins
+
+    crontab
+
+                                   *      *      *        *        *
+    含义                           分钟   小时   日期     月份     星期
+    取值范围                       0-59   0-23   1月31日  1月12日  0-6
+    示例                                                        
+    每隔15分钟执行一次              H/15   *      *        *        *   
+    每隔2个小时执行一次             H      H/2    *        *        *     
+    每隔3天执行一次                 H      H      H/3      *        *     
+    每隔3天执行一次(每月的1-15号)    H      H      1-15/3   *        *     
+    每周1,3,5执行一次               H      H      *        *        1,3,5     
+                                                                        
+    指定时间范围   a-b                                         
+    指定时间间隔   /                                           
+    指定变量取值   a,b,c                                       
+    H/15: H HASH,随机均匀分布
+
 
 #iis
 
