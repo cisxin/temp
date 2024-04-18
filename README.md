@@ -951,7 +951,7 @@
 
 #jenkins
 
-    crontab
+    crontab  */15
 
                                    *      *      *        *        *
     含义                           分钟   小时   日期     月份     星期
