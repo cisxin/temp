@@ -405,6 +405,14 @@
     
     中断 继续
     git clone --recursive https://huggingface.co/THUDM/chatglm3-6b
+    
+    ////////////////////
+    第四步：Github账号上添加公钥
+    进入Settings设置 -> SSH and GPG keys -> New SSH key - > 复制id_rsa.pub内容 -> 粘贴保存
+    第五步：验证是否设置成功
+    $ssh -T git@github.com
+     successfully authenticated //表明设置成功
+    不需要账号密码clone和push 注意:使用ssh的url
 
 #g++
 
