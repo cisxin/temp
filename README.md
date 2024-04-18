@@ -242,12 +242,13 @@
     //在 ~/.ssh 目录下生成密钥对文件
     ssh-keygen -t rsa
     //ssh-keygen -m PEM -t rsa -b 4096
-    #id_rsa id_rsa.pub
+    # ==> id_rsa id_rsa.pub
     //复制id_rsa.pub到主机上指定用户的 ~/.ssh/authorized_keys
     cat id_rsa.pub >> authorized_keys
-    //chmod 600 .ssh/authorized_keys #注意权限！
-    //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息
-    ssh-copy-id user@hostname
+    //chmod 600 .ssh/authorized_keys #注意权限！//server
+    //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息 //client
+    ssh-copy-id user@hostname //将公钥发布到服务器
+    ssh-copy-id –i id_rsa.pub administrator@IP
     $rhel9
     ecdsa-sha2-nistp256
     ssh-keygen -t ecdsa
