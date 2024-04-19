@@ -996,6 +996,20 @@
     Ψ	ψ	psi
     Ω	ω	omega
 
+    名称     音标                 大写   小写  名称      音标                           大写   小写
+    alpha    /'ælfə/              Α     α     nu       /nju:/                         Ν      ν
+    beta     /'bi:tə/ /'beɪtə/    Β     β     xi       希腊 /ksi/ 英美/ˈzaɪ/ /ˈksaɪ/   Ξ      ξ
+    gamma    /'gæmə/              Γ     γ     omicron  /əuˈmaikrən/ /ˈɑmɪˌkrɑn/       Ο      ο
+    delta    /'deltə/             Δ     δ     pi       /paɪ/                          Π      π
+    epsilon  /'epsɪlɒn/           Ε     ε     rho      /rəʊ/                          Ρ      ρ
+    zeta     /'zi:tə/             Ζ     ζ     sigma    /'sɪɡmə/                       Σ      σ, ς
+    eta      /'i:tə/              Η     η     tau      /tɔ:/ 或 /taʊ/                 Τ      τ
+    theta    /'θi:tə/             Θ     θ     upsilon  /ˈipsilon/ 或  /ˈʌpsɨlɒn/      Υ      υ
+    iota     /aɪ'əʊtə/            Ι     ι     phi      /faɪ/                          Φ      φ
+    kappa    /'kæpə/              Κ     κ     chi      /kaɪ/                          Χ      χ
+    lambda   /'læmdə/             Λ     λ     psi      /psaɪ/                         Ψ      ψ
+    mu       /mju:/               Μ     μ     omega    /'əʊmɪɡə/ /oʊ'meɡə/            Ω      ω
+
 #iis
 
     # 导出所有应用程序池
