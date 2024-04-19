@@ -34,6 +34,7 @@
 - [rhel9](#rhel9)
 - [llm](#llm)
 - [jenkins](#jenkins)
+- [Σ](#Σ)
 - [iis](#iis)
 - [java　.keystore](#java　.keystore)
 
@@ -968,6 +969,32 @@
     指定变量取值   a,b,c                                       
     H/15: H HASH,随机均匀分布
 
+#Σ
+
+    Α	α	alpha
+    Β	β	beta
+    Γ	γ	gamma
+    Δ	δ	delta
+    Ε	ε	epsilon
+    Ζ	ζ	zeta
+    Η	η	eta
+    Θ	θ	theta
+    Ι	ι	iota
+    Κ	κ	kappa
+    Λ	λ	lambda
+    Μ	μ	mu
+    Ν	ν	nu
+    Ξ	ξ	xi
+    Ο	ο	omicron
+    Π	π	pi
+    Ρ	ρ	rho
+    Σ	σ	sigma
+    Τ	τ	tau
+    Υ	υ	upsilon
+    Φ	φ	phi
+    Χ	χ	chi
+    Ψ	ψ	psi
+    Ω	ω	omega
 
 #iis
 
