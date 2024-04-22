@@ -748,6 +748,8 @@
     #CMD ["./test"]
     
     CMD ["python3 test.py"]
+
+    docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     ####################################################################################
 
 #su_id
