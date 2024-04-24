@@ -27,6 +27,7 @@
 - [docker](#docker)
 - [su id](#su-id)
 - [python3](#python3)
+- [LaTeX](#latex)
 - [llm](#llm)
 - [kernel](#kernel)
 - [rhel9](#rhel9)
@@ -796,6 +797,11 @@
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
 
+# LaTeX
+
+  $H(s) = \frac{Y(s)}{X(s)}$
+  $$H(z) = \frac{Y(z)}{X(z)}$$
+  
 # llm
     
     //Langchain-Chatchat
