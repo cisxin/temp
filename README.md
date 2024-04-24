@@ -416,6 +416,9 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
+    //url
+    git remote -v
+
 # g++
 
     sudo vim /etc/profile
