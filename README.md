@@ -1,7 +1,6 @@
-[toc]
+# contents
 
-##Contents
-
+- [contents](#contents)
 - [grep](#grep)
 - [awk](#awk)
 - [sed](#sed)
@@ -16,31 +15,31 @@
 - [while](#while)
 - [fsck](#fsck)
 - [git](#git)
-- [g++](#g++)
+- [g++](#g)
 - [samba](#samba)
 - [mac](#mac)
 - [os](#os)
 - [disk](#disk)
 - [disk速度测试](#disk速度测试)
 - [ps](#ps)
-- [unicode_to_utf-8](#unicode_to_utf-8)
-- [ubunt_disk_4TB](#ubunt_disk_4TB)
+- [unicode\_to\_utf-8](#unicode_to_utf-8)
+- [ubunt\_disk\_4TB](#ubunt_disk_4tb)
 - [network](#network)
 - [curl](#curl)
 - [docker](#docker)
-- [su_id](#su_id)
+- [su\_id](#su_id)
 - [python3](#python3)
 - [kernel](#kernel)
 - [rhel9](#rhel9)
 - [llm](#llm)
 - [jenkins](#jenkins)
-- [Σ](#Σ)
+- [Σ](#σ)
 - [iis](#iis)
-- [java　.keystore](#java　.keystore)
+- [java .keystore](#java-keystore)
 
-#grep
+# grep
 
-##当前目录包含字符串文件
+当前目录包含字符串文件
 
     grep -rn "#include <assert" *
     docker ps -as | grep -E "cc-|ccc"
@@ -86,7 +85,7 @@
 
     set | grep -E "^[A-Za-z_]+="
 
-#awk
+# awk
 
     awk -F',' '{ print $1, $3 }' filename
     //数值计算，求和...
@@ -111,7 +110,7 @@
     ls -l --time-style=+"%Y-%m-%dT%H:%M:%S" | grep 2023-08 | awk '{print $7}' | xargs ls -lah
     ls -l --time-style=+%Y%m%d | awk '{if (length($6) > 0 && $6 < 20230808) {print $7}}' | xargs -r ls 
 
-##删除100天前文件
+  删除100天前文件
 
     find ./xml_cdr -mtime +100 -type f -name *.xml -exec rm -rf {} \;
 
@@ -142,13 +141,13 @@
     find ./ -maxdepth 1 -type f -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{8,}'
     find ./ -maxdepth 1 -type f -mtime +30 -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{32,}' -exec rm -rf {} \;
 
-##不可见字符
+  不可见字符
 
     grep --color='auto' -P -n "[^\x00-\x7F]" file.xml
     sed 's/\x0b/ /g' b.txt > c.txt
 
 
-#sed
+# sed
 
     sed -n 's/0.0.0.0/1.1.1.1/p' a.txt
     sed -i 's/107.25.6.7/172.20.20.1/g' *.xml
@@ -161,7 +160,7 @@
     dos2unix file_name
 
 
-#vim
+# vim
 
     整页翻页 ctrl-f ctrl-b
     } 移动到下一个block
@@ -190,7 +189,7 @@
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
 
-#时区
+# 时区
 
     sudo tzselect
     ...
@@ -212,13 +211,13 @@
     timedatectl
 
 
-#ln
+# ln
 
     ln -s s->t
     ln -s ../bin/python3.8 /usr/local/bin/python3
     mklink /d C:\.nuget E:\.nuget
 
-#rsync
+# rsync
 
     rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
 
@@ -231,7 +230,7 @@
     sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
     echo `date` "rsync test end ....." >> /tmp/log.txt
 
-#ssh
+# ssh
 
     ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
     scp -i
@@ -258,14 +257,16 @@
     ssh-copy-id trade@ip
 
 
-    //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
+  //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
+
     vim ~/.ssh/config
     Host host1
         HostName <hostname or IP>
         User <username>
         IdentityFile ~/.ssh/id_rsa1
 
-    //putty
+  //putty
+  
     @echo off & setlocal enabledelayedexpansion
     title wework
     set /p d1=startdate:
@@ -291,7 +292,7 @@
     echo end
     exit
 
-#crontab
+# crontab
     
     etc/init.d/crond status
     sudo systemctl status cron.service
@@ -300,12 +301,12 @@
     10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
 
-#nc
+# nc
 
     nc -l 127.0.0.1 5300
     while true; do nc -l 5300; done
 
-#for
+# for
 
     length2=`echo $json2 | jq '.hits.hits|length'`;
     if [ $length22 -eq 0 ];then
@@ -339,7 +340,7 @@
     done
     echo `date` "end del ....." >> /tmp/log.txt
 
-#while
+# while
 
     #!/bin/bash
     while getopts "p:u:a:r:d:o:" opt;do
@@ -372,7 +373,7 @@
     rm -rf $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml
     sed -e "s/%gw_fix_phone%/${gw_fix_phone}/;s/%gw_username%/${gw_username}/;s/%gw_auth_username%/${gw_auth_username}/;s/%gw_realm%/${gw_realm}/;s/%gw_from_domain%/${gw_from_domain}/;s/%gw_outbound_proxy%/${gw_outbound_proxy}/" $(pwd)/template/external2_00000000.xml > $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml;
 
-#fsck
+# fsck
 
     fsck /dev/mapper/ubuntu--vg-ubuntu--lv
     fsck /dev/sda1
@@ -382,7 +383,7 @@
     sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
     mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
 
-#git
+# git
 
     git show 显示最后一次的文件改变的具体内容
     git show -5 显示最后 5 次的文件改变的具体内容
@@ -416,13 +417,13 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
-#g++
+# g++
 
     sudo vim /etc/profile
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
     source /etc/profile
 
-#samba
+# samba
 
     sudo apt-get install samba samba-common
     sudo vim /etc/samba/smb.conf
@@ -461,21 +462,22 @@
             valid users = trade
     systemctl restart smb.service
 
-#mac
+# mac
     
     locate tf-keras-datasets
     sudo /usr/libexec/locate.updatedb
 
-#os
-    禁止休眠:
+# os
+  禁止休眠:
+    
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
-##windows命令窗口中文乱码
-    
+  windows命令窗口中文乱码
+
     chcp 65001
     chcp 936
 
-#disk
+# disk
 
     1.对新增加的硬盘进行分区、格式化
 
@@ -565,13 +567,13 @@
     /dev/md0                /u02                    xfs     defaults        0 0
     //////////////////////
 
-#disk速度测试
+# disk速度测试
 
     sudo time dd if=/dev/zero of=test.dat bs=8k count=130000
     sudo time dd if=/dev/sda of=/dev/null bs=8k count=130000
     sudo time dd if=/dev/sda of=testrw.dat bs=8k  count=130000
 
-#ps
+# ps
 
     ps -axj
     ps -e
@@ -597,14 +599,14 @@
     //启动时间
     ps -eo pid,cmd,lstart | grep "example_process"
 
-#unicode_to_utf-8
+# unicode_to_utf-8
     
     file -i s.txt
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
     iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8
     cat ko.txt | iconv -f GBK -t UTF-8
 
-#ubunt_disk_4TB
+# ubunt_disk_4TB
 
     sudo parted /dev/sda #进入parted 
     mklabel gpt          #将磁盘设置为gpt格式，
@@ -627,7 +629,7 @@
     UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
     重启电
 
-#network
+# network
     
     ip link
 
@@ -669,13 +671,13 @@
     sudo ip link set eno4 up
     sudo ip link set eno4 down
 
-#curl
+# curl
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
 
-#docker
+# docker
 
     curl -k -sSl https://get.docker.com | sudo sh
     curl -fsSL https://get.docker.com -o get-docker.sh
@@ -752,7 +754,7 @@
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     ####################################################################################
 
-#su_id
+# su_id
 
     su - root
     su -
@@ -783,7 +785,7 @@
     777 -rwxrwxrwx   所有人都能读、写和执行（该设置通常不是好想法）。
     文件 664 目录 775     chmod 400 密钥文件
 
-#python3
+# python3
 
     apt-get install python3
     apt-get install python3-pip
@@ -796,7 +798,7 @@
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
 
-#kernel
+# kernel
 
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300_6.3.0-060300.202304232030_all.deb
@@ -806,7 +808,7 @@
     sudo reboot
     uname -r
 
-#rhel9
+# rhel9
     //dnf yum
     1、挂载系统光盘到/mnt/cdrom目录
     mkdir -p /mnt/cdrom
@@ -858,7 +860,7 @@
     chkconfig iptables off
     systemctl status iptables.service
 
-#llm
+# llm
     
     //Langchain-Chatchat
     sudo apt install python3-pip
@@ -907,7 +909,7 @@
     python startup.py -a
     http://127.0.0.1:8501
 
-//////
+  //////
 
     //llm ollama langchain streamlit webui RAG
     curl https://ollama.ai/install.sh | sh
@@ -938,7 +940,7 @@
 
     启动之后可以访问 http://localhost:8080
 
-//////
+  //////
 
     //huggingface
     git lfs install
@@ -952,7 +954,7 @@
 
     git pull origin
 
-#jenkins
+# jenkins
 
     crontab  */15
 
@@ -971,7 +973,7 @@
     指定变量取值   a,b,c                                       
     H/15: H HASH,随机均匀分布
 
-#Σ
+# Σ
 
     Α	α	alpha
     Β	β	beta
@@ -1012,7 +1014,7 @@
     lambda   /'læmdə/             Λ     λ     psi      /psaɪ/                         Ψ      ψ
     mu       /mju:/               Μ     μ     omega    /'əʊmɪɡə/ /oʊ'meɡə/            Ω      ω
 
-#iis
+# iis
 
     # 导出所有应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe list apppool /config /xml > d:\temp\apppools.xml
@@ -1036,7 +1038,7 @@
     # 导入单独站点
     C:\Windows\System32\inetsrv\appcmd.exe add site /in < c:mywebsite.xml
 
-#java　.keystore
+# java .keystore
 
     //生成密钥对
     /home/tomcat /jdk1.8.0_201/bin/keytool -genkey -alias tomcat -keyalg RSA -keySize 4096 -sigAlg SHA256withRSA -keystore /home/tomcat/ccttpp2/apache-tomcat-9.0.44/conf/cert/ssffiitt.keystore
