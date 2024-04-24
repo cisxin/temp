@@ -20,18 +20,16 @@
 - [mac](#mac)
 - [os](#os)
 - [disk](#disk)
-- [disk速度测试](#disk速度测试)
 - [ps](#ps)
-- [unicode\_to\_utf-8](#unicode_to_utf-8)
-- [ubunt\_disk\_4TB](#ubunt_disk_4tb)
+- [unicode to utf-8](#unicode-to-utf-8)
 - [network](#network)
 - [curl](#curl)
 - [docker](#docker)
-- [su\_id](#su_id)
+- [su id](#su-id)
 - [python3](#python3)
+- [llm](#llm)
 - [kernel](#kernel)
 - [rhel9](#rhel9)
-- [llm](#llm)
 - [jenkins](#jenkins)
 - [Σ](#σ)
 - [iis](#iis)
@@ -567,11 +565,34 @@
     /dev/md0                /u02                    xfs     defaults        0 0
     //////////////////////
 
-# disk速度测试
+  disk速度测试
 
     sudo time dd if=/dev/zero of=test.dat bs=8k count=130000
     sudo time dd if=/dev/sda of=/dev/null bs=8k count=130000
     sudo time dd if=/dev/sda of=testrw.dat bs=8k  count=130000
+
+  ubunt disk 4TB
+
+    sudo parted /dev/sda #进入parted 
+    mklabel gpt          #将磁盘设置为gpt格式，
+    mkpart logical 0 -1  #将磁盘所有的容量设置为GPT格式
+    print                #查看分区结果
+    这个时候应该是默认进行分了一个/dev/sda1这个分区
+    退出parted
+    quit
+    终端输入 sudo mkfs.ext4 -F /dev/sda1 
+    将刚刚分出来的sda1格式化为ext4的格式，然后就可以设置开机自动挂载了。
+    sudo mount -t ext4 /dev/sda1 /app
+
+    设置开机自动挂载
+    查看硬盘/dev/sda1 对应的UUID
+    sudo blkid   
+    注意: 唯一的sda1的UUID号。
+    再事先准备好一个地方来做挂载点，比如我这里是/DATA4T然后再用命令打开配置文件：
+    sudo vim /etc/fstab
+    添加
+    UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
+    重启电
 
 # ps
 
@@ -599,35 +620,12 @@
     //启动时间
     ps -eo pid,cmd,lstart | grep "example_process"
 
-# unicode_to_utf-8
+# unicode to utf-8
     
     file -i s.txt
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
     iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8
     cat ko.txt | iconv -f GBK -t UTF-8
-
-# ubunt_disk_4TB
-
-    sudo parted /dev/sda #进入parted 
-    mklabel gpt          #将磁盘设置为gpt格式，
-    mkpart logical 0 -1  #将磁盘所有的容量设置为GPT格式
-    print                #查看分区结果
-    这个时候应该是默认进行分了一个/dev/sda1这个分区
-    退出parted
-    quit
-    终端输入 sudo mkfs.ext4 -F /dev/sda1 
-    将刚刚分出来的sda1格式化为ext4的格式，然后就可以设置开机自动挂载了。
-    sudo mount -t ext4 /dev/sda1 /app
-
-    设置开机自动挂载
-    查看硬盘/dev/sda1 对应的UUID
-    sudo blkid   
-    注意: 唯一的sda1的UUID号。
-    再事先准备好一个地方来做挂载点，比如我这里是/DATA4T然后再用命令打开配置文件：
-    sudo vim /etc/fstab
-    添加
-    UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
-    重启电
 
 # network
     
@@ -754,7 +752,7 @@
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     ####################################################################################
 
-# su_id
+# su id
 
     su - root
     su -
@@ -797,68 +795,6 @@
 
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
-
-# kernel
-
-    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
-    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300_6.3.0-060300.202304232030_all.deb
-    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-image-unsigned-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
-    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-modules-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
-    sudo dpkg --install *.deb
-    sudo reboot
-    uname -r
-
-# rhel9
-    //dnf yum
-    1、挂载系统光盘到/mnt/cdrom目录
-    mkdir -p /mnt/cdrom
-    mount /dev/sr0 /mnt/cdrom
-
-    2、设置系统启动后将光盘自动挂载到/mnt/cdrom
-    echo "/dev/sr0 /mnt/cdrom iso9660 defaults 0 0" >> /etc/fstabcat /etc/fstab
-
-    3、切换到/etc/yum.repos.d/目录
-    cd /etc/yum.repos.d/
-    vim RHEL8.repo #vim redhat.repo #RHEL9
-
-    4、按下i键，输入以下内容
-    [BaseOS]
-    name=BaseOS
-    baseurl=file:///mnt/cdrom/BaseOS
-    enabled=1
-    gpgcheck=0
-    [AppStream]
-    name=AppStream
-    baseurl=file:///mnt/cdrom/AppStream
-    enabled=1
-    gpgcheck=0
-
-    5、测试Yum配置是否可用
-    yum -y install nginx或者dnf -y install nginx
-    yum install net-tools -y
-
-    ----rhel7
-    mount -o loop /rhel-server-7.9-x86_64-dev.iso /mnt/cdrom
-    [base]
-    name=base
-    baseurl=file:///mnt/cdrom
-    enabled=1
-    gpgcheck=0
-    -------------------------------------
-    //SELINUX
-    /usr/sbin/sestatus -v
-
-    修改/etc/selinux/config 文件
-    将SELINUX=enforcing改为SELINUX=disabled
-    reboot
-
-    systemctl stop firewalld
-    systemctl disable firewalld
-    systemctl status firewalld  //Active: inactive (dead) 关闭
-
-    service iptables stop
-    chkconfig iptables off
-    systemctl status iptables.service
 
 # llm
     
@@ -952,7 +888,69 @@
     GIT_SSL_NO_VERIFY=1 git clone https://huggingface.co/google/gemma-1.1-7b-it
     huggingface-cli download --resume-download gemma-1.1-7b-it --local-dir gemma-1.1-7b-it
 
-    git pull origin
+    git pull origin    
+
+# kernel
+
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300_6.3.0-060300.202304232030_all.deb
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-image-unsigned-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
+    wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-modules-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
+    sudo dpkg --install *.deb
+    sudo reboot
+    uname -r
+
+# rhel9
+    //dnf yum
+    1、挂载系统光盘到/mnt/cdrom目录
+    mkdir -p /mnt/cdrom
+    mount /dev/sr0 /mnt/cdrom
+
+    2、设置系统启动后将光盘自动挂载到/mnt/cdrom
+    echo "/dev/sr0 /mnt/cdrom iso9660 defaults 0 0" >> /etc/fstabcat /etc/fstab
+
+    3、切换到/etc/yum.repos.d/目录
+    cd /etc/yum.repos.d/
+    vim RHEL8.repo #vim redhat.repo #RHEL9
+
+    4、按下i键，输入以下内容
+    [BaseOS]
+    name=BaseOS
+    baseurl=file:///mnt/cdrom/BaseOS
+    enabled=1
+    gpgcheck=0
+    [AppStream]
+    name=AppStream
+    baseurl=file:///mnt/cdrom/AppStream
+    enabled=1
+    gpgcheck=0
+
+    5、测试Yum配置是否可用
+    yum -y install nginx或者dnf -y install nginx
+    yum install net-tools -y
+
+    ----rhel7
+    mount -o loop /rhel-server-7.9-x86_64-dev.iso /mnt/cdrom
+    [base]
+    name=base
+    baseurl=file:///mnt/cdrom
+    enabled=1
+    gpgcheck=0
+    -------------------------------------
+    //SELINUX
+    /usr/sbin/sestatus -v
+
+    修改/etc/selinux/config 文件
+    将SELINUX=enforcing改为SELINUX=disabled
+    reboot
+
+    systemctl stop firewalld
+    systemctl disable firewalld
+    systemctl status firewalld  //Active: inactive (dead) 关闭
+
+    service iptables stop
+    chkconfig iptables off
+    systemctl status iptables.service
 
 # jenkins
 
