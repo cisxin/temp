@@ -3,6 +3,7 @@
 - [contents](#contents)
 - [grep](#grep)
 - [awk](#awk)
+- [ps](#ps)
 - [sed](#sed)
 - [vim](#vim)
 - [时区](#时区)
@@ -20,7 +21,7 @@
 - [mac](#mac)
 - [os](#os)
 - [disk](#disk)
-- [ps](#ps)
+- [ps](#ps-1)
 - [unicode to utf-8](#unicode-to-utf-8)
 - [network](#network)
 - [curl](#curl)
@@ -104,7 +105,10 @@
 
     tar -tvf 20231031.tar | awk '{a+=$3}END{print a}'
 
+# ps
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
+
+    bg fg jobs ctr+z nohup
 
     ls -l --time-style=+"%Y-%m-%dT%H:%M:%S" | grep 2023-08 | awk '{print $7}' | xargs ls -lah
     ls -l --time-style=+%Y%m%d | awk '{if (length($6) > 0 && $6 < 20230808) {print $7}}' | xargs -r ls 
