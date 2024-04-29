@@ -766,6 +766,9 @@
     su -
     sudo -i root 
 
+    echo "$password" | sudo -S your_command
+    echo "123456" | sudo -S apt update
+
     id root
     id -g root
 
