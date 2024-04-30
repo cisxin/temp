@@ -3,34 +3,33 @@
 - [contents](#contents)
 - [grep](#grep)
 - [awk](#awk)
-- [ps](#ps)
 - [sed](#sed)
+- [ps](#ps)
 - [vim](#vim)
-- [时区](#时区)
 - [ln](#ln)
 - [rsync](#rsync)
 - [ssh](#ssh)
+- [su id](#su-id)
 - [crontab](#crontab)
 - [nc](#nc)
 - [for](#for)
 - [while](#while)
-- [fsck](#fsck)
 - [git](#git)
 - [g++](#g)
 - [samba](#samba)
 - [mac](#mac)
 - [os](#os)
+- [fsck](#fsck)
 - [disk](#disk)
-- [ps](#ps-1)
 - [unicode to utf-8](#unicode-to-utf-8)
 - [network](#network)
 - [curl](#curl)
 - [docker](#docker)
-- [su id](#su-id)
 - [python3](#python3)
 - [LaTeX](#latex)
 - [llm](#llm)
 - [kernel](#kernel)
+- [时区](#时区)
 - [rhel9](#rhel9)
 - [jenkins](#jenkins)
 - [Σ](#σ)
@@ -105,6 +104,18 @@
 
     tar -tvf 20231031.tar | awk '{a+=$3}END{print a}'
 
+# sed
+
+    sed -n 's/0.0.0.0/1.1.1.1/p' a.txt
+    sed -i 's/107.25.6.7/172.20.20.1/g' *.xml
+    sed -i 's/1\.1\.1\.1/0\.0\.0\.0/g' a.txt
+    sed -i "s/qh0/$qh0/g" `grep -rl 'qh0' --include="*.sh" --include="*.conf" --include="*.yml" --exclude="*.bash" ./`
+
+    替换\r\n->\n
+    sed -i "s/\r//g" file_name
+    find /home/test -name "*.sh" | xargs dos2unix
+    dos2unix file_name
+    
 # ps
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
 
@@ -149,18 +160,31 @@
     grep --color='auto' -P -n "[^\x00-\x7F]" file.xml
     sed 's/\x0b/ /g' b.txt > c.txt
 
+  /////////
 
-# sed
+    ps -axj
+    ps -e
+    //handle count
+    ls /proc/25091/fd | wc -l
+    ls -asl /proc/<pid>/fd/
+    lsof -p 25091
+    //thread
+    top -H -p 25091
+    pstree -p 进程号
+    //memory
+    ps -aux
 
-    sed -n 's/0.0.0.0/1.1.1.1/p' a.txt
-    sed -i 's/107.25.6.7/172.20.20.1/g' *.xml
-    sed -i 's/1\.1\.1\.1/0\.0\.0\.0/g' a.txt
-    sed -i "s/qh0/$qh0/g" `grep -rl 'qh0' --include="*.sh" --include="*.conf" --include="*.yml" --exclude="*.bash" ./`
+    kill 142 157
+    kill -9 -- -117
 
-    替换\r\n->\n
-    sed -i "s/\r//g" file_name
-    find /home/test -name "*.sh" | xargs dos2unix
-    dos2unix file_name
+    //强制关闭指定用户
+    pkill -KILL -u username //who w
+    
+    //进程<=>端口号
+    netstat -nap | grep 端口号
+
+    //启动时间
+    ps -eo pid,cmd,lstart | grep "example_process"
 
 
 # vim
@@ -191,28 +215,6 @@
     vim ~/.vimrc
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
-
-# 时区
-
-    sudo tzselect
-    ...
-    sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-    date
-    sudo ntpdate time.windows.com
-
-    //自动同步时间
-    sudo ntpdate time.nist.gov
-    sudo ntpdate -s time.windows.com
-    sudo apt-get install ntpdate
-    sudo nepdate cn.pool.ntp.org
-
-    sudo vim /etc/default/locale
-    LC_TIME="en_DK.UTF-8"
-    
-    --------
-    sudo timedatectl set-timezone Asia/Shanghai
-    timedatectl
-
 
 # ln
 
@@ -295,6 +297,40 @@
     echo end
     exit
 
+# su id
+
+    su - root
+    su -
+    sudo -i root 
+
+    echo "$password" | sudo -S your_command
+    echo "123456" | sudo -S apt update
+
+    id root
+    id -g root
+
+    groups test
+
+    cat /etc/passwd | less
+    cat /etc/group    
+
+    adduser test
+
+    usermod -u new_uid username
+    ::用户 username 的GID修改为 new_gid
+    usermod -g new_gid username
+
+    chown user filename
+    chgrp groupname filename
+
+    chmod
+    400 -r--------   拥有者能够读 其他任何人不能进行任何操作；
+    644 -rw-r--r--   拥有者都能够读，但只有拥有者可以编辑；
+    666 -rw-rw-rw-   所有用户都有文件读、写权限
+    755 -rwxr-xr-x   所有人都能读和执行，但只有拥有者才能编辑；
+    777 -rwxrwxrwx   所有人都能读、写和执行（该设置通常不是好想法）。
+    文件 664 目录 775     chmod 400 密钥文件
+    
 # crontab
     
     etc/init.d/crond status
@@ -375,16 +411,6 @@
     mkdir $(pwd)/freeswitch_config/sip_profiles/external2
     rm -rf $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml
     sed -e "s/%gw_fix_phone%/${gw_fix_phone}/;s/%gw_username%/${gw_username}/;s/%gw_auth_username%/${gw_auth_username}/;s/%gw_realm%/${gw_realm}/;s/%gw_from_domain%/${gw_from_domain}/;s/%gw_outbound_proxy%/${gw_outbound_proxy}/" $(pwd)/template/external2_00000000.xml > $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml;
-
-# fsck
-
-    fsck /dev/mapper/ubuntu--vg-ubuntu--lv
-    fsck /dev/sda1
-    fsck -fvy /
-    chkdsk c: /f
-    sudo mount -o remount,rw /partition/identifier /mount/point
-    sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
-    mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
 
 # git
 
@@ -483,6 +509,16 @@
     chcp 65001
     chcp 936
 
+# fsck
+
+    fsck /dev/mapper/ubuntu--vg-ubuntu--lv
+    fsck /dev/sda1
+    fsck -fvy /
+    chkdsk c: /f
+    sudo mount -o remount,rw /partition/identifier /mount/point
+    sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
+    mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
+    
 # disk
 
     1.对新增加的硬盘进行分区、格式化
@@ -602,32 +638,6 @@
     UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
     重启电
 
-# ps
-
-    ps -axj
-    ps -e
-    //handle count
-    ls /proc/25091/fd | wc -l
-    ls -asl /proc/<pid>/fd/
-    lsof -p 25091
-    //thread
-    top -H -p 25091
-    pstree -p 进程号
-    //memory
-    ps -aux
-
-    kill 142 157
-    kill -9 -- -117
-
-    //强制关闭指定用户
-    pkill -KILL -u username //who w
-    
-    //进程<=>端口号
-    netstat -nap | grep 端口号
-
-    //启动时间
-    ps -eo pid,cmd,lstart | grep "example_process"
-
 # unicode to utf-8
     
     file -i s.txt
@@ -636,8 +646,10 @@
     cat ko.txt | iconv -f GBK -t UTF-8
 
 # network
-    
-    ip link
+
+    ip link show
+    sudo ip link set eno4 up
+    sudo ip link set eno4 down
 
     cis@ubuntu:~$ cat /etc/netplan/01-netcfg.yaml 
     # This is the network config written by 'subiquity'
@@ -672,10 +684,6 @@
     UDP客户端命令:
     1、iperf -u -c 172.19.16.97 -p 3389 -b 1500M -i 1
     2、iperf -u -c 172.19.16.97 -p 3389 -b 2000M -i 1
-
-    ip link show
-    sudo ip link set eno4 up
-    sudo ip link set eno4 down
 
 # curl
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
@@ -759,40 +767,6 @@
 
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     ####################################################################################
-
-# su id
-
-    su - root
-    su -
-    sudo -i root 
-
-    echo "$password" | sudo -S your_command
-    echo "123456" | sudo -S apt update
-
-    id root
-    id -g root
-
-    groups test
-
-    cat /etc/passwd | less
-    cat /etc/group    
-
-    adduser test
-
-    usermod -u new_uid username
-    ::用户 username 的GID修改为 new_gid
-    usermod -g new_gid username
-
-    chown user filename
-    chgrp groupname filename
-
-    chmod
-    400 -r--------   拥有者能够读 其他任何人不能进行任何操作；
-    644 -rw-r--r--   拥有者都能够读，但只有拥有者可以编辑；
-    666 -rw-rw-rw-   所有用户都有文件读、写权限
-    755 -rwxr-xr-x   所有人都能读和执行，但只有拥有者才能编辑；
-    777 -rwxrwxrwx   所有人都能读、写和执行（该设置通常不是好想法）。
-    文件 664 目录 775     chmod 400 密钥文件
 
 # python3
 
@@ -916,6 +890,27 @@
     sudo reboot
     uname -r
 
+# 时区
+
+    sudo tzselect
+    ...
+    sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    date
+    sudo ntpdate time.windows.com
+
+    //自动同步时间
+    sudo ntpdate time.nist.gov
+    sudo ntpdate -s time.windows.com
+    sudo apt-get install ntpdate
+    sudo nepdate cn.pool.ntp.org
+
+    sudo vim /etc/default/locale
+    LC_TIME="en_DK.UTF-8"
+    
+    --------
+    sudo timedatectl set-timezone Asia/Shanghai
+    timedatectl
+    
 # rhel9
     //dnf yum
     1、挂载系统光盘到/mnt/cdrom目录
