@@ -6,11 +6,11 @@
 - [sed](#sed)
 - [ps](#ps)
 - [vim](#vim)
-- [ln](#ln)
-- [rsync](#rsync)
 - [ssh](#ssh)
 - [su id](#su-id)
 - [crontab](#crontab)
+- [ln](#ln)
+- [rsync](#rsync)
 - [nc](#nc)
 - [for](#for)
 - [while](#while)
@@ -216,25 +216,6 @@
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
 
-# ln
-
-    ln -s s->t
-    ln -s ../bin/python3.8 /usr/local/bin/python3
-    mklink /d C:\.nuget E:\.nuget
-
-# rsync
-
-    rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
-
-    //--link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。
-    rsync -a --delete --link-dest /compare/path /source/path /target/path
-
-    sudo apt-get install sshpass
-    sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
-
-    sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
-    echo `date` "rsync test end ....." >> /tmp/log.txt
-
 # ssh
 
     ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
@@ -339,6 +320,24 @@
     59 23 * * * (cd /app; bash test.sh)
     10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
+# ln
+
+    ln -s s->t
+    ln -s ../bin/python3.8 /usr/local/bin/python3
+    mklink /d C:\.nuget E:\.nuget
+
+# rsync
+
+    rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
+
+    //--link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。
+    rsync -a --delete --link-dest /compare/path /source/path /target/path
+
+    sudo apt-get install sshpass
+    sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
+
+    sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
+    echo `date` "rsync test end ....." >> /tmp/log.txt
 
 # nc
 
