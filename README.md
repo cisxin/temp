@@ -123,6 +123,7 @@
 
     ls -l --time-style=+"%Y-%m-%dT%H:%M:%S" | grep 2023-08 | awk '{print $7}' | xargs ls -lah
     ls -l --time-style=+%Y%m%d | awk '{if (length($6) > 0 && $6 < 20230808) {print $7}}' | xargs -r ls 
+    ls -lah -Str
 
   删除100天前文件
 
@@ -241,7 +242,6 @@
     ssh-keygen -t ecdsa
     ssh-copy-id -i id_ecdsa.pub trade@ip
     ssh-copy-id trade@ip
-
 
   //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
 
@@ -614,7 +614,7 @@
     sudo time dd if=/dev/sda of=/dev/null bs=8k count=130000
     sudo time dd if=/dev/sda of=testrw.dat bs=8k  count=130000
 
-  ubunt disk 4TB
+  ubuntu disk 4TB
 
     sudo parted /dev/sda #进入parted 
     mklabel gpt          #将磁盘设置为gpt格式，
@@ -671,7 +671,7 @@
             search: []
       version: 2
 
-    sudo vim  /etc/systemd/resolved.conf
+    sudo vim /etc/systemd/resolved.conf
     DNS=114.114.114.114 8.8.8.8
     sudo systemctl restart systemd-resolved
 
@@ -923,7 +923,7 @@
     cd /etc/yum.repos.d/
     vim RHEL8.repo #vim redhat.repo #RHEL9
 
-    4、按下i键，输入以下内容
+    4、按下i键,输入以下内容
     [BaseOS]
     name=BaseOS
     baseurl=file:///mnt/cdrom/BaseOS
