@@ -448,6 +448,18 @@
     //url
     git remote -v
 
+  ////gitlab error
+
+    error ts=2024-01-28T06:34:20.553201665Z caller=main.go:717 err="opening storage failed: block dir: \"/var/opt/gitlab/prometheus/data/01HHJ3Y17S5YZBD6B449RAKRYK\": 1.1.unexpected end of JSON input"
+    2.cd /var/opt/gitlab/
+    3.sudo systemctl stop gitlab-runsvdir
+    4.sudo gitlab-ctl stop 
+    5.sudo rm-rf /var/opt/gitlab/prometheus/data/ 
+    6.sudo rm /var/opt/gitlab/gitaly/gitaly.pid 
+    7.sudo rm ./redis/dump.rdb -rf 
+    8.sudo systemctl restart gitlab-runsvdir 
+    9.sudo gitlab-ctl restart
+
 # g++
 
     sudo vim /etc/profile
