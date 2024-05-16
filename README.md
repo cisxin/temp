@@ -103,7 +103,8 @@
     seq 5 |awk 'BEGIN{sum=0;print "总和:"}{if(NR<=4)printf $1"+";sum+=$1; if(NR==5)printf $1 "="}END{print sum}'
 
     tar -tvf 20231031.tar | awk '{a+=$3}END{print a}'
-    sudo tar -zcvf gitlab20240516.gar.gz /srv/gitlab
+    sudo tar -zcvf gitlab20240516.tar.gz /srv/gitlab
+    tar -xzvf gitlab20240516.tar.gz
 
 # sed
 
