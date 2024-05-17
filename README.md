@@ -447,7 +447,31 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
-    //url
+  //move docker
+    
+    docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
+    docker save gitlab/gitlab-ce:12.0.3-ce.0 > ./gitlab20240516gitlab_ce12.0.3-ce.0.tar
+    =>
+    docker load < gitlab20240516gitlab_ce12.0.3-ce.0.tar
+    sudo bash rungitlab.sh && docker exec -it gitlab0 chown git /var/opt/gitlab/.ssh/authorized_keys && docker exec -it gitlab0 chmod 2770 /var/opt/gitlab/git-data/repositories
+    ++++++++
+    docker run -dit \
+    --hostname 192.168.0.180 \
+    --publish 1443:443 --publish 10080:10080 --publish 10022:22 \
+    --name gitlab0 \
+    --volume /etc/resolv.conf:/etc/resolv.conf \
+    --volume $(pwd)/gitlab/config:/etc/gitlab \
+    --volume $(pwd)/gitlab/logs:/var/log/gitlab \
+    --volume $(pwd)/gitlab/data:/var/opt/gitlab \
+    --privileged=true \
+    gitlab/gitlab-ce:12.0.3-ce.0
+
+    docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
+    --------
+
+
+  //url
+    
     git remote -v
 
   ////gitlab error
