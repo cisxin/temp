@@ -582,7 +582,7 @@
     2添加新LVM到已有的LVM组，实现扩容
 
     lvm              进入lvm管理
-    lvm>pvcreate /dev/sda3      这是初始化刚才的分区，必须的(将物理分区创建为物理卷)(in linux lvm(ext4))
+    lvm>pvcreate /dev/sda3  //这是初始化刚才的分区，必须的(将物理分区创建为物理卷)(in linux lvm(ext4)) //默认安装sda1 sda2 sda3存在
     lvm>vgextend ubuntu-vg /dev/sda3  将初始化过的分区加入到虚拟卷组ubuntu-vg (卷和卷组的命令可以通过  vgdisplay, vgextend ubuntu-vg /dev/sda3)
     lvm>vgdisplay -v
     lvm>lvextend -l+953861 /dev/mapper/ubuntu--vg-ubuntu--lv //扩展已有卷的容量（953861 是通过vgdisplay查看的Free  PE / Size的大小） //redhat:lvextend -l+100%FREE /dev/mapper/rhel-opt 
@@ -1083,6 +1083,8 @@
     C:\Windows\System32\inetsrv\appcmd.exe list site "站点名称" /config /xml > c:mywebsite.xml
     # 导入单独站点
     C:\Windows\System32\inetsrv\appcmd.exe add site /in < c:mywebsite.xml
+
+    --explicitly-allowed-ports=10080,9801
 
 # java .keystore
 
