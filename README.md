@@ -743,6 +743,11 @@
     1、iperf -u -c 172.19.16.97 -p 3389 -b 1500M -i 1
     2、iperf -u -c 172.19.16.97 -p 3389 -b 2000M -i 1
 
+    //nftable nft
+    sudo nft list tables
+    sudo nft list chains
+    sudo nft list ruleset
+
 # curl
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
 
