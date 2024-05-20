@@ -234,9 +234,18 @@
     //ssh-keygen -m PEM -t rsa -b 4096
     # ==> id_rsa id_rsa.pub
     //复制id_rsa.pub到主机上指定用户的 ~/.ssh/authorized_keys
-    cat id_rsa.pub >> authorized_keys
+    cat id_rsa.pub >> authorized_keys //本地客户机 id_rsa.pub,远程服务器 authorized_keys
+    ++++++++
+    //多个SSH密钥 vim ~/.ssh/config
+    Host remote_host
+        HostName 10.10.0.94
+        User test
+        IdentityFile ~/.ssh/id_rsa2
+    //使用配置的别名进行连接：ssh remote_host
+    --------
     //chmod 600 .ssh/authorized_keys #注意权限！//server
-    //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息 //client
+    //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息 //client 
+    //第一次连接到某个远程服务器,SSH客户端会收到该远程服务器的公钥=>known_hosts//防止中间人攻击(MITM攻击)
     ssh-copy-id user@hostname //将公钥发布到服务器
     ssh-copy-id –i id_rsa.pub administrator@IP
     $rhel9
