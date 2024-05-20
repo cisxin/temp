@@ -288,6 +288,10 @@
     pscp.exe -sftp -P 2244 -i E:\temp\id_rsa_putty.ppk -r ubuntu@x.x.x.x:/tmp/test ./
     echo end
     exit
+    
+    //OpenSSH私钥keyname,转换为keyname.ppk
+    sudo apt-get install putty-tools
+    puttygen id_rsa -o id_rsa_putty.ppk
 
 # su id
 
