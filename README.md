@@ -690,6 +690,8 @@
 
 # network
 
+    sudo apt install net-tools
+
     ip link show
     sudo ip link set eno4 up
     sudo ip link set eno4 down
