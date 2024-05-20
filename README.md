@@ -492,6 +492,12 @@
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
     source /etc/profile
 
+    sudo apt-get install golang-go
+    go env
+    go version
+    //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
+    go env -w GOPROXY=https://goproxy.cn
+
 # samba
 
     sudo apt-get install samba samba-common
