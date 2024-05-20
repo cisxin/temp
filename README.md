@@ -13,12 +13,10 @@
 - [rsync](#rsync)
 - [nc](#nc)
 - [for](#for)
-- [while](#while)
 - [git](#git)
 - [g++](#g)
 - [samba](#samba)
 - [mac](#mac)
-- [os](#os)
 - [fsck](#fsck)
 - [disk](#disk)
 - [unicode to utf-8](#unicode-to-utf-8)
@@ -359,6 +357,9 @@
     nc -l 127.0.0.1 5300
     while true; do nc -l 5300; done
 
+    ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
+    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"
+
 # for
 
     length2=`echo $json2 | jq '.hits.hits|length'`;
@@ -393,7 +394,7 @@
     done
     echo `date` "end del ....." >> /tmp/log.txt
 
-# while
+  //while
 
     #!/bin/bash
     while getopts "p:u:a:r:d:o:" opt;do
@@ -550,12 +551,15 @@
             valid users = trade
     systemctl restart smb.service
 
+
 # mac
     
     locate tf-keras-datasets
     sudo /usr/libexec/locate.updatedb
 
-# os
+    //ubuntu plocate updatedb
+
+  // os
   禁止休眠:
     
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
