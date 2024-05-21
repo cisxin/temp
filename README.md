@@ -129,6 +129,8 @@
     ls -l --time-style=+%Y%m%d | awk '{if (length($6) > 0 && $6 < 20230808) {print $7}}' | xargs -r ls 
     ls -lah -Str
 
+    cd .. && cd - && cd ~
+
   删除100天前文件
 
     find ./xml_cdr -mtime +100 -type f -name *.xml -exec rm -rf {} \;
