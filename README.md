@@ -19,7 +19,6 @@
 - [mac](#mac)
 - [fsck](#fsck)
 - [disk](#disk)
-- [unicode to utf-8](#unicode-to-utf-8)
 - [network](#network)
 - [curl](#curl)
 - [docker](#docker)
@@ -115,6 +114,13 @@
     sed -i "s/\r//g" file_name
     find /home/test -name "*.sh" | xargs dos2unix
     dos2unix file_name
+
+    //unicode to utf-8
+    file -i s.txt
+    iconv -f utf-16 -t utf-8 s.txt > s2.txt
+    iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8
+    cat ko.txt | iconv -f GBK -t UTF-8
+
     
 # ps
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
@@ -698,12 +704,6 @@
     UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
     重启电
 
-# unicode to utf-8
-    
-    file -i s.txt
-    iconv -f utf-16 -t utf-8 s.txt > s2.txt
-    iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8
-    cat ko.txt | iconv -f GBK -t UTF-8
 
 # network
 
