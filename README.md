@@ -11,7 +11,6 @@
 - [crontab](#crontab)
 - [ln](#ln)
 - [rsync](#rsync)
-- [nc](#nc)
 - [for](#for)
 - [git](#git)
 - [g++](#g)
@@ -357,14 +356,6 @@
 
     sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
     echo `date` "rsync test end ....." >> /tmp/log.txt
-
-# nc
-
-    nc -l 127.0.0.1 5300
-    while true; do nc -l 5300; done
-
-    ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
-    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"
 
 # for
 
@@ -757,6 +748,14 @@
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
+
+  //nc
+    
+    nc -l 127.0.0.1 5300
+    while true; do nc -l 5300; done
+
+    ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
+    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"    
 
 # docker
 
