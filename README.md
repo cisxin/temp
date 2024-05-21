@@ -9,7 +9,6 @@
 - [ssh](#ssh)
 - [su id](#su-id)
 - [crontab](#crontab)
-- [ln](#ln)
 - [rsync](#rsync)
 - [for](#for)
 - [git](#git)
@@ -338,12 +337,6 @@
     59 23 * * * (cd /app; bash test.sh)
     10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
-# ln
-
-    ln -s s->t
-    ln -s ../bin/python3.8 /usr/local/bin/python3
-    mklink /d C:\.nuget E:\.nuget
-
 # rsync
 
     rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
@@ -575,6 +568,12 @@
     sudo mount -o remount,rw /partition/identifier /mount/point
     sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
     mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
+
+  //ln
+
+    ln -s s->t
+    ln -s ../bin/python3.8 /usr/local/bin/python3
+    mklink /d C:\.nuget E:\.nuget    
     
 # disk
 
