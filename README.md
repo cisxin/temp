@@ -423,6 +423,7 @@
 
     git show 显示最后一次的文件改变的具体内容
     git show -5 显示最后 5 次的文件改变的具体内容
+    git branch -a 查询远程分支
 
     撤消本地修改
     git fetch --all
@@ -452,6 +453,8 @@
     $ ssh -T git@github.com
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
+
+    //sudo apt remove nano
 
   //move docker
     
@@ -503,6 +506,9 @@
     go version
     //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
     go env -w GOPROXY=https://goproxy.cn
+
+    sudo apt-get install pkg-config libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev zlib1g-dev libevent-dev libmicrohttpd-dev
+    sudo apt-get install mono-devel //debian    
 
 # samba
 
