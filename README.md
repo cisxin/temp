@@ -9,7 +9,6 @@
 - [ssh](#ssh)
 - [su id](#su-id)
 - [crontab](#crontab)
-- [rsync](#rsync)
 - [for](#for)
 - [git](#git)
 - [g++](#g)
@@ -339,18 +338,6 @@
     59 23 * * * (cd /app; bash test.sh)
     10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
-# rsync
-
-    rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
-
-    //--link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。
-    rsync -a --delete --link-dest /compare/path /source/path /target/path
-
-    sudo apt-get install sshpass
-    sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
-
-    sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
-    echo `date` "rsync test end ....." >> /tmp/log.txt
 
 # for
 
@@ -553,6 +540,18 @@
             valid users = trade
     systemctl restart smb.service
 
+  //rsync
+
+    rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
+
+    //--link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。
+    rsync -a --delete --link-dest /compare/path /source/path /target/path
+
+    sudo apt-get install sshpass
+    sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
+
+    sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
+    echo `date` "rsync test end ....." >> /tmp/log.txt
 
 # mac
     
