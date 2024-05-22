@@ -19,9 +19,7 @@
 - [python3](#python3)
 - [LaTeX Σ](#latex-σ)
 - [llm](#llm)
-- [kernel](#kernel)
-- [时区](#时区)
-- [rhel9](#rhel9)
+- [kernel 时区 rhel9](#kernel-时区-rhel9)
 - [jenkins](#jenkins)
 - [iis](#iis)
 - [java .keystore](#java-keystore)
@@ -1016,7 +1014,7 @@
 
     git pull origin    
 
-# kernel
+# kernel 时区 rhel9
 
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300_6.3.0-060300.202304232030_all.deb
@@ -1026,7 +1024,7 @@
     sudo reboot
     uname -r
 
-# 时区
+  //时区
 
     sudo tzselect
     ...
@@ -1047,7 +1045,7 @@
     sudo timedatectl set-timezone Asia/Shanghai
     timedatectl
     
-# rhel9
+  //rhel9
     //dnf yum
     1、挂载系统光盘到/mnt/cdrom目录
     mkdir -p /mnt/cdrom
