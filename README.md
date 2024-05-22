@@ -299,7 +299,7 @@
 # su id
 
     su - root
-    su -
+    su - //会话的环境变量,路径等会被切换到root用户的配置
     sudo -i root 
 
     echo "$password" | sudo -S your_command
@@ -329,6 +329,10 @@
     755 -rwxr-xr-x   所有人都能读和执行，但只有拥有者才能编辑；
     777 -rwxrwxrwx   所有人都能读、写和执行（该设置通常不是好想法）。
     文件 664 目录 775     chmod 400 密钥文件
+    
+    //simple password
+    sudo passwd test
+    
     
 # crontab
     
