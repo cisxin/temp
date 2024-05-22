@@ -507,8 +507,12 @@
     //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
     go env -w GOPROXY=https://goproxy.cn
 
-    sudo apt-get install pkg-config libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev zlib1g-dev libevent-dev libmicrohttpd-dev
-    sudo apt-get install mono-devel //debian    
+    sudo apt-get install pkg-config automake autoconf libtool libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev libevent-dev libmicrohttpd-dev
+    //libssl-dev libboost-all-dev libevent-dev libboost-test-dev zlib1g-dev
+    sudo apt-get install mono-devel //debian  
+
+    //gdb
+  
 
 # samba
 
@@ -750,6 +754,16 @@
     sudo nft list chains
     sudo nft list ruleset
 
+    //映射共享目录
+    mount -t cifs //192.168.0.1/temp /tmp/temp -o username=test,password=123456
+    umount /tmp/temp
+
+    //查看系统tcp连接中各个状态的连接数
+    netstat -an | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+    //查看和本机80端口建立连接并状态在established的所有ip
+    netstat -an |grep 80 |grep ESTA |awk '{print$5 "\n"}' |awk 'BEGIN {FS=":"} {print $1 "\n"}' |sort |uniq    
+    //输出每个ip的连接数，以及总的各个状态的连接数。
+    netstat -n | awk '/^tcp/ {n=split($(NF-1),array,":");if(n<=2)++S[array[(1)]];else++S[array[(4)]];++s[$NF];++N} END {for(a in S){printf("%-20s %s\n", a, S[a]);++I}printf("%-20s %s\n","TOTAL_IP",I);for(a in s) printf("%-20s %s\n",a, s[a]);printf("%-20s %s\n","TOTAL_LINK",N);}'
 # curl
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
 
@@ -775,6 +789,8 @@
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
     sudo docker images | grep none | awk '{print $3}'| xargs docker rmi
+
+    docker cp f1418c0bce6f:/mimc-cpp-sdk /tmp
 
     //2
     curl -fsSL  https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
@@ -840,6 +856,11 @@
 
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     ####################################################################################
+
+    docker login -u test123456 -p cis 192.168.0.1:5000
+    docker tag debian 192.168.0.1:5000/debian
+    docker push 192.168.0.1:5000/debian
+    docker logout 192.168.0.1:5000
 
 # python3
 
