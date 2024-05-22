@@ -21,8 +21,7 @@
 - [llm](#llm)
 - [kernel 时区 rhel9](#kernel-时区-rhel9)
 - [jenkins](#jenkins)
-- [iis](#iis)
-- [java .keystore](#java-keystore)
+- [iis || java .keystore](#iis--java-keystore)
 
 # grep
 
@@ -1117,7 +1116,7 @@
     H/15: H HASH,随机均匀分布
 
 
-# iis
+# iis || java .keystore
 
     # 导出所有应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe list apppool /config /xml > d:\temp\apppools.xml
@@ -1143,7 +1142,7 @@
 
     --explicitly-allowed-ports=10080,9801
 
-# java .keystore
+  //java .keystore
 
     //生成密钥对
     /home/tomcat /jdk1.8.0_201/bin/keytool -genkey -alias tomcat -keyalg RSA -keySize 4096 -sigAlg SHA256withRSA -keystore /home/tomcat/ccttpp2/apache-tomcat-9.0.44/conf/cert/ssffiitt.keystore
