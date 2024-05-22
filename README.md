@@ -4,29 +4,25 @@
 - [grep](#grep)
 - [awk](#awk)
 - [sed](#sed)
-- [ps](#ps)
+- [ps crontab](#ps-crontab)
 - [vim](#vim)
-- [ssh](#ssh)
-- [su id](#su-id)
-- [crontab](#crontab)
-- [for](#for)
+- [ssh || su id](#ssh--su-id)
+- [for while](#for-while)
 - [git](#git)
 - [g++](#g)
-- [samba](#samba)
-- [mac](#mac)
-- [fsck](#fsck)
-- [disk](#disk)
+- [samba rsync](#samba-rsync)
+- [mac os](#mac-os)
+- [disk fsck ln](#disk-fsck-ln)
 - [network](#network)
-- [curl](#curl)
+- [curl nc ab](#curl-nc-ab)
 - [docker](#docker)
 - [python3](#python3)
-- [LaTeX](#latex)
+- [LaTeX Σ](#latex-σ)
 - [llm](#llm)
 - [kernel](#kernel)
 - [时区](#时区)
 - [rhel9](#rhel9)
 - [jenkins](#jenkins)
-- [Σ](#σ)
 - [iis](#iis)
 - [java .keystore](#java-keystore)
 
@@ -119,7 +115,7 @@
     cat ko.txt | iconv -f GBK -t UTF-8
 
     
-# ps
+# ps crontab
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
 
     bg fg jobs ctr+z nohup
@@ -192,7 +188,16 @@
     //启动时间
     ps -eo pid,cmd,lstart | grep "example_process"
 
+    
+  //crontab
+    
+    etc/init.d/crond status
+    sudo systemctl status cron.service
 
+    59 23 * * * (cd /app; bash test.sh)
+    10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
+
+    
 # vim
 
     整页翻页 ctrl-f ctrl-b
@@ -222,7 +227,7 @@
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
 
-# ssh
+# ssh || su id
 
     ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
     scp -i
@@ -296,7 +301,7 @@
     sudo apt-get install putty-tools
     puttygen id_rsa -o id_rsa_putty.ppk
 
-# su id
+  // su id
 
     su - root
     su - //会话的环境变量,路径等会被切换到root用户的配置
@@ -332,18 +337,9 @@
     
     //simple password
     sudo passwd test
-    
-    
-# crontab
-    
-    etc/init.d/crond status
-    sudo systemctl status cron.service
-
-    59 23 * * * (cd /app; bash test.sh)
-    10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
 
-# for
+# for while
 
     length2=`echo $json2 | jq '.hits.hits|length'`;
     if [ $length22 -eq 0 ];then
@@ -505,7 +501,7 @@
     //gdb
   
 
-# samba
+# samba rsync
 
     sudo apt-get install samba samba-common
     sudo vim /etc/samba/smb.conf
@@ -557,7 +553,7 @@
     sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
     echo `date` "rsync test end ....." >> /tmp/log.txt
 
-# mac
+# mac os
     
     locate tf-keras-datasets
     sudo /usr/libexec/locate.updatedb
@@ -573,24 +569,8 @@
 
     chcp 65001
     chcp 936
-
-# fsck
-
-    fsck /dev/mapper/ubuntu--vg-ubuntu--lv
-    fsck /dev/sda1
-    fsck -fvy /
-    chkdsk c: /f
-    sudo mount -o remount,rw /partition/identifier /mount/point
-    sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
-    mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
-
-  //ln
-
-    ln -s s->t
-    ln -s ../bin/python3.8 /usr/local/bin/python3
-    mklink /d C:\.nuget E:\.nuget    
-    
-# disk
+   
+# disk fsck ln
 
     1.对新增加的硬盘进行分区、格式化
 
@@ -709,6 +689,21 @@
     UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
     重启电
 
+  // fsck
+
+    fsck /dev/mapper/ubuntu--vg-ubuntu--lv
+    fsck /dev/sda1
+    fsck -fvy /
+    chkdsk c: /f
+    sudo mount -o remount,rw /partition/identifier /mount/point
+    sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
+    mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
+
+  //ln
+
+    ln -s s->t
+    ln -s ../bin/python3.8 /usr/local/bin/python3
+    mklink /d C:\.nuget E:\.nuget    
 
 # network
 
@@ -769,7 +764,7 @@
     netstat -n | awk '/^tcp/ {n=split($(NF-1),array,":");if(n<=2)++S[array[(1)]];else++S[array[(4)]];++s[$NF];++N} END {for(a in S){printf("%-20s %s\n", a, S[a]);++I}printf("%-20s %s\n","TOTAL_IP",I);for(a in s) printf("%-20s %s\n",a, s[a]);printf("%-20s %s\n","TOTAL_LINK",N);}'
 
     
-# curl
+# curl nc ab
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
@@ -880,11 +875,53 @@
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
 
-# LaTeX
+# LaTeX Σ
 
   $H(s) = \frac{Y(s)}{X(s)}$
   $$H(z) = \frac{Y(z)}{X(z)}$$
   
+  // Σ
+
+    Α	α	alpha
+    Β	β	beta
+    Γ	γ	gamma
+    Δ	δ	delta
+    Ε	ε	epsilon
+    Ζ	ζ	zeta
+    Η	η	eta
+    Θ	θ	theta
+    Ι	ι	iota
+    Κ	κ	kappa
+    Λ	λ	lambda
+    Μ	μ	mu
+    Ν	ν	nu
+    Ξ	ξ	xi
+    Ο	ο	omicron
+    Π	π	pi
+    Ρ	ρ	rho
+    Σ	σ	sigma
+    Τ	τ	tau
+    Υ	υ	upsilon
+    Φ	φ	phi
+    Χ	χ	chi
+    Ψ	ψ	psi
+    Ω	ω	omega
+
+    名称     音标                 大写   小写  名称      音标                           大写   小写
+    alpha    /'ælfə/              Α     α     nu       /nju:/                         Ν      ν
+    beta     /'bi:tə/ /'beɪtə/    Β     β     xi       希腊 /ksi/ 英美/ˈzaɪ/ /ˈksaɪ/   Ξ      ξ
+    gamma    /'gæmə/              Γ     γ     omicron  /əuˈmaikrən/ /ˈɑmɪˌkrɑn/       Ο      ο
+    delta    /'deltə/             Δ     δ     pi       /paɪ/                          Π      π
+    epsilon  /'epsɪlɒn/           Ε     ε     rho      /rəʊ/                          Ρ      ρ
+    zeta     /'zi:tə/             Ζ     ζ     sigma    /'sɪɡmə/                       Σ      σ, ς
+    eta      /'i:tə/              Η     η     tau      /tɔ:/ 或 /taʊ/                 Τ      τ
+    theta    /'θi:tə/             Θ     θ     upsilon  /ˈipsilon/ 或  /ˈʌpsɨlɒn/      Υ      υ
+    iota     /aɪ'əʊtə/            Ι     ι     phi      /faɪ/                          Φ      φ
+    kappa    /'kæpə/              Κ     κ     chi      /kaɪ/                          Χ      χ
+    lambda   /'læmdə/             Λ     λ     psi      /psaɪ/                         Ψ      ψ
+    mu       /mju:/               Μ     μ     omega    /'əʊmɪɡə/ /oʊ'meɡə/            Ω      ω
+
+
 # llm
     
     //Langchain-Chatchat
@@ -1081,46 +1118,6 @@
     指定变量取值   a,b,c                                       
     H/15: H HASH,随机均匀分布
 
-# Σ
-
-    Α	α	alpha
-    Β	β	beta
-    Γ	γ	gamma
-    Δ	δ	delta
-    Ε	ε	epsilon
-    Ζ	ζ	zeta
-    Η	η	eta
-    Θ	θ	theta
-    Ι	ι	iota
-    Κ	κ	kappa
-    Λ	λ	lambda
-    Μ	μ	mu
-    Ν	ν	nu
-    Ξ	ξ	xi
-    Ο	ο	omicron
-    Π	π	pi
-    Ρ	ρ	rho
-    Σ	σ	sigma
-    Τ	τ	tau
-    Υ	υ	upsilon
-    Φ	φ	phi
-    Χ	χ	chi
-    Ψ	ψ	psi
-    Ω	ω	omega
-
-    名称     音标                 大写   小写  名称      音标                           大写   小写
-    alpha    /'ælfə/              Α     α     nu       /nju:/                         Ν      ν
-    beta     /'bi:tə/ /'beɪtə/    Β     β     xi       希腊 /ksi/ 英美/ˈzaɪ/ /ˈksaɪ/   Ξ      ξ
-    gamma    /'gæmə/              Γ     γ     omicron  /əuˈmaikrən/ /ˈɑmɪˌkrɑn/       Ο      ο
-    delta    /'deltə/             Δ     δ     pi       /paɪ/                          Π      π
-    epsilon  /'epsɪlɒn/           Ε     ε     rho      /rəʊ/                          Ρ      ρ
-    zeta     /'zi:tə/             Ζ     ζ     sigma    /'sɪɡmə/                       Σ      σ, ς
-    eta      /'i:tə/              Η     η     tau      /tɔ:/ 或 /taʊ/                 Τ      τ
-    theta    /'θi:tə/             Θ     θ     upsilon  /ˈipsilon/ 或  /ˈʌpsɨlɒn/      Υ      υ
-    iota     /aɪ'əʊtə/            Ι     ι     phi      /faɪ/                          Φ      φ
-    kappa    /'kæpə/              Κ     κ     chi      /kaɪ/                          Χ      χ
-    lambda   /'læmdə/             Λ     λ     psi      /psaɪ/                         Ψ      ψ
-    mu       /mju:/               Μ     μ     omega    /'əʊmɪɡə/ /oʊ'meɡə/            Ω      ω
 
 # iis
 
