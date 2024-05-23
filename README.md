@@ -1374,6 +1374,14 @@
     //设置sip head
     originate {sip_from_uri=68888888@10.10.78.18}{sip_invite_to_uri=013800138000@10.10.78.18:5060}sofia/gateway/gw68888888/013800138000@10.10.254.81 &park()    
 
+    EXPOSE 8021/tcp
+    EXPOSE 5060/tcp 5060/udp 5080/tcp 5080/udp
+    EXPOSE 5061/tcp 5061/udp 5081/tcp 5081/udp
+    EXPOSE 7443/tcp
+    EXPOSE 5070/udp 5070/tcp
+    EXPOSE 64535-65535/udp
+    EXPOSE 16384-32768/udp
+
 
 # iis || java .keystore
 
