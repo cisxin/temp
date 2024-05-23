@@ -1238,7 +1238,7 @@
     git init ./
     git clone https://huggingface.co/google/gemma-7b-it
     git remote add origin 'huggingface.co/google/gemma-1.1-7b-it'
-    git remote set-url origin https://cisxin:hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxx@huggingface.co/google/gemma-1.1-7b-it
+    git remote set-url origin https://cis:hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxx@huggingface.co/google/gemma-1.1-7b-it
     GIT_SSL_NO_VERIFY=1 git clone https://huggingface.co/google/gemma-1.1-7b-it
     huggingface-cli download --resume-download gemma-1.1-7b-it --local-dir gemma-1.1-7b-it
 
