@@ -859,6 +859,17 @@
     docker push 192.168.0.1:5000/debian
     docker logout 192.168.0.1:5000
 
+  //kvm
+  
+    lsmod | grep kvm
+    sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager 
+    sudo virt-install --name=virt0 --memory=4096,maxmemory=4096 --vcpus=2,maxvcpus=4 \
+    --virt-type kvm --install ubuntu18.04 --os-type=linux --os-variant=ubuntu18.04 \
+    --location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
+    --disk path=/home/fs/vm/virt0.img,size=512 \
+    --boot cdrom,hd --cdrom /tmp/ubuntu-18.04.4-live-server-amd64.iso \
+    --network bridge:br0 --graphics vnc,listen=0.0.0.0 --noautoconsole -v    
+
 # python3
 
     apt-get install python3
