@@ -574,10 +574,19 @@
 
     //ubuntu plocate updatedb
 
-  // os
-  禁止休眠:
-    
+  //os
+    //禁止休眠:
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+    
+    last -x|grep shutdown|head -1  //查看最后一次关机时间
+    journalctl -xe  //查看最新的系统日志
+    /var/log/syslog //包含系统日志信息
+    /var/log/dmesg  //包含开机时的日志信息 
+    sudo dmesg | grep something  //Linux内核的消息缓冲器
+    logger "Hello World"  //写入系统日志
+    journalctl -u sshd.service  //单独显示某个服务的日志
+    last  //登录日志
+    lastlog  //每个用户上次登录的时间 "/etc/log/lastlog"
 
   //windows命令窗口中文乱码
 
