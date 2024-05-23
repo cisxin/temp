@@ -184,7 +184,6 @@
 
     //启动时间
     ps -eo pid,cmd,lstart | grep "example_process"
-
     
   //crontab
     
@@ -463,7 +462,6 @@
 
     docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
     --------
-
 
   //url
     
@@ -982,7 +980,6 @@
     sudo iptables -t nat -D PREROUTING 2
     sudo iptables -t nat -D POSTROUTING 4
 
-
   //kvm
 
     lsmod | grep kvm
@@ -1103,7 +1100,7 @@
     python startup.py -a
     http://127.0.0.1:8501
 
-  //////
+  //ollama
 
     //llm ollama langchain streamlit webui RAG
     curl https://ollama.ai/install.sh | sh
@@ -1281,26 +1278,21 @@
 
 # iis || java .keystore
 
-    # 导出所有应用程序池
+    // 导出所有应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe list apppool /config /xml > d:\temp\apppools.xml
-
-    # 导入所有应用程序池
+    // 导入所有应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe add apppool /in < d:\temp\apppools.xml
-
-    # 导出所有站点
+    // 导出所有站点
     C:\Windows\System32\inetsrv\appcmd.exe list site /config /xml > d:\temp\sites.xml
-
-    # 导入所有站点
+    // 导入所有站点
     C:\Windows\System32\inetsrv\appcmd.exe add site /in < d:\temp\sites.xml
-
-
-    # 导出单独的应用程序池
+    // 导出单独的应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe list apppool "应用程序池名称" /config /xml > c:myapppool.xml
     # 导入单独的应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe add apppool /in < c:myapppool.xml
-    # 导出单独站点
+    // 导出单独站点
     C:\Windows\System32\inetsrv\appcmd.exe list site "站点名称" /config /xml > c:mywebsite.xml
-    # 导入单独站点
+    // 导入单独站点
     C:\Windows\System32\inetsrv\appcmd.exe add site /in < c:mywebsite.xml
 
     --explicitly-allowed-ports=10080,9801
