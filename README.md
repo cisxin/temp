@@ -869,7 +869,7 @@
 
     docker cp f1418c0bce6f:/mimc-cpp-sdk /tmp
 
-    //2
+    //docker install
     curl -fsSL  https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
     sudo add-apt-repository "deb [arch=amd64]  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
     sudo apt-get update
@@ -913,7 +913,7 @@
     #EXPOSE 80
     #VOLUME [ "/tmp":/tmp ]
 
-    #cd docker
+    #cd docker //docker build
     #docker build --no-cache=true -t test -f Dockerfile.test ./
     #docker save test > ./test.tar
     #docker load < test.tar
@@ -923,7 +923,8 @@
     #docker tag test testtest
     #docker run -dit --name test0 test /bin/bash
     #docker stop test0 && docker rm test0
-
+    
+    //dockerfile
     #RUN mv libcossdk.a.bak libcossdk.a
     #RUN g++ -I/usr/local/include -I/usr/include -I/usr/local/curl -L./ -std=c++14 -w -o test test.cpp ./libcossdk.a -lpthread -ldl 
     #RUN rm -f Dockerfile.* *.a *.h *.cpp *.o *.out docker.sh build.sh
@@ -938,6 +939,26 @@
     docker tag debian 192.168.0.1:5000/debian
     docker push 192.168.0.1:5000/debian
     docker logout 192.168.0.1:5000
+
+  //#docker fix ip
+
+    docker stop nginxtest && docker rm nginxtest
+    docker network rm staticnet
+    docker network create --subnet=192.168.100.1/24 staticnet
+    docker network ls
+    docker run -itd --name nginxtest --net staticnet --ip 192.168.100.44 nginx
+    ping 192.168.100.44
+    telnet 192.168.100.44 80
+    telnet 10.60.0.175 80
+    sudo iptables -t filter -L
+    sudo iptables -L -n --line-number
+    sudo iptables -t nat -L -n -v --line-number
+    sudo iptables -t nat -A OUTPUT -s 192.168.100.44 -j DNAT --to-destination 10.60.0.175
+    sudo iptables -t nat -A PREROUTING -d 10.60.0.175 -j DNAT --to-destination 192.168.100.44
+    sudo iptables -t nat -D OUTPUT 2
+    sudo iptables -t nat -D PREROUTING 2
+    sudo iptables -t nat -D POSTROUTING 4
+
 
   //kvm
 
