@@ -455,8 +455,6 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
-    
-
   //move docker
     
     docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
