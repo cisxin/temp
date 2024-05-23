@@ -981,15 +981,69 @@
     sudo iptables -t nat -D POSTROUTING 4
 
   //kvm
-
+    
+    //install
     lsmod | grep kvm
     sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager 
+
+    ++++++++ set bridges
+    sudo systemctl start libvirtd.service
+    sudo systemctl enable libvirtd.service
+    sudo service libvirtd status
+    -------
+    sudo cat /etc/netplan/01-netcfg.yaml 
+    # This file describes the network interfaces available on your system
+    # # For more information, see netplan(5).
+    network:
+      version: 2
+      renderer: networkd
+      ethernets:
+        ens33:
+          dhcp4: no
+          dhcp6: no
+      bridges:
+        br0:
+          interfaces: [ens33]
+          dhcp4: no
+          optional: true
+          addresses: [10.40.50.237/16]
+          gateway4: 10.40.0.1
+          nameservers:
+            addresses: [114.114.114.114,10.40.0.1]
+    -----
+    sudo netplan apply
+    ifconfig
+
+    br0:.....
+
+    //没权限会导致dhcp分配失败
+    sudo iptables -A FORWARD -p all -i br0 -j ACCEPT
+
+    sudo networkctl status -a
+    brctl show
+    --------
+
+    //vnc ok
     sudo virt-install --name=virt0 --memory=4096,maxmemory=4096 --vcpus=2,maxvcpus=4 \
     --virt-type kvm --install ubuntu18.04 --os-type=linux --os-variant=ubuntu18.04 \
     --location 'http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/' \
-    --disk path=/home/fs/vm/virt0.img,size=512 \
+    --disk path=/tmp/vm/virt0.img,size=512 \
     --boot cdrom,hd --cdrom /tmp/ubuntu-18.04.4-live-server-amd64.iso \
-    --network bridge:br0 --graphics vnc,listen=0.0.0.0 --noautoconsole -v    
+    --network bridge:br0 --graphics vnc,listen=0.0.0.0 --noautoconsole -v  
+    
+    //to operate
+    virsh shutdown virt0 & virsh destroy virt0 & virsh undefine virt0 & rm -rf /tmp/vm/*  
+
+    virsh list --all
+    virsh start virt0
+    virsh shutdown virt0
+
+    virsh console virt0
+
+    virsh autostart virt0 //开机自启动虚拟机,生成配置文件/etc/libvirt/qemu/autostart/vm-node1.xml
+    virsh autostart --disable virt0 //取消开机自启动
+
+    sudo virt-clone -o virt0 -n database_devel -f /path/to/virt01.img 
 
 # python3
 
