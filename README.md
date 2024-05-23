@@ -20,7 +20,7 @@
 - [LaTeX Σ](#latex-σ)
 - [llm](#llm)
 - [kernel 时区 rhel9](#kernel-时区-rhel9)
-- [jenkins](#jenkins)
+- [jenkins fs](#jenkins-fs)
 - [iis || java .keystore](#iis--java-keystore)
 
 # grep
@@ -1231,7 +1231,7 @@
     chkconfig iptables off
     systemctl status iptables.service
 
-# jenkins
+# jenkins fs
 
     crontab  */15
 
@@ -1249,6 +1249,34 @@
     指定时间间隔   /                                           
     指定变量取值   a,b,c                                       
     H/15: H HASH,随机均匀分布
+
+  //fs
+
+    //fix
+    originate sofia/gateway/route  /17fix  #17ims#fs  #9904#68888888#68888888#013800138000 &park()
+    originate sofia/gateway/gw214/17216#17213#215#9904#68888888#68888888#013800138000 &park()
+    originate sofia/gateway/gw68888888/013800138000 &echo()
+
+    originate user/9002 &bridge(user/9005)
+    originate sofia/gateway/gw68888888/013800138000 &bridge(user/9005)
+    originate user/9005 &bridge(sofia/gateway/gw68888888/13800138000)
+
+    uuid_bridge 032d6115-f206-4507-b2a6-4f2e38bddae3 5985787c-c696-498d-baac-17bcfe2d2c89
+    originate {sip_h_from=<sip:68888888@10.10.78.18>}sofia/gateway/gw68888888/013800138000 &park()
+
+    //originate sofia/internal/1769#17215#113#9005#68888888#68888888#13800138000@10.10.0.21 &park()
+
+    docker pull image.xxxx.com/freeswitch
+    docker run -d -v /app/fs/freeswitch_config:/etc/freeswitch -v /app/fs/tmp:/tmp -v /app/fs/record:/data/record -v /app/fs/sounds:/data/sounds -v /dev/shm:/var/lib/freeswitch/db -v /etc/localtime:/etc/localtime:ro -v /app/fs/tmp/log:/var/log --net=host --name freeswitch0 -it image.xxxx.com/freeswitch
+    docker exec -it freeswitch0 fs_cli -x "sofia status profile internal reg" | grep 2337
+    docker exec -it freeswitch0 fs_cli -x "sofia profile external killgw gw223"
+    docker exec -it freeswitch0 fs_cli -x "sofia profile external2 rescan"
+    docker exec -it freeswitch0 fs_cli -x "reloadxml"
+    docker exec -it freeswitch0 fs_cli -x "sofia status"
+    docker exec -it freeswitch0 fs_cli -x "show channels"
+
+    //设置sip head
+    originate {sip_from_uri=68888888@10.10.78.18}{sip_invite_to_uri=013800138000@10.10.78.18:5060}sofia/gateway/gw68888888/013800138000@10.10.254.81 &park()    
 
 
 # iis || java .keystore
