@@ -424,7 +424,20 @@
     查看全局配置
     git config -l
     工程本目录查看.gitignore文件
-    全局gitignore    
+    全局gitignore
+
+    //切到master
+    git pull
+    //解决冲突（解决master的冲突，保证代码最新）
+    git add  .
+    git merge --continue //(git update-ref -d MERGE_HEAD)
+    git commit . -m "message"
+    git merge develop
+    //解决冲突（解决两个分支的冲突，实现合并）
+    git add  .
+    git merge --continue //(git update-ref -d MERGE_HEAD)
+    git commit . -m "message"
+    git push origin master
 
     git log --name-status 每次修改的文件列表, 显示状态
     git log --name-only 每次修改的文件列表
