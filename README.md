@@ -13,7 +13,7 @@
 - [samba rsync](#samba-rsync)
 - [mac os](#mac-os)
 - [disk fsck ln](#disk-fsck-ln)
-- [network nftable](#network-nftable)
+- [network nftable netsh](#network-nftable-netsh)
 - [curl nc ab](#curl-nc-ab)
 - [docker kvm](#docker-kvm)
 - [python3](#python3)
@@ -702,7 +702,7 @@
     ln -s ../bin/python3.8 /usr/local/bin/python3
     mklink /d C:\.nuget E:\.nuget    
 
-# network nftable
+# network nftable netsh
 
     sudo apt install net-tools
 
@@ -783,6 +783,26 @@
       }
 
     /////
+
+  //windows netsh
+    
+    ------------------------------------------------------------------------------
+    1. 查询端口映射情况
+    netsh interface portproxy show v4tov4
+    2. 查询某一个IP的所有端口映射情况
+    netsh interface portproxy show v4tov4 | find "[IP]"
+    例：netsh interface portproxy show v4tov4 | find "192.168.1.1"
+    3. 增加一个端口映射
+    netsh interface portproxy add v4tov4 listenaddress=[外网IP] listenport=[外网端口] connectaddress=[内网IP] connectport=[内网端口]
+    例：netsh interface portproxy add v4tov4 listenaddress=192.168.5.239 listenport=8080 connectaddress=192.168.1.50 connectport=80
+    录音文件下载端口转发：
+    netsh interface portproxy add v4tov4 listenaddress=192.168.5.239 listenport=8080 connectaddress=120.x.x.x connectport=2024
+    //netsh interface portproxy add v4tov4 listenaddress=10.10.0.107 listenport=8080 connectaddress=140.x.x.x connectport=2024
+    4. 删除一个端口映射
+    netsh interface portproxy delete v4tov4 listenaddress=[外网IP] listenport=[外网端口]
+    例：netsh interface portproxy delete v4tov4 listenaddress=2.2.2.2 listenport=8080
+    //netsh interface portproxy delete v4tov4 listenaddress=192.168.5.239 listenport=8080
+    ------------------------------------------------------------------------------
     
 # curl nc ab
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
