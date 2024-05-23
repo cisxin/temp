@@ -15,7 +15,7 @@
 - [disk fsck ln](#disk-fsck-ln)
 - [network](#network)
 - [curl nc ab](#curl-nc-ab)
-- [docker](#docker)
+- [docker kvm](#docker-kvm)
 - [python3](#python3)
 - [LaTeX Σ](#latex-σ)
 - [llm](#llm)
@@ -775,7 +775,7 @@
     ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"    
 
-# docker
+# docker kvm
 
     curl -k -sSl https://get.docker.com | sudo sh
     curl -fsSL https://get.docker.com -o get-docker.sh
@@ -860,7 +860,7 @@
     docker logout 192.168.0.1:5000
 
   //kvm
-  
+
     lsmod | grep kvm
     sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager 
     sudo virt-install --name=virt0 --memory=4096,maxmemory=4096 --vcpus=2,maxvcpus=4 \
