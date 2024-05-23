@@ -14,7 +14,7 @@
 - [mac os](#mac-os)
 - [disk fsck ln](#disk-fsck-ln)
 - [network route nftable netsh tcpdump](#network-route-nftable-netsh-tcpdump)
-- [curl nc ab](#curl-nc-ab)
+- [curl nc ab pptpsetup](#curl-nc-ab-pptpsetup)
 - [docker kvm](#docker-kvm)
 - [python3](#python3)
 - [LaTeX Σ](#latex-σ)
@@ -223,6 +223,8 @@
     vim ~/.vimrc
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
+
+    sudo apt-get remove nano
 
 # ssh || su id
 
@@ -854,7 +856,7 @@
     sudo tcpdump -i eno1 -A -s 0 'tcp port 11000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
     sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
     
-# curl nc ab
+# curl nc ab pptpsetup
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
@@ -866,7 +868,15 @@
     while true; do nc -l 5300; done
 
     ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
-    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"    
+    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"
+
+  //pptpsetup
+
+    sudo pptpsetup --create testvpn --server 10.10.15.100 --username vpn --password vpn --encrypt --start
+    sudo route del -net 10.10.8.240 netmask 255.255.255.255
+    sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
+    sudo pptpsetup --create testvpn --server 10.10.15.100 --username vpn --password vpn --encrypt --start && sudo route del -net 10.23.8.240 netmask 255.255.255.255 && sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
+    sudo vim /etc/ppp/options     
 
 # docker kvm
 
