@@ -13,7 +13,7 @@
 - [samba rsync](#samba-rsync)
 - [mac os](#mac-os)
 - [disk fsck ln](#disk-fsck-ln)
-- [network nftable netsh](#network-nftable-netsh)
+- [network route nftable netsh tcpdump](#network-route-nftable-netsh-tcpdump)
 - [curl nc ab](#curl-nc-ab)
 - [docker kvm](#docker-kvm)
 - [python3](#python3)
@@ -702,7 +702,7 @@
     ln -s ../bin/python3.8 /usr/local/bin/python3
     mklink /d C:\.nuget E:\.nuget    
 
-# network nftable netsh
+# network route nftable netsh tcpdump
 
     sudo apt install net-tools
 
@@ -755,6 +755,34 @@
     //输出每个ip的连接数，以及总的各个状态的连接数。
     netstat -n | awk '/^tcp/ {n=split($(NF-1),array,":");if(n<=2)++S[array[(1)]];else++S[array[(4)]];++s[$NF];++N} END {for(a in S){printf("%-20s %s\n", a, S[a]);++I}printf("%-20s %s\n","TOTAL_IP",I);for(a in s) printf("%-20s %s\n",a, s[a]);printf("%-20s %s\n","TOTAL_LINK",N);}'
 
+  //route
+
+    sudo route add -net 58.33.x.x netmask 255.255.255.255 ens40
+    sudo route add -net 10.0.0.0 netmask 255.0.0.0 gw 10.40.0.95 br0
+    sudo route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.40.0.95 br0
+    sudo route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.40.0.1 ens40
+    sudo route del -net 14.18.x.x netmask 255.255.255.255
+    sudo route del -net 0.0.0.0 netmask 0.0.0.0 br0
+    sudo route del -net 0.0.0.0 netmask 0.0.0.0 ens192
+    sudo route del -net 0.0.0.0 netmask 255.0.0.0 gw 10.40.0.95 br0
+    route add -host 10.1.0.214 gw 10.1.0.216
+    route add -net 10.1.0.214 netmask 255.255.255.255 gw yz216
+    sudo route add -net 172.20.20.0 netmask 255.255.255.0 gw 192.168.88.1 ens192
+
+    ip route add 10.10.0.0 via 10.40.0.1
+    ip route del 10.10.0.0/16
+    -------------------------------------------------------?????????
+    sudo route add -net 10.1.0.215/16 gw 10.10.14.96
+    
+    //win
+    route delete 0.0.0.0  mask 0.0.0.0 192.168.225.1
+    route -p add 10.10.0.0 mask 255.255.0.0 10.40.86.105
+    route -p add 10.1.0.0 mask 255.255.0.0 192.168.1.5
+    route -p add 10.10.0.0 mask 255.255.0.0 192.168.1.5
+    route -p add 10.1.0.0 mask 255.255.0.0 10.23.14.96
+    route add 10.50.0.0 mask 255.255.0.0 192.168.0.234
+
+
   //nftable nft
 
     sudo nft list tables
@@ -803,6 +831,15 @@
     例：netsh interface portproxy delete v4tov4 listenaddress=2.2.2.2 listenport=8080
     //netsh interface portproxy delete v4tov4 listenaddress=192.168.5.239 listenport=8080
     ------------------------------------------------------------------------------
+
+  //tcpdump
+    
+    tcpdump -i enp3s0 host 10.1.0.x -v
+    tcpdump -ni enp3s0 udp and host 10.1 -v -w /tmp/1.cap
+    tcpdump -ni enp3s0 udp and host 121.37.x.x -v -w /tmp/1.cap
+
+    sudo tcpdump -i eno1 -A -s 0 'tcp port 11000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
+    sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
     
 # curl nc ab
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
