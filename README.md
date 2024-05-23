@@ -562,10 +562,15 @@
     
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
-  windows命令窗口中文乱码
+  //windows命令窗口中文乱码
 
     chcp 65001
     chcp 936
+    
+    //service name:service_name2
+    sc create service_name2 binPath= "D:\service_name2.exe"
+    sc create service_name binPath= "C:\service_name.exe"
+    sc delete service_name 
    
 # disk fsck ln
 
@@ -729,6 +734,13 @@
           nameservers:
             addresses: []
             search: []
+        eno4:
+          addresses: [10.1.0.216/16,10.1.0.213/16]
+          gateway4: 10.1.0.1
+          nameservers:
+            addresses:
+            - 10.1.0.1
+            search: []            
       version: 2
 
     sudo vim /etc/systemd/resolved.conf
