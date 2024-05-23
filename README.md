@@ -509,6 +509,13 @@
 
     apt-get install python3
     apt-get install python3-pip
+
+    //24.04
+    sudo apt-get install python3-all-dev
+    pip3 install numpy --break-system-packages
+    apt install python3-<package>
+    //pipx install xxxx
+
     //////////////////////////////
     or windows
     python3 -m pip install --upgrade pip --force-reinstall
