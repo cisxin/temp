@@ -1212,9 +1212,8 @@
 
     启动之后可以访问 http://localhost:8080
 
-  //////
-
-    //huggingface
+  //huggingface
+  
     git lfs install
     huggingface-cli login
     git init ./
