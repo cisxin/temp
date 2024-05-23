@@ -13,7 +13,7 @@
 - [samba rsync](#samba-rsync)
 - [mac os](#mac-os)
 - [disk fsck ln](#disk-fsck-ln)
-- [network](#network)
+- [network nftable](#network-nftable)
 - [curl nc ab](#curl-nc-ab)
 - [docker kvm](#docker-kvm)
 - [python3](#python3)
@@ -702,7 +702,7 @@
     ln -s ../bin/python3.8 /usr/local/bin/python3
     mklink /d C:\.nuget E:\.nuget    
 
-# network
+# network nftable
 
     sudo apt install net-tools
 
@@ -744,11 +744,6 @@
     1、iperf -u -c 172.19.16.97 -p 3389 -b 1500M -i 1
     2、iperf -u -c 172.19.16.97 -p 3389 -b 2000M -i 1
 
-    //nftable nft
-    sudo nft list tables
-    sudo nft list chains
-    sudo nft list ruleset
-
     //映射共享目录
     mount -t cifs //192.168.0.1/temp /tmp/temp -o username=test,password=123456
     umount /tmp/temp
@@ -760,6 +755,34 @@
     //输出每个ip的连接数，以及总的各个状态的连接数。
     netstat -n | awk '/^tcp/ {n=split($(NF-1),array,":");if(n<=2)++S[array[(1)]];else++S[array[(4)]];++s[$NF];++N} END {for(a in S){printf("%-20s %s\n", a, S[a]);++I}printf("%-20s %s\n","TOTAL_IP",I);for(a in s) printf("%-20s %s\n",a, s[a]);printf("%-20s %s\n","TOTAL_LINK",N);}'
 
+  //nftable nft
+
+    sudo nft list tables
+    sudo nft list chains
+    sudo nft list ruleset
+    sudo nft add table inet t8080
+    sudo nft add chain inet t8080 t8080a { type filter hook input priority 0 \; }
+    sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.112 tcp dport 8080 accept  
+    sudo nft add rule inet t8080 t8080a ip saddr 10.23.8.1/16 tcp dport 8080 accept
+    sudo nft add rule inet t8080 t8080a tcp dport 8080 reject
+    sudo sh -c "nft list ruleset > /etc/nftables.conf"
+    sudo systemctl restart nftables.service
+    sudo nft list ruleset
+    /////
+      chain INPUT {
+        type filter hook input priority filter; policy accept;
+        meta l4proto tcp tcp dport 8080 counter packets 0 bytes 0 drop
+      }
+    }
+    table inet t8080 {
+      chain t8080a {
+        type filter hook input priority filter; policy accept;
+        ip saddr 1.116.81.112 tcp dport 8080 accept
+        ip saddr 10.23.0.0/16 tcp dport 8080 accept
+        tcp dport 8080 reject
+      }
+
+    /////
     
 # curl nc ab
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
