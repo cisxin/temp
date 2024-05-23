@@ -223,6 +223,8 @@
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
 
+    echo -e -n "\x63\x69\x73\x0a" > aaaa.txt
+
     sudo apt-get remove nano
 
 # ssh || su id
@@ -413,6 +415,17 @@
     撤消本地修改
     git fetch --all
     git reset --hard origin/master
+    服务器ip变更,客户端:
+    git remote set-url origin 10.10.1.36
+    本地缺文件
+    git checkout
+    git checkout aaaa.ini 
+    将提交重置
+    git reset --hard HEAD
+    查看全局配置
+    git config -l
+    工程本目录查看.gitignore文件
+    全局gitignore    
 
     git log --name-status 每次修改的文件列表, 显示状态
     git log --name-only 每次修改的文件列表
@@ -420,8 +433,12 @@
     git whatchanged 每次修改的文件列表
     git whatchanged --stat 每次修改的文件列表, 统计
     git show commitid 显示某个 commitid 改变的具体内容
+    git diff HEAD^ # 比较与上一个版本的差异
 
     git config --local credential.helper store 保存用户名密码
+    //or
+    [credential]
+      helper = store    
 
     回退到某个版本
     git checkout 7cd0386bd67e7f240b55fd037159ff7fe8f7063b seg_sensitive.txt
@@ -439,7 +456,7 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
-    //sudo apt remove nano
+    
 
   //move docker
     
@@ -983,6 +1000,7 @@
   //kvm
     
     //install
+    egrep -o '(vmx|svm)' /proc/cpuinfo
     lsmod | grep kvm
     sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virtinst virt-manager 
 
