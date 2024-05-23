@@ -9,14 +9,13 @@
 - [ssh || su id](#ssh--su-id)
 - [for while](#for-while)
 - [git](#git)
-- [g++](#g)
+- [g++ python3 go](#g-python3-go)
 - [samba rsync](#samba-rsync)
 - [mac os](#mac-os)
 - [disk fsck ln](#disk-fsck-ln)
 - [network route nftable netsh tcpdump](#network-route-nftable-netsh-tcpdump)
 - [curl nc ab pptpsetup](#curl-nc-ab-pptpsetup)
 - [docker kvm](#docker-kvm)
-- [python3](#python3)
 - [LaTeX Σ](#latex-σ)
 - [llm](#llm)
 - [kernel 时区 rhel9](#kernel-时区-rhel9)
@@ -496,23 +495,38 @@
     8.sudo systemctl restart gitlab-runsvdir 
     9.sudo gitlab-ctl restart
 
-# g++
+# g++ python3 go
 
     sudo vim /etc/profile
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
     source /etc/profile
-
-    sudo apt-get install golang-go
-    go env
-    go version
-    //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
-    go env -w GOPROXY=https://goproxy.cn
 
     sudo apt-get install pkg-config automake autoconf libtool libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev libevent-dev libmicrohttpd-dev
     //libssl-dev libboost-all-dev libevent-dev libboost-test-dev zlib1g-dev
     sudo apt-get install mono-devel //debian  
 
     //gdb
+
+  //python3
+
+    apt-get install python3
+    apt-get install python3-pip
+    //////////////////////////////
+    or windows
+    python3 -m pip install --upgrade pip --force-reinstall
+    //////////////////////////////
+    pip3 install --upgrade pip
+
+    pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+    pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/    
+
+  //go
+
+    sudo apt-get install golang-go
+    go env
+    go version
+    //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
+    go env -w GOPROXY=https://goproxy.cn
   
 
 # samba rsync
@@ -1071,19 +1085,6 @@
     virsh autostart --disable virt0 //取消开机自启动
 
     sudo virt-clone -o virt0 -n database_devel -f /path/to/virt01.img 
-
-# python3
-
-    apt-get install python3
-    apt-get install python3-pip
-    //////////////////////////////
-    or windows
-    python3 -m pip install --upgrade pip --force-reinstall
-    //////////////////////////////
-    pip3 install --upgrade pip
-
-    pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
-    pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
 
 # LaTeX Σ
 
