@@ -327,12 +327,12 @@
     chgrp groupname filename
 
     chmod
-    400 -r--------   拥有者能够读 其他任何人不能进行任何操作；
-    644 -rw-r--r--   拥有者都能够读，但只有拥有者可以编辑；
-    666 -rw-rw-rw-   所有用户都有文件读、写权限
-    755 -rwxr-xr-x   所有人都能读和执行，但只有拥有者才能编辑；
-    777 -rwxrwxrwx   所有人都能读、写和执行（该设置通常不是好想法）。
-    文件 664 目录 775     chmod 400 密钥文件
+    400 -r--------     拥有者能够读 其他任何人不能进行任何操作；
+    644 -rw-r--r--     拥有者都能够读，但只有拥有者可以编辑；
+    666 -rw-rw-rw-     所有用户都有文件读、写权限
+    755 -rwxr-xr-x     所有人都能读和执行，但只有拥有者才能编辑；
+    777 -rwxrwxrwx     所有人都能读、写和执行（该设置通常不是好想法）。
+    文件 664 目录 775   chmod 400 密钥文件
     
     //simple password
     sudo passwd test
@@ -526,7 +526,7 @@
     //24.04
     sudo apt-get install python3-all-dev
     pip3 install numpy --break-system-packages
-    apt install python3-<package>
+    sudo apt-get install python3-<package>
     //pipx install xxxx
 
     //////////////////////////////
@@ -885,7 +885,6 @@
 
   //windows netsh
     
-    ------------------------------------------------------------------------------
     1. 查询端口映射情况
     netsh interface portproxy show v4tov4
     2. 查询某一个IP的所有端口映射情况
@@ -901,7 +900,6 @@
     netsh interface portproxy delete v4tov4 listenaddress=[外网IP] listenport=[外网端口]
     例：netsh interface portproxy delete v4tov4 listenaddress=2.2.2.2 listenport=8080
     //netsh interface portproxy delete v4tov4 listenaddress=192.168.5.239 listenport=8080
-    ------------------------------------------------------------------------------
 
   //tcpdump
     
@@ -1271,7 +1269,6 @@
     sudo vim /etc/default/locale
     LC_TIME="en_DK.UTF-8"
     
-    --------
     sudo timedatectl set-timezone Asia/Shanghai
     timedatectl
     
