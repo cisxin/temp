@@ -526,7 +526,7 @@
     //24.04
     sudo apt-get install python3-all-dev
     pip3 install numpy --break-system-packages
-    sudo apt-get install python3-<package>
+    sudo apt-get install python3-numpy python3-scipy python3-configobj python3-sympy python3-mpmath python3-functools
     //pipx install xxxx
 
     //////////////////////////////
