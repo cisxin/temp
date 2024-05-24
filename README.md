@@ -1421,7 +1421,6 @@
     #reindex.remote.whitelist: www.test.com:9200
 
     docker run -d -v /app/elk/pipeline/:/usr/share/logstash/pipeline/ -v `pwd`/logstash.yml:/usr/share/logstash/config/logstash.yml -v `pwd`/ldata:/app/data -v `pwd`/logstash:/var/log/logstash  -e LS_JAVA_OPTS='-Xms2048m -Xmx2048m' -e ES_JAVA_OPTS='-Xms2048m -Xmx2048m' -p 9600:9600/tcp --name logstash0 -t docker.elastic.co/logstash/logstash:7.12.0
-
     vim logstash.yml
     http.host: "0.0.0.0"
     log.level: "error"
