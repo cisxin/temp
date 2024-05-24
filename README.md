@@ -604,6 +604,10 @@
     locate tf-keras-datasets
     sudo /usr/libexec/locate.updatedb
 
+    /Users/test/Library /Users/test/Library/Containers
+    /Users/test/Library/Developer /Users/test/Library/Caches
+    /Applications /Library
+
     //ubuntu plocate updatedb
 
   //os
