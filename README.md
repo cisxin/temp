@@ -1419,6 +1419,9 @@
     more elasticsearch.yml
     http.host: 0.0.0.0
     #reindex.remote.whitelist: www.test.com:9200
+    ------------//install elasticsearch-analysis-ik plug-in unit
+    #./elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.10.1/elasticsearch-analysis-ik-7.10.1.zip
+    ------------
 
     docker run -d -v /app/elk/pipeline/:/usr/share/logstash/pipeline/ -v `pwd`/logstash.yml:/usr/share/logstash/config/logstash.yml -v `pwd`/ldata:/app/data -v `pwd`/logstash:/var/log/logstash  -e LS_JAVA_OPTS='-Xms2048m -Xmx2048m' -e ES_JAVA_OPTS='-Xms2048m -Xmx2048m' -p 9600:9600/tcp --name logstash0 -t docker.elastic.co/logstash/logstash:7.12.0
     vim logstash.yml
@@ -1441,12 +1444,10 @@
         }    
     }
     filter {
-
         mutate {
             convert => { "msgid" => "string" }
         }
     }
-
     output
     {
         elasticsearch
