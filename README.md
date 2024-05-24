@@ -20,7 +20,7 @@
 - [llm](#llm)
 - [kernel 时区 rhel9](#kernel-时区-rhel9)
 - [jenkins fs](#jenkins-fs)
-- [iis || java .keystore](#iis--java-keystore)
+- [iis \[java .keystore\] elk](#iis-java-keystore-elk)
 
 # grep
 
@@ -1384,7 +1384,7 @@
     //udp:5060 5080 5061 5081 5070 64535-65535 16384-32768
 
 
-# iis || java .keystore
+# iis [java .keystore] elk
 
     // 导出所有应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe list apppool /config /xml > d:\temp\apppools.xml
@@ -1412,3 +1412,59 @@
 
     //导入云端证书
     keytool -import -v -file /home/tomcat/ctp2/apache-tomcat-9.0.44/conf/cert/202011.cer -keystore /home/tomcat/ccttpp2/apache-tomcat-9.0.43/conf/cert/ssffiitt.keystore
+
+  //elk
+     
+    docker run -d -p 9200:9200 -p 9300:9300 -p 8088:8080 -v `pwd`/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v `pwd`/data:/usr/share/elasticsearch/data -e "discovery.type=single-node" --name elasticsearch0 -t elasticsearch:7.12.0
+    more elasticsearch.yml
+    http.host: 0.0.0.0
+    #reindex.remote.whitelist: www.test.com:9200
+
+    docker run -d -v /app/elk/pipeline/:/usr/share/logstash/pipeline/ -v `pwd`/logstash.yml:/usr/share/logstash/config/logstash.yml -v `pwd`/ldata:/app/data -v `pwd`/logstash:/var/log/logstash  -e LS_JAVA_OPTS='-Xms2048m -Xmx2048m' -e ES_JAVA_OPTS='-Xms2048m -Xmx2048m' -p 9600:9600/tcp --name logstash0 -t docker.elastic.co/logstash/logstash:7.12.0
+
+    vim logstash.yml
+    http.host: "0.0.0.0"
+    log.level: "error"
+    --------------------------------
+    vim pipeline/logstash.conf
+    input
+    { 
+        elasticsearch {
+            hosts => ["https://www.test.com:9200"]
+            user => elastic
+            password => "123456"
+            index => "index_2024"
+            query => '{"query": {"match_all" : {} }, "sort": ["_doc"] }'
+            docinfo => true
+            size => 1000
+            scroll => "1m"
+            codec => "json"
+        }    
+    }
+    filter {
+
+        mutate {
+            convert => { "msgid" => "string" }
+        }
+    }
+
+    output
+    {
+        elasticsearch
+        {
+            index => "index_2024"
+            hosts => ["http://10.10.0.100:9200"]
+            #user => elastic
+            #password => "123456"
+            codec => "json"
+            document_id => "%{msgid}"
+            action => "update"
+            doc_as_upsert => true
+        }
+        stdout {
+            codec => "json"
+        }
+    }
+    --------------------------------
+
+    docker run -d -p 5601:5601 -e "ELASTICSEARCH_URL=http://10.10.0.10:9200" -e "ELASTICSEARCH_HOSTS=http://10.10.0.10:9200" --name kibana0 -t kibana:7.12.0
