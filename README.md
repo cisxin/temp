@@ -923,7 +923,7 @@
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
 
-    ftp ftp://test:123456@10.10.0.2:21 => put *.tar
+    ftp ftp://test:123456@10.10.0.2:21 => put *.tar => mput * => mput *.tar
 
   //nc
     
