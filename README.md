@@ -536,7 +536,9 @@
     pip3 install --upgrade pip
 
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
-    pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/    
+    pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
+    pip install jax[cuda12-pip] -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+    pip install jaxlib==0.4.25+cuda12.cudnn89  -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
   //go
 
