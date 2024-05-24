@@ -1,3 +1,186 @@
+//elk
+
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+post 索引名称/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET message/_search
+{
+  "size": 1000,
+  "sort": [
+    {
+      "timestamp": {
+        "order": "desc"
+      }
+    }
+  ],
+  "query": {
+    "bool": {
+      "must": [],
+      "filter": [
+        {
+          "match_all": {}
+        }
+      ],
+      "should": [],
+      "must_not": []
+    }
+  }
+}
+
+POST /message/_delete_by_query
+{
+  "query": {
+    "bool": { 
+      "must": [
+        {
+          "range": {
+            "@timestamp": {
+              "lte": "2022-12-31T00:00:00.000Z"
+            }
+          }
+        }, 
+        {
+          "match_phrase": {
+            "text.content": "本周的热点"
+          }
+        }
+      ]
+    }
+  }
+}    
+  
+curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "match": {
+      "content": "想你"
+    }
+  },
+  "sort": {
+      "create_time": {
+          "order": "desc"
+      },
+      "_score": {
+          "order": "asc"
+      }     
+  },  
+  "from":0,
+  "size":500
+}'  
+
+curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+              "@timestamp": {
+                  "gte": "2021-12-07T07:04:51.000000Z"
+              }
+          }
+        },
+        {
+          "match_phrase": {
+              "msgtype": "text"
+          }
+        },
+        {
+            "bool": {
+                "should": [
+                    {
+                        "bool": {
+                            "must_not": {
+                                "exists": {
+                                    "field": "upload_time"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "range":{
+                            "upload_time": {
+                                "lt": 1000
+                            }
+                        }
+                    }
+                ]
+            }
+        }        
+      ]
+    }
+  },
+  "sort": [
+    {
+      "@timestamp": {
+          "order": "asc"
+      }
+    }
+  ]  
+}'
+
+curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: application/json' -d'
+{
+"docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
+"query":{"bool":{"filter":[{"match_all":{}},{"match_phrase":{"@timestamp":{"query":"now-4d/d"}}},{"script":{"script": {"source":"doc[\"roomid.keyword\"].size()==1 && doc[\"roomid.keyword\"].value.length()>1"}}}]}},
+"size":0,"_source":{"excludes":[]},"stored_fields":["*"],
+"aggs":{"roomid":{"terms":{"field":"roomid.keyword","order":{"_count":"desc"},"size":1000000},"aggs":{
+"meeting_voice_call":{"stats":{"script":"doc[\"meeting_voice_call.endtime\"].size()==0||doc[\"meeting_voice_call.endtime\"].value==0?0:doc[\"meeting_voice_call.endtime\"].value-doc.msgtime.value/1000"}},
+"images_count":{"stats":{"script":"doc[\"msgtype\"].value==\"image\"?1:0"}},
+"text_count":{"stats":{"script":"doc[\"msgtype\"].value==\"text\"?1:0"}},
+"revoke_count":{"stats":{"script":"doc[\"msgtype\"].value==\"revoke\"?1:0"}},
+"voice_count":{"stats":{"script":"doc[\"msgtype\"].value==\"voice\"?1:0"}},
+"video_count":{"stats":{"script":"doc[\"msgtype\"].value==\"video\"?1:0"}},
+"file_count":{"stats":{"script":"doc[\"msgtype\"].value==\"file\"?1:0"}},
+"redpacket_count":{"stats":{"script":"doc[\"msgtype\"].value==\"redpacket\"?1:0"}},
+"meeting_voice_call_count":{"stats":{"script":"doc[\"msgtype\"].value==\"meeting_voice_call\"?1:0"}},
+"start_time":{"min":{"field":"@timestamp","format":"yyyy-MM-dd HH:mm:ss"}},
+"end_time":{"max":{"field":"@timestamp","format":"yyyy-MM-dd HH:mm:ss"}},
+"time":{"max":{"field":"@timestamp","format":"yyyy-MM-dd"}},
+"tolist_count":{"cardinality":{"field":"tolist"}},
+"msgtype_count":{"cardinality":{"field":"msgtype"}}}}}}'
+
+./elasticdump --overwrite --limit=2000 --retryAttempts=100 --timeout=10000 --input=https://'elastic':'123456'@www.test.com:9200/message --output=http://10.10.0.10:9200/message
+
+curl -k -u 'elastic':'123456' -XPUT "https://www.test.com:9200/_reindex?pretty" -H 'Content-Type: application/json; charset=UTF-8' -d'
+{
+  "source": {
+    "remote": {
+      "host": "https://www.test.com:9200",
+      "socket_timeout": "1m",
+      "connect_timeout": "10s",
+      "username": "elastic",
+      "password": "123456"
+    },
+    "size":100,
+    "index": "work_2022",
+    "query": {
+      "match_all": {}
+    }
+  },
+  "dest": {
+    "index": "work_2022"
+  }
+}'
+
+---------------------------------------------------------------------------
+
+
+
+
+//oracle
+
 ##11g
 docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
 
