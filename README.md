@@ -917,10 +917,13 @@
     sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
     
 # curl nc ab pptpsetup
+
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
+
+    ftp ftp://test:123456@10.10.0.2:21 => put *.tar
 
   //nc
     
