@@ -1386,6 +1386,10 @@
     //tcp:8021 5060 5080 5061 5081 7443 5070
     //udp:5060 5080 5061 5081 5070 64535-65535 16384-32768
 
+    sudo apt install sngrep
+    sudo sngrep port 5060
+    sudo sngrep host 192.168.1.100
+
 
 # iis [java .keystore] elk
 
