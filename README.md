@@ -1374,7 +1374,8 @@
     docker exec -it freeswitch0 fs_cli -x "show channels"
 
     //设置sip head
-    originate {sip_from_uri=68888888@10.10.78.18}{sip_invite_to_uri=013800138000@10.10.78.18:5060}sofia/gateway/gw68888888/013800138000@10.10.254.81 &park()    
+    originate {sip_from_uri=68888888@10.10.78.18}{sip_invite_to_uri=013800138000@10.10.78.18:5060}sofia/gateway/gw68888888/013800138000@10.10.254.81 &park()
+    originate {absolute_codec_string=PCMA,PCMU,OPUS}sofia/gateway/gw68888888/013800138000 &bridge(user/9004)
 
     EXPOSE 8021/tcp
     EXPOSE 5060/tcp 5060/udp 5080/tcp 5080/udp
