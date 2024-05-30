@@ -950,14 +950,14 @@
     curl -k -sSl https://get.docker.com | sudo sh
     curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
-    sudo usermod -aG ${USER} 
-    or >sudo usermod -aG docker $USER
+    sudo usermod -aG ${USER} or >sudo usermod -aG docker $USER
 
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
     sudo docker images | grep none | awk '{print $3}'| xargs docker rmi
 
     docker cp f1418c0bce6f:/mimc-cpp-sdk /tmp
+    docker exec -it -u root jenkins0 /bin/bash
 
     //docker install
     curl -fsSL  https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
