@@ -1372,6 +1372,7 @@
     docker exec -it freeswitch0 fs_cli -x "reloadxml"
     docker exec -it freeswitch0 fs_cli -x "sofia status"
     docker exec -it freeswitch0 fs_cli -x "show channels"
+    docker exec -it freeswitch0 fs_cli -x "global_getvar local_ip_v4"
 
     //设置sip head
     originate {sip_from_uri=68888888@10.10.78.18}{sip_invite_to_uri=013800138000@10.10.78.18:5060}sofia/gateway/gw68888888/013800138000@10.10.254.81 &park()
