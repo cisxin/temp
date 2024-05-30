@@ -486,6 +486,10 @@
     --volume $(pwd)/gitlab/data:/var/opt/gitlab \
     --privileged=true \
     gitlab/gitlab-ce:12.0.3-ce.0
+    //修改服务器的IP地址
+    sudo vim gitlab/config/gitlab.rb
+        external_url "http://10.10.0.110:10080"
+
 
     docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
     --------
