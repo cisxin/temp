@@ -225,7 +225,7 @@
 
     sudo apt-get remove nano
 
-# ssh || su id
+# ssh su id
 
     ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
     scp -i
