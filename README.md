@@ -6,7 +6,7 @@
 - [sed](#sed)
 - [ps crontab](#ps-crontab)
 - [vim](#vim)
-- [ssh || su id](#ssh--su-id)
+- [ssh su id](#ssh-su-id)
 - [for while](#for-while)
 - [git](#git)
 - [g++ python3 go](#g-python3-go)
