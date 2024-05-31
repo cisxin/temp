@@ -158,9 +158,8 @@
     grep --color='auto' -P -n "[^\x00-\x7F]" file.xml
     sed 's/\x0b/ /g' b.txt > c.txt
 
-  /////////
+  ps -axj
 
-    ps -axj
     ps -e
     //handle count
     ls /proc/25091/fd | wc -l
@@ -361,7 +360,6 @@
         fi
 
     done
-
 
     a=`redis-cli -h 127.0.0.1 -p 6379 get tradedate:SH`
     for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14
