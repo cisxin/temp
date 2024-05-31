@@ -411,20 +411,12 @@
     git show -5 显示最后 5 次的文件改变的具体内容
     git branch -a 查询远程分支
 
-    撤消本地修改
-    git fetch --all
-    git reset --hard origin/master
-    服务器ip变更,客户端:
-    git remote set-url origin 10.10.1.36
-    本地缺文件
-    git checkout
-    git checkout aaaa.ini 
-    将提交重置
-    git reset --hard HEAD
-    查看全局配置
-    git config -l
-    工程本目录查看.gitignore文件
-    全局gitignore
+    撤消本地修改 git fetch --all    git reset --hard origin/master
+    服务器ip变更,客户端: git remote set-url origin 10.10.1.36
+    本地缺文件 git checkout    git checkout aaaa.ini 
+    将提交重置 git reset --hard HEAD
+    查看全局配置 git config -l
+    工程本目录查看.gitignore文件    全局gitignore
 
     //切到master
     git pull
@@ -469,32 +461,13 @@
     不需要账号密码clone和push 注意:使用ssh的url
 
   docker pull gitlab/gitlab-ce:latest
-
-    docker stop gitlab0
-    docker rm gitlab0
-    docker run -dit \
-        --hostname 10.10.8.180 \
-        --publish 1443:443 --publish 10080:10080 --publish 10022:22 \
-        --name gitlab0 \
-        --volume /etc/resolv.conf:/etc/resolv.conf \
-        --volume $(pwd)/gitlab/config:/etc/gitlab \
-        --volume $(pwd)/gitlab/logs:/var/log/gitlab \
-        --volume $(pwd)/gitlab/data:/var/opt/gitlab \
-        --privileged=true \
-        gitlab/gitlab-ce:latest
-    #    --memory=16g \
-
-    #sudo vim gitlab/config/gitlab.rb
-
-
-  //move docker
     
     docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
     docker save gitlab/gitlab-ce:12.0.3-ce.0 > ./gitlab20240516gitlab_ce12.0.3-ce.0.tar
     =>
     docker load < gitlab20240516gitlab_ce12.0.3-ce.0.tar
     sudo bash rungitlab.sh && docker exec -it gitlab0 chown git /var/opt/gitlab/.ssh/authorized_keys && docker exec -it gitlab0 chmod 2770 /var/opt/gitlab/git-data/repositories
-    ++++++++
+
     docker run -dit \
     --hostname 192.168.0.180 \
     --publish 1443:443 --publish 10080:10080 --publish 10022:22 \
@@ -504,14 +477,10 @@
     --volume $(pwd)/gitlab/logs:/var/log/gitlab \
     --volume $(pwd)/gitlab/data:/var/opt/gitlab \
     --privileged=true \
-    gitlab/gitlab-ce:12.0.3-ce.0
+    gitlab/gitlab-ce:latest
     //修改服务器的IP地址
     sudo vim gitlab/config/gitlab.rb
         external_url "http://10.10.0.110:10080"
-
-
-    docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
-    --------
 
   //url
     
