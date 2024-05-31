@@ -468,6 +468,25 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
+  docker pull gitlab/gitlab-ce:latest
+
+    docker stop gitlab0
+    docker rm gitlab0
+    docker run -dit \
+        --hostname 10.10.8.180 \
+        --publish 1443:443 --publish 10080:10080 --publish 10022:22 \
+        --name gitlab0 \
+        --volume /etc/resolv.conf:/etc/resolv.conf \
+        --volume $(pwd)/gitlab/config:/etc/gitlab \
+        --volume $(pwd)/gitlab/logs:/var/log/gitlab \
+        --volume $(pwd)/gitlab/data:/var/opt/gitlab \
+        --privileged=true \
+        gitlab/gitlab-ce:latest
+    #    --memory=16g \
+
+    #sudo vim gitlab/config/gitlab.rb
+
+
   //move docker
     
     docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
