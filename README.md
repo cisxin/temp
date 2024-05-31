@@ -412,7 +412,7 @@
     git branch -a 查询远程分支
 
     撤消本地修改 git fetch --all    git reset --hard origin/master
-    服务器ip变更,客户端: git remote set-url origin 10.10.1.36
+    服务器ip变更: git remote set-url origin http://10.10.0.110:10080/test/test.git
     本地缺文件 git checkout    git checkout aaaa.ini 
     将提交重置 git reset --hard HEAD
     查看全局配置 git config -l
