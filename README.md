@@ -1351,6 +1351,23 @@
     指定时间间隔   /                                           
     指定变量取值   a,b,c                                       
     H/15: H HASH,随机均匀分布
+  
+  docker build --no-cache=true -t jenkins_docker -f Dockerfile ./
+
+    FROM jenkins/jenkins:lts
+    USER root
+    RUN apt-get update && apt-get -y install apt-transport-https ca-certificates curl gnupg2 software-properties-common && \
+        curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
+        add-apt-repository \
+          "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+          $(lsb_release -cs) \
+          stable" && \
+        apt-get update && apt-get -y update && apt-get -y install docker-ce
+    USER jenkins
+
+    docker stop jenkins0
+    docker rm jenkins0
+    docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
 
   //fs
 
