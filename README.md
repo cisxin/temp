@@ -1496,3 +1496,10 @@
     //...
     //Changed password for user [elastic]
     docker restart elasticsearch0
+    
+    docker exec -it kibana0 bash
+    vim config/Kibana.yml
+    elasticsearch.username: "elastic"
+    elasticsearch.password: "123456"
+
+    curl -k -u 'elastic':'123456' -XPOST "http://10.10.0.10:9200/test_index_2024/_search?pretty" -H 'Content-Type: application/json; charset=UTF-8' -d'{  "query": {   "match_all": {}  } }'
