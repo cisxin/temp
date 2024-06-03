@@ -1484,3 +1484,15 @@
     --------------------------------
 
     docker run -d -p 5601:5601 -e "ELASTICSEARCH_URL=http://10.10.0.10:9200" -e "ELASTICSEARCH_HOSTS=http://10.10.0.10:9200" --name kibana0 -t kibana:7.12.0
+
+  设置修改账号密码
+  
+    vim config/elasticsearch.yml
+    xpack.security.enabled: true
+    xpack.security.transport.ssl.enabled: true
+    docker restart elasticsearch0
+    //设置6个账号和密码，包括elasticsearch、kibana等
+    ./bin/elasticsearch-setup-passwords interactive
+    //...
+    //Changed password for user [elastic]
+    docker restart elasticsearch0
