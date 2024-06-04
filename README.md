@@ -587,9 +587,10 @@
 
     sudo apt-get install sshpass
     sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
-
     sshpass -p "123456" rsync -av --progress --delete /tmp/aaaa test@192.168.0.1:/tmp >> /tmp/log.txt 2>&1
     echo `date` "rsync test end ....." >> /tmp/log.txt
+    sshpass -p "123456" ssh  test@10.1.0.15 "docker exec -i freeswitch0 fs_cli -x 'show channels as json'"
+    sshpass -p '123456' ssh -o StrictHostKeyChecking=no john@192.168.1.100 'docker ps'
 
 # mac os
     
