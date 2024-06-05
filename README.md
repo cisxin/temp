@@ -419,7 +419,7 @@
     //切到master
     git pull
     //解决冲突（解决master的冲突，保证代码最新）
-    git add  .
+    git add .
     git merge --continue //(git update-ref -d MERGE_HEAD)
     git commit . -m "message"
     git merge develop
@@ -436,6 +436,7 @@
     git whatchanged --stat 每次修改的文件列表, 统计
     git show commitid 显示某个 commitid 改变的具体内容
     git diff HEAD^ # 比较与上一个版本的差异
+    git remote -v //url
 
     git config --local credential.helper store 保存用户名密码
     //or
@@ -445,7 +446,7 @@
     回退到某个版本
     git checkout 7cd0386bd67e7f240b55fd037159ff7fe8f7063b seg_sensitive.txt
 
-    git remote set-url origin https://ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@github.com/username/test.git
+    git remote set-url origin https://ghp_xxxxxxxx@github.com/username/test.git
     
     中断 继续
     git clone --recursive https://huggingface.co/THUDM/chatglm3-6b
@@ -479,10 +480,6 @@
     //修改服务器的IP地址
     sudo vim gitlab/config/gitlab.rb
         external_url "http://10.10.0.110:10080"
-
-  //url
-    
-    git remote -v
 
   ////gitlab error
 
