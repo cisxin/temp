@@ -600,6 +600,20 @@
 
     //ubuntu plocate updatedb
 
+    vim /etc/security/limits.conf
+    # 用户  jdoe 最大可以打开 1024个文件
+    jdoe    soft    nofile    1024
+    jdoe    hard    nofile    2048
+    # 所有用户  最多可以创建 2048个进程
+    *       soft    nproc     1024
+    *       hard    nproc     2048
+    # 用户组 wheel 最大可以打开 4096 个文件
+    @wheel  soft    nofile    4096
+    @wheel  hard    nofile    8192
+    # 用户 foo 可以锁定 64MB 的内存
+    foo     soft    memlock   65536
+    foo     hard    memlock   65536
+
   //os
     //禁止休眠:
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
