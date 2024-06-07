@@ -868,9 +868,12 @@
     sudo nft list chains
     sudo nft list ruleset
     sudo nft add table inet t8080
+    #在filter表中创建一个名为input的链,类型为filter,挂钩点(hook)为input,优先级为0
     sudo nft add chain inet t8080 t8080a { type filter hook input priority 0 \; }
-    sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.112 tcp dport 8080 accept  
+    #接受来自IP地址 1.116.81.x 且目标端口为8080的TCP数据包
+    sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.x tcp dport 8080 accept  
     sudo nft add rule inet t8080 t8080a ip saddr 10.23.8.1/16 tcp dport 8080 accept
+    #拒绝所有目标端口为8080的TCP数据包
     sudo nft add rule inet t8080 t8080a tcp dport 8080 reject
     sudo sh -c "nft list ruleset > /etc/nftables.conf"
     sudo systemctl restart nftables.service
