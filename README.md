@@ -873,7 +873,7 @@
     #接受来自IP地址 1.116.81.x 且目标端口为8080的TCP数据包
     sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.x tcp dport 8080 accept  
     sudo nft add rule inet t8080 t8080a ip saddr 10.23.8.1/16 tcp dport 8080 accept
-    #拒绝所有目标端口为8080的TCP数据包
+    #拒绝所有目标端口为8080的TCP流量(除非它们已经被前面的规则接受)拒绝所有其他目标端口为8080的TCP流量
     sudo nft add rule inet t8080 t8080a tcp dport 8080 reject
     sudo sh -c "nft list ruleset > /etc/nftables.conf"
     sudo systemctl restart nftables.service
@@ -887,7 +887,7 @@
     table inet t8080 {
       chain t8080a {
         type filter hook input priority filter; policy accept;
-        ip saddr 1.116.81.112 tcp dport 8080 accept
+        ip saddr 1.116.81.0 tcp dport 8080 accept
         ip saddr 10.23.0.0/16 tcp dport 8080 accept
         tcp dport 8080 reject
       }
