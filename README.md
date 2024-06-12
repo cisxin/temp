@@ -534,6 +534,21 @@
     go version
     //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
     go env -w GOPROXY=https://goproxy.cn
+
+  //vue
+
+    sudo apt install npm
+    sudo npm install vue-cli -g
+    npm install -g serve
+    serve -s dist
+    vue -V
+    vue list
+    vue init webpack project-name
+    npm run build:dev
+    npm run serve //npm run serve -- --port 8080
+    npm run build
+    //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+    export NODE_OPTIONS=--openssl-legacy-provider
   
 
 # samba rsync
