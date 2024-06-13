@@ -539,14 +539,17 @@
 
     sudo apt install npm
     sudo npm install vue-cli -g
+    sudo npm install -g @vue/cli
+    npm install @vue/cli-plugin-babel --save-dev
     npm install -g serve
     serve -s dist
     vue -V
     vue list
     vue init webpack project-name
-    npm run build:dev
+        npm run build:dev
     npm run serve //npm run serve -- --port 8080
     npm run build
+    vue-cli-service build --mode development
     //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
     export NODE_OPTIONS=--openssl-legacy-provider
   
