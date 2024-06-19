@@ -902,12 +902,13 @@
     #在filter表中创建一个名为input的链,类型为filter,挂钩点(hook)为input,优先级为0
     sudo nft add chain inet t8080 t8080a { type filter hook input priority 0 \; }
     #接受来自IP地址 1.116.81.x 且目标端口为8080的TCP数据包
-    sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.x tcp dport 8080 accept  
+    sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.x tcp dport 8080 accept
+    sudo nft add rule inet t8080 t8080a ip saddr 1.116.81.x udp dport 8080 accept
     sudo nft add rule inet t8080 t8080a ip saddr 10.23.8.1/16 tcp dport 8080 accept
     #拒绝所有目标端口为8080的TCP流量(除非它们已经被前面的规则接受)拒绝所有其他目标端口为8080的TCP流量
     sudo nft add rule inet t8080 t8080a tcp dport 8080 reject
-    sudo sh -c "nft list ruleset > /etc/nftables.conf"
-    sudo systemctl restart nftables.service
+    sudo bash -c "nft list ruleset > /etc/nftables.conf"
+    sudo systemctl restart nftables.service # nft -f /etc/nftables.conf
     sudo nft list ruleset
     /////
       chain INPUT {
@@ -921,6 +922,8 @@
         ip saddr 1.116.81.0 tcp dport 8080 accept
         ip saddr 10.23.0.0/16 tcp dport 8080 accept
         tcp dport 8080 reject
+        ip saddr 1.116.81.0 udp dport 8080 accept 
+        udp dport 8080 reject        
       }
 
     /////
@@ -968,9 +971,6 @@
     nc -u -l -p 8080
     echo "hello udp!" | nc -u 10.1.0.x 8080
     while true; do nc -l 5300; done
-
-    ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
-    ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.10.160.50:8080/v1/api/getdocument"
 
   //pptpsetup
 
