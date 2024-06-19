@@ -946,6 +946,7 @@
   //tcpdump
     
     tcpdump -i enp3s0 host 10.1.0.x -v
+    tcpdump -ni ens160 tcp and host 10.0.0.1 and port 8080 -v
     tcpdump -ni enp3s0 udp and host 10.1 -v -w /tmp/1.cap
     tcpdump -ni enp3s0 udp and host 121.37.x.x -v -w /tmp/1.cap
 
