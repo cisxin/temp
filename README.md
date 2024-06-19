@@ -965,6 +965,8 @@
   //nc
     
     nc -l 127.0.0.1 5300
+    nc -u -l -p 8080
+    echo "hello udp!" | nc -u 10.1.0.x 8080
     while true; do nc -l 5300; done
 
     ab -n 1000 -c 1000 "http://10.10.160.50:8080/v1/api/getdocument"
