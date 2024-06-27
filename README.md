@@ -1084,6 +1084,17 @@
     sudo iptables -t nat -D PREROUTING 2
     sudo iptables -t nat -D POSTROUTING 4
 
+  //uninstall
+
+     sudo systemctl stop docker
+     sudo apt-get purge docker-ce docker-ce-cli containerd.io
+     sudo rm -rf /var/lib/docker && sudo rm -rf /var/lib/containerd
+     sudo rm -rf /var/lib/docker && sudo rm -rf /etc/docker
+     sudo userdel docker && sudo groupdel docker
+     sudo rm -rf /var/run/docker.sock && sudo rm -rf /var/run/docker.pid
+     //Docker的其他依赖或扩展,也可以通过apt进行清除
+     sudo apt-get autoremove --purge docker-ce docker-ce-cli containerd.io
+
   //kvm
     
     //install
