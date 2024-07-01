@@ -1012,10 +1012,11 @@
     ######################
     #!/bin/bash
     docker load -i test.tar
+  
+  //clean logs file
 
     #!/bin/sh
     echo 123456 | sudo su << "EOF"
-    echo "======== docker containers logs file size ========"  
     logs=$(find /var/lib/docker/containers/ -name *-json.log)  
     for log in $logs  
     do 
@@ -1024,6 +1025,20 @@
         echo `date` "clean logs : $log"    
     done
     exit
+
+  //docker build
+  
+    #cd docker 
+    #docker build --no-cache=true -t test -f Dockerfile.test ./
+    #docker save test > ./test.tar
+    #docker load < test.tar
+    #docker push test
+    #docker pull test
+    #docker commit 1825ebfd3d19 test0
+    #docker tag test testtest
+    #docker run -dit --name test0 test /bin/bash //--log-opt max-size=10m --log-opt max-file=3
+    #docker stop test0 && docker rm test0
+    du -d1 -h /var/lib/docker/containers | sort -rh
 
     dockerfile:
     FROM ubuntu:latest
@@ -1038,17 +1053,6 @@
     #EXPOSE 80
     #VOLUME [ "/tmp":/tmp ]
 
-    #cd docker //docker build
-    #docker build --no-cache=true -t test -f Dockerfile.test ./
-    #docker save test > ./test.tar
-    #docker load < test.tar
-    #docker push test
-    #docker pull test
-    #docker commit 1825ebfd3d19 test0
-    #docker tag test testtest
-    #docker run -dit --name test0 test /bin/bash
-    #docker stop test0 && docker rm test0
-    
     //dockerfile
     #RUN mv libcossdk.a.bak libcossdk.a
     #RUN g++ -I/usr/local/include -I/usr/include -I/usr/local/curl -L./ -std=c++14 -w -o test test.cpp ./libcossdk.a -lpthread -ldl 
