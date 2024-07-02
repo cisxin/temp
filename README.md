@@ -565,6 +565,11 @@
     vue-cli-service build --mode development
     //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
     export NODE_OPTIONS=--openssl-legacy-provider
+
+  //vscode
+    
+    extensions
+    Partial Diff  //select tow files 
   
 
 # samba rsync
