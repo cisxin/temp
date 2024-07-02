@@ -120,7 +120,7 @@
     //unicode to utf-8
     file -i s.txt
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
-    iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8
+    iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8  //ISO-8859
     cat ko.txt | iconv -f GBK -t UTF-8
 
     
