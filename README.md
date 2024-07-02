@@ -1031,6 +1031,8 @@
     done
     exit
 
+    docker ps -aq | xargs docker inspect --format='{{.LogPath}}' | xargs truncate -s 0
+
   //docker build
   
     #cd docker 
