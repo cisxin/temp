@@ -1498,6 +1498,10 @@
     //导入云端证书
     keytool -import -v -file /home/tomcat/ctp2/apache-tomcat-9.0.44/conf/cert/202011.cer -keystore /home/tomcat/ccttpp2/apache-tomcat-9.0.43/conf/cert/ssffiitt.keystore
 
+    wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.rpm
+    rpm -ivh jdk-21_linux-x64_bin.rpm
+    sudo dpkg -i jdk-21_linux-x64_bin.deb
+
   //elk
      
     docker run -d -p 9200:9200 -p 9300:9300 -p 8088:8080 -v `pwd`/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v `pwd`/data:/usr/share/elasticsearch/data -e "discovery.type=single-node" --name elasticsearch0 -t elasticsearch:7.12.0
