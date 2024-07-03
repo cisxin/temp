@@ -658,6 +658,17 @@
     foo     soft    memlock   65536
     foo     hard    memlock   65536
 
+  //占用1GB内存1个小时
+  
+    #!/bin/bash
+    mkdir /tmp/memory
+    mount -t tmpfs -o size=1024M tmpfs /tmp/memory
+    dd if=/dev/zero of=/tmp/memory/block
+    sleep 3600
+    rm /tmp/memory/block
+    umount /tmp/memory
+    rmdir /tmp/memory
+
   //os
     //禁止休眠:
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
