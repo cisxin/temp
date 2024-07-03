@@ -513,10 +513,18 @@
     source /etc/profile
 
     sudo apt-get install pkg-config automake autoconf libtool libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev libevent-dev libmicrohttpd-dev
-    //libssl-dev libboost-all-dev libevent-dev libboost-test-dev zlib1g-dev
+    //libssl-dev libboost-all-dev libevent-dev libboost-test-dev zlib1g-dev libjsoncpp-dev libminizip-dev
     sudo apt-get install mono-devel //debian  
+    sudo apt-get install libpoco-dev libmysqlclient-dev
 
-    //gdb
+  //gdb
+
+    sudo apt-get install sbcl clisp
+    sudo apt-get install slime
+
+    sudo add-apt-repository ppa:swi-prolog/stable
+    sudo apt-get update
+    sudo apt-get install swi-prolog
 
   //python3
 
