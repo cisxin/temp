@@ -520,7 +520,6 @@
   //gdb
 
     sudo apt-get install sbcl clisp
-    sudo apt-get install slime
 
     sudo add-apt-repository ppa:swi-prolog/stable
     sudo apt-get update
