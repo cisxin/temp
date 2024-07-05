@@ -1597,3 +1597,10 @@
 
     curl -k -XGET "http://10.10.0.10:9200/_cat/indices?v"
     curl -k -u 'elastic':'123456' -XPOST "http://10.10.0.10:9200/test_index_2024/_search?pretty" -H 'Content-Type: application/json; charset=UTF-8' -d'{  "query": {   "match_all": {}  } }'
+
+  //db principle ES_AUTO_BACKUP
+    GET _snapshot/ES_AUTO_BACKUP/_all
+    POST _snapshot/ES_AUTO_BACKUP/es-o978fl2y_20240704/_restore
+    {
+        "indices": "message_2021"
+    }
