@@ -1599,7 +1599,9 @@
     curl -k -u 'elastic':'123456' -XPOST "http://10.10.0.10:9200/test_index_2024/_search?pretty" -H 'Content-Type: application/json; charset=UTF-8' -d'{  "query": {   "match_all": {}  } }'
 
   //db principle ES_AUTO_BACKUP
+    PUT _snapshot/my_backup/snapshot_1?wait_for_completion=true //命令会为所有打开的索引创建名称为snapshot_1的快照
     GET _snapshot/ES_AUTO_BACKUP/_all
+    GET _snapshot/ES_AUTO_BACKUP/es-o978fl2y_20240704
     POST _snapshot/ES_AUTO_BACKUP/es-o978fl2y_20240704/_restore
     {
         "indices": "message_2021"
