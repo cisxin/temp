@@ -438,7 +438,7 @@
     git merge develop
     //解决冲突（解决两个分支的冲突，实现合并）
     git add  .
-    git merge --continue //(git update-ref -d MERGE_HEAD)
+    git merge --continue //(git update-ref -d MERGE_HEAD) 
     git commit . -m "message"
     git push origin master
 
@@ -463,6 +463,12 @@
     
     中断 继续
     git clone --recursive https://huggingface.co/THUDM/chatglm3-6b
+
+    git reset --hard HEAD~1 //回滚到以前的提交
+    git push --force origin master //强制推送到远程分支
+    git checkout main //切换到其他分支
+    git branch -D temp-branch //强制删除分支
+    git push --force origin main //继续推送
     
     ////////////////////
     第四步：Github账号上添加公钥
