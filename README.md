@@ -572,6 +572,27 @@
     vue-cli-service build --mode development
     //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
     export NODE_OPTIONS=--openssl-legacy-provider
+                +-------------------------------------+
+                |                View                 |
+                |                  ↓                  |
+                |                DOM                  |
+                +-------------------------------------+
+                              |         ↑
+                              v         |
+    +---------------------------------------------------------+
+    |                      ViewModel                          |
+    |  +-----------------------------+  +------------------+  |
+    |  |        DOM Listeners        |  |    Data Bindings  |  |
+    |  +-----------------------------+  +------------------+  |
+    +---------------------------------------------------------+
+                              |         ^
+                              v         |
+                +-------------------------------------+
+                |               Model                 |
+                |                  ↓                  |
+                |      Plain JavaScript Objects       |
+                +-------------------------------------+
+
 
   //vscode
     
