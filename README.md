@@ -464,7 +464,7 @@
     中断 继续
     git clone --recursive https://huggingface.co/THUDM/chatglm3-6b
 
-    git reset --hard HEAD~1 //回滚到以前的提交
+    git reset --hard 15b0718d2e0f08e58cb24f73dc82be7420a76149 //回滚到以前的提交
     git push --force origin master //强制推送到远程分支
     git checkout main //切换到其他分支
     git branch -D temp-branch //强制删除分支
