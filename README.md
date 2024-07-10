@@ -780,7 +780,6 @@
     sudo vgdisplay
     lvextend -L 120G /dev/mapper/ubuntu--vg-ubuntu--lv     //增大至120G
     resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv  //执行调整
-    lvextend -L 120G /dev/mapper/ubuntu--vg-ubuntu--lv     //增大至120G
     df -h
     ------------------------------------------------------------------------------
 
