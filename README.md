@@ -429,6 +429,10 @@
     查看全局配置 git config -l
     工程本目录查看.gitignore文件    全局gitignore
 
+    //提交和检出代码时均不进行转换
+    git config --global core.autocrlf false
+    vscode->file->preferences->settings->profile files.eol \n
+
     //切到master
     git pull
     //解决冲突（解决master的冲突，保证代码最新）
