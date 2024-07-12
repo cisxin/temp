@@ -1404,6 +1404,8 @@
     sudo nepdate cn.pool.ntp.org
 
     sudo vim /etc/default/locale
+    LANG="en_US.utf8"
+    LANGUAGE="en_US.utf8:"
     LC_TIME="en_DK.UTF-8"
     
     sudo timedatectl set-timezone Asia/Shanghai
