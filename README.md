@@ -627,6 +627,8 @@
     vscode->file->preferences->settings->profile files.eol \n
 
     vscode->file->preferences->settings->profile editor.autoClosingBrackets=never
+
+    "Search" input ">hex editor"
   
 
 # samba rsync
