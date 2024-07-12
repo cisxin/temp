@@ -627,6 +627,7 @@
     vscode->file->preferences->settings->profile files.eol \n
 
     vscode->file->preferences->settings->profile editor.autoClosingBrackets=never
+    vscode->file->preferences->settings->profile editor.autoClosingQuotes=never
 
     "Search" input ">hex editor"
   
