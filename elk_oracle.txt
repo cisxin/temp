@@ -178,7 +178,6 @@ curl -k -u 'elastic':'123456' -XPUT "https://www.test.com:9200/_reindex?pretty" 
 
 
 
-
 //oracle
 
 ##11g
