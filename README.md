@@ -117,6 +117,10 @@
     find /home/test -name "*.sh" | xargs dos2unix
     dos2unix file_name
 
+    vim c.txt //replace one line
+    export LANG=en_US.UTF-8
+    sed -i.bak '/^export LANG=/c\export LANG=zh_CN.utf8' c.txt
+
     //unicode to utf-8
     file -i s.txt
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
@@ -1392,7 +1396,7 @@
 
   //时区
 
-    sudo tzselect
+    sudo tzselect //sudo timedatectl set-timezone Asia/Shanghai && timedatectl
     ...
     sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
     date
@@ -1408,9 +1412,6 @@
     LANG="en_US.utf8"
     LANGUAGE="en_US.utf8:"
     LC_TIME="en_DK.UTF-8"
-    
-    sudo timedatectl set-timezone Asia/Shanghai
-    timedatectl
     
   //rhel9
     
