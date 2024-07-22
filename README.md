@@ -1178,8 +1178,13 @@
      //Docker的其他依赖或扩展,也可以通过apt进行清除
      sudo apt-get autoremove --purge docker-ce docker-ce-cli containerd.io
 
+  //docker stop容器失败
+
+     docker rm -f 容器id
+     docker network disconnect --force bridge 容器id
+
   //kvm
-    
+
     //install
     egrep -o '(vmx|svm)' /proc/cpuinfo
     lsmod | grep kvm
