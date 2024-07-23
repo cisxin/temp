@@ -206,6 +206,7 @@
     ls -l /proc/3138/fd/*
     l-wx------ 1 root root 64 Jul 23 09:36 /proc/3138/fd/1 -> /root/nohup.out (deleted)
     echo > /proc/3138/fd/1
+    ls -l /proc/$(ps -ef | grep "java -jar Saas.jar" | grep -v "color=auto" | awk '{print $2}')/fd/1
     
   //crontab
     
