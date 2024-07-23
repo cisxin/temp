@@ -199,6 +199,13 @@
 
     //启动时间
     ps -eo pid,cmd,lstart | grep "example_process"
+
+    //rm "deleted file"
+    sudo lsof -v | grep deleted
+    java       3138                 root    1w      REG              253,1 78145200669     393809 /root/nohup.out (deleted)
+    ls -l /proc/3138/fd/*
+    l-wx------ 1 root root 64 Jul 23 09:36 /proc/3138/fd/1 -> /root/nohup.out (deleted)
+    echo > /proc/3138/fd/1
     
   //crontab
     
