@@ -493,6 +493,8 @@
      successfully authenticated //表明设置成功
     不需要账号密码clone和push 注意:使用ssh的url
 
+    cd /tmp/jack && echo $(pwd) && git pull http://test:123456@github.com:10080/jack.git
+
   docker pull gitlab/gitlab-ce:latest
     
     docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
