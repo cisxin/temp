@@ -578,6 +578,30 @@
     //$GOROOT //install path //$GOPATH //search path for importing packages //export GOBIN=$GOROOT/bin/
     go env -w GOPROXY=https://goproxy.cn
 
+    //debug
+    一、假设你的golang项目代码是在vscode终端以go run main.go -e dev来启动的，那么打开用vscode打开项目目录
+    二、在VSCode的侧边栏中，点击调试图标（虫子图标）打开调试视图。
+    三、点击调试视图顶部的"create a launch.json file"链接。这将创建一个名为launch.json的文件，用于配置调试任务。
+    四、在launch.json中，找到并修改 "configurations" 部分，
+    添加以下配置示例：(如果是go run main.go运行这个项目的，不需要最后一个arg参数):
+    {
+        // Use IntelliSense to learn about possible attributes.
+        // Hover to view descriptions of existing attributes.
+        // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": [],
+
+        "name": "Launch",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${workspaceFolder}/main.go",
+        "args": ["-e", "dev"]
+            
+    }
+    五、设置断点
+    六、启动调试 (install dlv)
+
   //vue
 
     sudo apt install npm
