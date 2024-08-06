@@ -666,6 +666,15 @@
     vscode->file->preferences->settings->profile editor.autoClosingQuotes=never
 
     "Search" input ">hex editor"
+
+  //rust
+    
+    curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+    rustc --version
+    rustup update
+    cargo --version && cargo new testrust
+    cargo build && cargo run && cargo check
+    VSCode + Rust-Analyzer
   
 
 # samba rsync
