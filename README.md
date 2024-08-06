@@ -674,7 +674,7 @@
     rustup update
     cargo --version && cargo new testrust
     cargo build && cargo run && cargo check
-    VSCode + Rust-Analyzer
+    VSCode + Rust-Analyzer, LLDB DAP, CodeLLDB,=>main.rs => run|debug
   
 
 # samba rsync
