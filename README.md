@@ -1257,6 +1257,12 @@
     sudo vim /etc/apt/sources.list.d/docker.list
     deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu noble stable
 
+    sudo apt-key list
+    pub rsa4096 2020-01-29 [SC]
+    8CAE 012E BFAC 38B1 7A93  7CD8 C5E2 2450 0C12 89C0
+    复制ID的后8位
+    sudo apt-key export 0EBFCD88 | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/pgdg.gpg
+
   //kvm
 
     //install
