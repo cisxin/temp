@@ -780,6 +780,31 @@
     last  //登录日志
     lastlog  //每个用户上次登录的时间 "/etc/log/lastlog"
 
+  //apt udpate
+
+    sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+    sudo vim /etc/apt/sources.list
+    deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble main restricted universe multiverse
+    deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-updates main restricted universe multiverse
+    deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-backports main restricted universe multiverse
+    deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-security main restricted universe multiverse
+    deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-proposed main restricted universe multiverse
+    #Codename:	noble
+
+    1.noble main restricted universe multiverse
+        main：官方完全支持的软件，包含大多数常用的免费软件。
+        restricted：包含了非自由软件，但这些软件得到了 Ubuntu 开发团队的支持。
+        universe：社区维护的软件包，可能没有得到官方支持，但由开源社区提供。
+        multiverse：不自由的软件包，这些软件包可能受到版权或其他法律限制。
+    2. noble-updates main restricted universe multiverse
+        这个分支包含了已经发布的 Ubuntu 版本的稳定更新，包括安全补丁和修复程序。这些更新包已经过测试，可以确保系统的稳定性和安全性。
+    3. noble-backports main restricted universe multiverse
+        这个分支包含了从未来的 Ubuntu 版本中挑选出来并移植到当前版本的软件包。通常情况下，这些软件包是为了满足用户对新特性或新软件的需求。
+    4. noble-security main restricted universe multiverse
+        这个分支专门用于安全更新，提供了对系统中发现的安全漏洞的修复。这些更新包的发布速度较快，旨在尽快解决安全问题。
+    5. noble-proposed main restricted universe multiverse
+        这个分支包含了尚未完全测试和验证的更新和新软件包。这些更新包可能还在测试阶段，供开发者和高级用户提前体验和反馈。
+
   //windows命令窗口中文乱码
 
     chcp 65001
@@ -1225,6 +1250,12 @@
 
      docker rm -f 容器id
      docker network disconnect --force bridge 容器id
+
+  //docker update
+    
+    curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+    sudo vim /etc/apt/sources.list.d/docker.list
+    deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu noble stable
 
   //kvm
 
