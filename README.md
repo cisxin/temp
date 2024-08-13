@@ -1104,6 +1104,9 @@
 # curl nc ab pptpsetup
 
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
+    curl --referer "tiga-web.changchao-tech.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
+    curl --referer "www.changchao-tech.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
+    curl --referer "140.207.9.21" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
