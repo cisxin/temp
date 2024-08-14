@@ -1212,7 +1212,20 @@
     CMD ["python3 test.py"]
 
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
-    ####################################################################################
+    sudo tee /etc/docker/daemon.json <<EOF
+        {
+        "registry-mirrors": [
+            "https://hub.uuuadc.top",
+            "https://docker.anyhub.us.kg",
+            "https://dockerhub.jobcher.com",
+            "https://dockerhub.icu",
+            "https://docker.ckyl.me",
+            "https://docker.awsl9527.cn"
+        ]
+    }
+    sudo systemctl daemon-reload
+    sudo systemctl restart docker
+    docker pull docker.awsl9527.cn/gitlab/gitlab-ce
 
     docker login -u test123456 -p cis 192.168.0.1:5000
     docker tag debian 192.168.0.1:5000/debian
