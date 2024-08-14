@@ -503,16 +503,6 @@
     docker load < gitlab20240516gitlab_ce12.0.3-ce.0.tar
     sudo bash rungitlab.sh && docker exec -it gitlab0 chown git /var/opt/gitlab/.ssh/authorized_keys && docker exec -it gitlab0 chmod 2770 /var/opt/gitlab/git-data/repositories
 
-    docker run -dit \
-    --hostname 192.168.0.180 \
-    --publish 1443:443 --publish 10080:10080 --publish 10022:22 \
-    --name gitlab0 \
-    --volume /etc/resolv.conf:/etc/resolv.conf \
-    --volume $(pwd)/gitlab/config:/etc/gitlab \
-    --volume $(pwd)/gitlab/logs:/var/log/gitlab \
-    --volume $(pwd)/gitlab/data:/var/opt/gitlab \
-    --privileged=true \
-    gitlab/gitlab-ce:latest
     //修改服务器的IP地址
     sudo vim gitlab/config/gitlab.rb
         external_url "http://10.10.0.110:10080"
@@ -528,6 +518,30 @@
     7.sudo rm ./redis/dump.rdb -rf 
     8.sudo systemctl restart gitlab-runsvdir 
     9.sudo gitlab-ctl restart
+
+  //gitlab-ce
+  
+    docker run -dti -v $(pwd)/config:/etc/gitlab -v $(pwd)/logs:/var/log/gitlab -v $(pwd)/data:/var/opt/gitlab -p 80:80 -p 443:443 -p 10022:22 -e external_url='http://localhost' -e gitlab_rails['gitlab_shell_ssh_port']=10022 --name gitlab0 docker.awsl9527.cn/gitlab/gitlab-ce:latest
+
+    docker exec -it gitlab0 /bin/bash
+    gitlab-rails console -e production
+    user = User.where(id:1).first
+    #<User id:1 @root>
+    # input
+    user.password='123456'
+    # 保存
+    user.save!
+    # 退出
+    exit
+
+    vim /etc/gitlab/gitlab.rb
+    external_url 'https://your-domain.com'  //??
+    nginx['redirect_http_to_https'] = true    
+    nginx['ssl_certificate'] = "/etc/gitlab/ssl/server.crt"
+    nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/server.key"
+
+    docker cp your_certificate.crt gitlab:/etc/gitlab/ssl/gitlab.crt
+    docker cp your_private_key.key gitlab:/etc/gitlab/ssl/gitlab.key
 
 # g++ python3 go
 
