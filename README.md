@@ -1622,6 +1622,8 @@
     originate user/9002 &bridge(user/9005)
     originate sofia/gateway/gw68888888/013800138000 &bridge(user/9005)
     originate user/9005 &bridge(sofia/gateway/gw68888888/13800138000)
+    originate user/9907 9901 xml default
+    originate user/9905 &ivr(menu_0001)
 
     uuid_bridge 032d6115-f206-4507-b2a6-4f2e38bddae3 5985787c-c696-498d-baac-17bcfe2d2c89
     originate {sip_h_from=<sip:68888888@10.10.78.18>}sofia/gateway/gw68888888/013800138000 &park()
@@ -1637,6 +1639,10 @@
     docker exec -it freeswitch0 fs_cli -x "sofia status"
     docker exec -it freeswitch0 fs_cli -x "show channels"
     docker exec -it freeswitch0 fs_cli -x "global_getvar local_ip_v4"
+
+    show registrations
+    sofia profile internal siptrace on
+    sofia profile internal siptrace off
 
     //设置sip head
     originate {sip_from_uri=68888888@10.10.78.18}{sip_invite_to_uri=013800138000@10.10.78.18:5060}sofia/gateway/gw68888888/013800138000@10.10.254.81 &park()
@@ -1680,6 +1686,10 @@
 
     https://docs.python.org/3/
     https://en.cppreference.com/w/    //zh
+
+    √√√╳╳╳
+    C:\Users\Administrator\.config\clash-verge
+    C:\Users\Administrator\.config\clash-verge\config.yaml
 
   //java .keystore
 
