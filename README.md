@@ -292,6 +292,10 @@
         User <username>
         IdentityFile ~/.ssh/id_rsa1
 
+    //限制用户(包括root用户)连续输入错误密码的次数。在3次失败锁定 锁定10分钟,之后自动解锁
+    sudo vim /etc/pam.d/sshd 或 /etc/pam.d/login
+    auth required pam_faillock.so deny=3 unlock_time=600 even_deny_root root_unlock_time=600
+
   //putty
   
     @echo off & setlocal enabledelayedexpansion
