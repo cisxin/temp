@@ -1617,6 +1617,7 @@
     //build
     cd freeswitch/docker/master
     docker build --no-cache=true --build-arg TOKEN=pat_1X8EQXH6EvgajWaBVWSJCG51 -t freeswitch -f Dockerfile ./
+    cd freeswitch\conf\vanilla  //通用的配置
 
     //fix
     originate sofia/gateway/route  /17fix  #17ims#fs  #9904#68888888#68888888#013800138000 &park()
