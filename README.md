@@ -836,7 +836,6 @@
 # disk fsck ln
 
     1.对新增加的硬盘进行分区、格式化
-
     增加空间的硬盘是 /dev/sda 
     分区： 
     [root@localhost]# fdisk /dev/sda     
@@ -856,31 +855,28 @@
     格式化分区
     mkfs.ext4 /dev/sda3
 
-    2添加新LVM到已有的LVM组，实现扩容
-
-    lvm              进入lvm管理
+    2.添加新LVM到已有的LVM组，实现扩容
+    sudo lvm                //进入lvm管理
     lvm>pvcreate /dev/sda3  //这是初始化刚才的分区，必须的(将物理分区创建为物理卷)(in linux lvm(ext4)) //默认安装sda1 sda2 sda3存在
-    lvm>vgextend ubuntu-vg /dev/sda3  将初始化过的分区加入到虚拟卷组ubuntu-vg (卷和卷组的命令可以通过  vgdisplay, vgextend ubuntu-vg /dev/sda3)
+    lvm>vgextend ubuntu-vg /dev/sda3  //将初始化过的分区加入到虚拟卷组ubuntu-vg (卷和卷组的命令可以通过 vgdisplay, vgextend ubuntu-vg /dev/sda3)
     lvm>vgdisplay -v
-    lvm>lvextend -l+953861 /dev/mapper/ubuntu--vg-ubuntu--lv //扩展已有卷的容量（953861 是通过vgdisplay查看的Free  PE / Size的大小） //redhat:lvextend -l+100%FREE /dev/mapper/rhel-opt 
-    lvm>pvdisplay                            查看卷容量，这时你会看到一个很大的卷了
-    lvm>quit                                  退出
+    lvm>lvextend -l+953861 /dev/mapper/ubuntu--vg-ubuntu--lv //扩展已有卷的容量(953861 通过vgdisplay查看的Free PE / Size的大小) //redhat:lvextend -l+100%FREE /dev/mapper/rhel-opt 
+    lvm>pvdisplay                      //查看卷容量，这时你会看到一个很大的卷了
+    lvm>quit                           //退出
     //lvdisplay /dev/mapper/rhel-opt
 
-    3以上只是卷扩容了，下面是文件系统的真正扩容，输入以下命令：
-
+    3.以上只是卷扩容了，下面是文件系统的真正扩容，输入以下命令：
+    sudo lvdisplay /dev/mapper/ubuntu--vg-ubuntu--lv
     sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv (系统安装后，扩容默认大小)
     //redhat:xfs_growfs /dev/mapper/rhel-opt
 
-    4查看新的磁盘空间
+    4.查看新的磁盘空间
     df -h
-    ------------------------------------------------------------------------------
     //lvm 调整大小
     sudo vgdisplay
-    lvextend -L 120G /dev/mapper/ubuntu--vg-ubuntu--lv     //增大至120G
-    resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv  //执行调整
+    lvextend -L 120G /dev/mapper/ubuntu--vg-ubuntu--lv //增大至120G
+    resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv        //执行调整
     df -h
-    ------------------------------------------------------------------------------
 
     sudo fdisk -lu
     sudo fdisk /dev/sdb
@@ -961,7 +957,7 @@
     sudo mount -o remount, rw /dev/mapper/ubuntu--vg-ubuntu--lv /
     mount -v | grep "^/" | awk '{print "\nPartition identifier: " $1  "\n Mountpoint: "  $3}'
 
-  //ln
+  // ln
 
     ln -s s->t
     ln -s ../bin/python3.8 /usr/local/bin/python3
@@ -1617,6 +1613,10 @@
     docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
 
   //fs
+    
+    //build
+    cd freeswitch/docker/master
+    docker build --no-cache=true --build-arg TOKEN=pat_1X8EQXH6EvgajWaBVWSJCG51 -t freeswitch -f Dockerfile ./
 
     //fix
     originate sofia/gateway/route  /17fix  #17ims#fs  #9904#68888888#68888888#013800138000 &park()
