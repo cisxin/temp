@@ -834,6 +834,8 @@
     sc delete service_name 
 
     磁盘(D:)-属性-共享-高级共享-共享此文件夹 //\\10.10.0.1
+
+    powercfg -h off
    
 # disk fsck ln
 
