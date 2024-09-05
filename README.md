@@ -111,6 +111,8 @@
     sed -i 's/107.25.6.7/172.20.20.1/g' *.xml
     sed -i 's/1\.1\.1\.1/0\.0\.0\.0/g' a.txt
     sed -i "s/qh0/$qh0/g" `grep -rl 'qh0' --include="*.sh" --include="*.conf" --include="*.yml" --exclude="*.bash" ./`
+    sed '/%local_ip_v4_v4%/d' $(pwd)/template/vars.xml > $(pwd)/conf/vars.xml
+    sed '/%local_ip_v4_v4%/s/.*/ /' $(pwd)/template/vars.xml > $(pwd)/conf/vars.xml
 
     替换\r\n->\n
     sed -i "s/\r//g" file_name
