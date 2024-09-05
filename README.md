@@ -308,16 +308,16 @@
     set date_format="YYYYMMDD"
     echo !d1! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
     if %errorlevel% == 1 (
-    echo 日期1格式不正确，应为 %date_format%
-    exit /b 1
+      echo 日期1格式不正确，应为 %date_format%
+      exit /b 1
     )
     set /p d2=enddate:
     echo %d2%
     set date_format="YYYYMMDD"
     echo !d2! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
     if %errorlevel% == 1 (
-    echo 日期2格式不正确，应为 %date_format%
-    exit /b 1
+      echo 日期2格式不正确，应为 %date_format%
+      exit /b 1
     )
     plink.exe -ssh -no-antispoof -P 2244 -i E:\temp\id_rsa_putty.ppk ubuntu@x.x.x.x /tmp/run.sh !d1! !d2!
     echo download...
@@ -404,30 +404,30 @@
 
     #!/bin/bash
     while getopts "p:u:a:r:d:o:" opt;do
-    case $opt in
-    p)
-        gw_fix_phone=$OPTARG
+      case $opt in
+        p)
+            gw_fix_phone=$OPTARG
+            ;;
+        u)
+            gw_username=$OPTARG
+            ;;
+        a)
+            gw_auth_username=$OPTARG
+            ;;
+        r)
+            gw_realm=$OPTARG
+            ;;
+        d)
+            gw_from_domain=$OPTARG
+            ;;
+        o)
+            gw_outbound_proxy=$OPTARG
+            ;;
+        ?)
+            echo "unkonw argument"
+            exit 1
         ;;
-    u)
-        gw_username=$OPTARG
-        ;;
-    a)
-        gw_auth_username=$OPTARG
-        ;;
-    r)
-        gw_realm=$OPTARG
-        ;;
-    d)
-        gw_from_domain=$OPTARG
-        ;;
-    o)
-        gw_outbound_proxy=$OPTARG
-        ;;
-    ?)
-        echo "unkonw argument"
-        exit 1
-    ;;
-    esac
+      esac
     done
     mkdir $(pwd)/freeswitch_config/sip_profiles/external2
     rm -rf $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml
