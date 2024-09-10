@@ -562,11 +562,15 @@
 
   //gdb
 
+    strings libXX.so | grep GCC
+
     sudo apt-get install sbcl clisp
 
     sudo add-apt-repository ppa:swi-prolog/stable
     sudo apt-get update
     sudo apt-get install swi-prolog
+
+    sudo apt-get install libboost-all-dev
 
   //python3
 
