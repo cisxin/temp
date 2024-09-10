@@ -563,6 +563,7 @@
   //gdb
 
     strings libXX.so | grep GCC
+    echo | g++ -dM -E -x c++ - | grep __cplusplus
 
     sudo apt-get install sbcl clisp
 
