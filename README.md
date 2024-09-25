@@ -640,7 +640,7 @@
     vue init webpack project-name
         npm run build:dev
     npm run serve //npm run serve -- --port 8080
-    npm run build
+    npm run build     npm run dev
     vue-cli-service build --mode development
     //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
     export NODE_OPTIONS=--openssl-legacy-provider
