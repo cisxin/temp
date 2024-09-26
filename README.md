@@ -352,7 +352,7 @@
     ::用户 username 的GID修改为 new_gid
     usermod -g new_gid username
 
-    chown user filename
+    chown user filename //chown user:group filename
     chgrp groupname filename
 
     chmod
