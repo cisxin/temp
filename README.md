@@ -541,6 +541,36 @@
     exit
 
     vim /etc/gitlab/gitlab.rb
+    gitlab-rails console
+    gitlab-ctl reconfigure
+    #gitlab-ctl restart
+    qq邮箱设置->第三方服务->IMAP/SMTP服务 开启
+    gitlab_rails['smtp_enable'] = true
+    gitlab_rails['smtp_address'] = "smtp.qq.com"
+    gitlab_rails['smtp_port'] = 587
+    gitlab_rails['smtp_user_name'] = "xxxx@qq.com"
+    gitlab_rails['smtp_password'] = "lkjxxxxxxxxxxxx"
+    gitlab_rails['smtp_domain'] = "smtp.qq.com"
+    gitlab_rails['smtp_authentication'] = "login"
+    gitlab_rails['smtp_enable_starttls_auto'] = true
+    gitlab_rails['smtp_tls'] = false
+    #gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+    gitlab_rails['gitlab_email_from'] = "xxxx@qq.com"
+    gitlab_rails['gitlab_email_reply_to'] = "xxxx@qq.com"
+    gitlab-rails console
+    Notify.test_email('xxxx@qq.com','mail title','mail txt').deliver_now
+
+    定时备份 vim /etc/gitlab/gitlab.rb
+    gitlab_rails['manage_backup_path'] = true
+    gitlab_rails['backup_path'] = "/var/opt/gitlab/backups"  #gitlab默认备份目录
+    gitlab_rails['backup_archive_permissions'] = 0644  #生成的备份文件权限
+    gitlab_rails['backup_keep_time'] = 604800  #默认备份保留天数为7天
+    //【0 0 * * 7 /root/backup.sh > /root/backup.log 2>&1】
+    gitlab-rake gitlab:backup:create > /dev/null 2>&1
+    if [ $? -ne 0 ];then
+        echo 'Backup gitlab data error!' > /home/gitlab/backup_gitlab.log
+
+    vim /etc/gitlab/gitlab.rb
     external_url 'https://your-domain.com'  //??
     nginx['redirect_http_to_https'] = true    
     nginx['ssl_certificate'] = "/etc/gitlab/ssl/server.crt"
