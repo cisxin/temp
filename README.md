@@ -562,11 +562,11 @@
 
     定时备份 vim /etc/gitlab/gitlab.rb
     gitlab_rails['manage_backup_path'] = true
-    gitlab_rails['backup_path'] = "/var/opt/gitlab/backups"  #gitlab默认备份目录
+    gitlab_rails['backup_path'] = "/var/opt/gitlab/backups"  #gitlab默认备份目录 +777
     gitlab_rails['backup_archive_permissions'] = 0644  #生成的备份文件权限
     gitlab_rails['backup_keep_time'] = 604800  #默认备份保留天数为7天
     //【0 0 * * 7 /root/backup.sh > /root/backup.log 2>&1】
-    gitlab-rake gitlab:backup:create > /dev/null 2>&1
+    gitlab-rake gitlab:backup:create > /dev/null 2>&1 //gitlab-rake gitlab:backup:create --trace
     if [ $? -ne 0 ];then
         echo 'Backup gitlab data error!' > /home/gitlab/backup_gitlab.log
 
@@ -1653,6 +1653,21 @@
     docker stop jenkins0
     docker rm jenkins0
     docker run -d --name jenkins0 -e "HOSTDIR=$PWD" -p 9081:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v $PWD/jenkins_home2:/var/jenkins_home --memory=8g --env JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxNewSize=1024m" jenkins0
+
+  //删除项目
+  
+    "Manage Jenkins"（管理 Jenkins）->"Script Console"
+    def jobNamesToDelete = ["job1", "job2", "job3"] // 替换为要删除的项目名称列表
+    jobNamesToDelete.each { jobName ->
+        def job = Jenkins.instance.getItem(jobName)
+        if (job) {
+            job.delete()
+            println("Deleted job: ${jobName}")
+        } else {
+            println("Job not found: ${jobName}")
+        }
+    }  
+
 
   //fs
     
