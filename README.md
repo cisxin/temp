@@ -1668,6 +1668,10 @@
         }
     }  
     删除历史数据: rm -rf JENKINS_HOME/jobs/<Job Name>/builds/xxxx
+    intstall publive over ssh
+    系统管理->系统配置->Publish over SSH
+    project->configure->configure->add building step->configure->"Send files or execute commands over SSH"->add "SSH Server"
+
 
   //fs
     
@@ -1764,6 +1768,54 @@
     wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.rpm
     rpm -ivh jdk-21_linux-x64_bin.rpm
     sudo dpkg -i jdk-21_linux-x64_bin.deb
+
+  //mysql
+
+    mkdir -p ./data ./logs ./conf ./conf/conf.d ./conf/mysql.conf.d
+    docker pull mysql:5.7
+    vi ./conf/my.cnf
+    [client]
+    default-character-set=utf8mb4
+
+    [mysql]
+    default-character-set=utf8mb4
+
+    [mysqld]
+    init_connect="SET collation_connection = utf8mb4_unicode_ci"
+    init_connect="SET NAMES utf8mb4"
+    character-set-server=utf8mb4
+    collation-server=utf8mb4_unicode_ci
+    skip-character-set-client-handshake
+    skip-name-resolve
+
+    docker run -p 3306:3306 --name mysql0 -v $PWD/log:/var/log/mysql -v $PWD/data:/var/lib/mysql -v $PWD/conf:/etc/mysql --restart=always -e MYSQL_ROOT_PASSWORD=123456 -dit mysql:5.7
+
+    docker exec -ti  mysql0 mysql -u root -p
+    SET PASSWORD FOR 'root'@'%' = PASSWORD('123456');
+    //ALTER USER 'root'@'%' IDENTIFIED BY '123456';
+    FLUSH PRIVILEGES;
+    exit;
+    
+    //mysql9:
+    mkdir -p ./data ./logs ./conf ./conf/conf.d ./conf/mysql.conf.d
+    docker stop mysql20 && docker rm mysql20
+    chmod 644 /etc/mysql/my.cnf
+    vi ./conf/my.cnf
+    [client]
+    default-character-set=utf8mb4
+
+    [mysql]
+    default-character-set=utf8mb4
+
+    [mysqld]
+    init_connect="SET collation_connection = utf8mb4_unicode_ci"
+    init_connect="SET NAMES utf8mb4"
+    character-set-server=utf8mb4
+    collation-server=utf8mb4_unicode_ci
+    docker run -p 3307:3306 -v $PWD/log:/var/log/mysq -v $PWD/data:/var/lib/mysql -v $PWD/conf:/etc/mysql --restart=always -e MYSQL_ROOT_PASSWORD=123456 --name mysql20 -dit mysql:latest
+    docker exec -ti  mysql20 mysql -u root -p
+    ALTER USER 'root'@'%' IDENTIFIED BY '123456';
+    FLUSH PRIVILEGES;
 
   //elk
      
