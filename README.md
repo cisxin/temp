@@ -1672,6 +1672,8 @@
     系统管理->系统配置->Publish over SSH
     project->configure->configure->add building step->configure->"Send files or execute commands over SSH"->add "SSH Server"
 
+    https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
 
   //fs
     
