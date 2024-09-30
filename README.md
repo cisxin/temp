@@ -264,9 +264,12 @@
     //在 ~/.ssh 目录下生成密钥对文件
     ssh-keygen -t rsa
     //ssh-keygen -m PEM -t rsa -b 4096
-    # ==> id_rsa id_rsa.pub
+    //=> id_rsa id_rsa.pub
     //复制id_rsa.pub到主机上指定用户的 ~/.ssh/authorized_keys
     cat id_rsa.pub >> authorized_keys //本地客户机 id_rsa.pub,远程服务器 authorized_keys
+    sudo vim /etc/ssh/sshd_config  //PasswordAuthentication yes, PubkeyAuthentication yes 可以同时启用
+      PubkeyAuthentication yes
+    sudo systemctl restart ssh //reboot
     ++++++++
     //多个SSH密钥 vim ~/.ssh/config
     Host remote_host
