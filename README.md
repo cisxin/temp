@@ -1195,7 +1195,6 @@
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
     sudo docker images | grep none | awk '{print $3}'| xargs docker rmi
 
-    docker cp f1418c0bce6f:/mimc-cpp-sdk /tmp
     docker exec -it -u root jenkins0 /bin/bash
 
     //docker install
@@ -1231,8 +1230,7 @@
       "registry-mirrors": ["https://ung2thfc.mirror.aliyuncs.com"]
     }
     EOF
-    sudo systemctl daemon-reload
-    sudo systemctl restart docker
+    sudo systemctl daemon-reload && sudo systemctl restart docker
   
   //clean logs file
 
