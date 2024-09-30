@@ -261,11 +261,16 @@
     scp -r user@remote:Desktop demo
     shpass -p "123456" scp -P port 01.py user@remote:Desktop/01.py
 
+    //Port 40022
+    sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+    sudo sed -i 's/#Port 22/Port 40022/' /etc/ssh/sshd_config
+    cat /etc/ssh/sshd_config | grep 40022
+    sudo systemctl restart ssh
+    sudo reboot
     //在 ~/.ssh 目录下生成密钥对文件
     ssh-keygen -t rsa
-    //ssh-keygen -m PEM -t rsa -b 4096
-    //=> id_rsa id_rsa.pub
-    //复制id_rsa.pub到主机上指定用户的 ~/.ssh/authorized_keys
+    //ssh-keygen -m PEM -t rsa -b 4096 //生成./id_rsa id_rsa.pub
+    //复制(192.168.0.x)id_rsa.pub到主机(202.x.x.x)上指定用户的 ~/.ssh/authorized_keys
     cat id_rsa.pub >> authorized_keys //本地客户机 id_rsa.pub,远程服务器 authorized_keys
     sudo vim /etc/ssh/sshd_config  //PasswordAuthentication yes, PubkeyAuthentication yes 可以同时启用
       PubkeyAuthentication yes
