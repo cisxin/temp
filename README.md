@@ -1694,6 +1694,7 @@
     intstall publive over ssh
     系统管理->系统配置->Publish over SSH
     project->configure->configure->add building step->configure->"Send files or execute commands over SSH"->add "SSH Server"
+    源码管理->git->Repository URL->Credentials->jenkins->username with password             Branches to build->*/main
 
     https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
 
