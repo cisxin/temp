@@ -627,6 +627,9 @@
     python3 -m pip install --upgrade pip --force-reinstall
     //////////////////////////////
     pip3 install --upgrade pip
+    pip3 install pipreqs
+    pipreqs /path/to/your/project
+    pipreqs /path/to/your/project --force    
 
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
