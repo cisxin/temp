@@ -1682,7 +1682,7 @@
 
   //删除项目
 
-    "Manage Jenkins"（管理 Jenkins）->"Script Console"
+    "Manage Jenkins"(管理 Jenkins)->"Script Console"
     def jobNamesToDelete = ["job1", "job2", "job3"] // 替换为要删除的项目名称列表
     jobNamesToDelete.each { jobName ->
         def job = Jenkins.instance.getItem(jobName)
