@@ -1171,9 +1171,9 @@
 # curl nc ab pptpsetup
 
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
-    curl --referer "tiga-web.changchao-tech.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
-    curl --referer "www.changchao-tech.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
-    curl --referer "140.207.9.21" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
+    curl --referer "tiga.ss888.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
+    curl --referer "www.ss888.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
+    curl --referer "0.0.0.21" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
 
     ab -n 1000 -c 1000 "http://10.1.1.5:8080/v1/api/getdocument"
     ab -n400 -c20  -p "img.json" -T "application/x-www-form-urlencoded" "http://10.1.1.5:8080/v1/api/getdocument"
@@ -1789,16 +1789,16 @@
     腾讯云->账号中心->项目管理
     域名申请->ssl证书申请->DNS验证(CNAME)->ssl证书验证确认->云解析DNS/CLB  ... SSL证书-主动配置到->CLB CLB->选择SSL证书
     腾讯云->域名注册->我的域名->域名注册
-    腾讯云->域名注册->我的域名->域名注册->解析=>云解析 DNS->我的解析->changchao-tech.com->记录管理->添加记录->www/@ 0.0.0.179(重庆1)
+    腾讯云->域名注册->我的域名->域名注册->解析=>云解析 DNS->我的解析->ss888.com->记录管理->添加记录->www/@ 0.0.0.179(重庆1)
     腾讯云->ICP备案->我的备案->新增/接入服务
     腾讯云->SSL证书->我的证书->购买证书/上传证书->部署    证书验证->证书验证(确认)
     DNS:腾讯云->负载均衡->实例管理->"实例"->监听器管理->HTTP/HTTPS监听器(已配置1个)->"-"->'+'->"ss888.cn"->已绑定后端服务->D/名称->IP地址  (域名解析到一个腾讯云的负载均衡实例上)
     腾讯云->云解析DNS->我的解析->"ss888.com"->解析(新手快速解析)->负载均衡(付费) （可解析到非腾讯云服务器）(DNS验证:特定邮箱,CNAME,网站控制权验证/txt文件验证)
-    腾讯云->访问管理->访问密钥->API密钥管理  ( API 请求的重要凭证)
+    腾讯云->访问管理->访问密钥->API密钥管理  (API 请求的重要凭证)
     腾讯云->云数据库 TencentDB->MySQL->数据库备份
     腾讯云->容器镜像服务->镜像仓库->广州->python/快捷指令->ss888/python:3.12a
     腾讯云->云解析DNS->我的解析->记录管理->"test.ss888.com"->A->0.0.0.179(CLB实例)
-    腾讯云->负载均衡->实例管理->"实例"->监听器管理->HTTP/HTTPS监听器(已配置2个)->"-"->'+'->"tiga-web.changchao-tech.com"->已绑定后端服务->ID/名称->IP地址 (0.0.0.200/172.17.0.1:6001, 0.0.0.41/172.17.0.11:6001)
+    腾讯云->负载均衡->实例管理->"实例"->监听器管理->HTTP/HTTPS监听器(已配置2个)->"-"->'+'->"tiga.ss888.com"->已绑定后端服务->ID/名称->IP地址 (0.0.0.200/172.17.0.1:6001, 0.0.0.41/172.17.0.11:6001)
     腾讯云->负载均衡 ... -> HTTPS监听器 ... -> 添加规则(选证书,其它默认) ... -> 绑定 -> 可选多个端口
 
     JS接口安全域名 微信公众号上配置安全域名  https://域名/MP_verify_*.txt    public/MP_verify_*.txt
@@ -1961,7 +1961,7 @@
     xpack.security.enabled: true
     xpack.security.transport.ssl.enabled: true
     docker restart elasticsearch0
-    //设置6个账号和密码，包括elasticsearch、kibana等
+    //设置6个账号和密码,包括elasticsearch、kibana等
     ./bin/elasticsearch-setup-passwords interactive
     //...
     //Changed password for user [elastic]
