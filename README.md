@@ -1802,6 +1802,7 @@
     腾讯云->负载均衡 ... -> HTTPS监听器 ... -> 添加规则(选证书,其它默认) ... -> 绑定 -> 可选多个端口
 
     JS接口安全域名 微信公众号上配置安全域名  https://域名/MP_verify_*.txt    public/MP_verify_*.txt
+    微信公众平台官网中的「设置与开发」-「功能设置」-「网页授权域名」
 
     sudo vim /etc/nginx/conf.d/website.conf
     server {
