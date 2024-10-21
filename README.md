@@ -1803,6 +1803,8 @@
 
     JS接口安全域名 微信公众号上配置安全域名  https://域名/MP_verify_*.txt    public/MP_verify_*.txt
     微信公众平台官网中的「设置与开发」-「功能设置」-「网页授权域名」
+    在公众平台网站的高级功能-开发模式页，点击"成为开发者"按钮 -> 开发者帐号 -> 微信公众号的APPID(开发者ID) "设置与开发"中的"基本设置"
+    公众号的AppID、小程序的AppID、开放平台的AppID、第三方平台的AppID、移动应用的AppID、网站应用的AppID、小商店的AppID
 
     sudo vim /etc/nginx/conf.d/website.conf
     server {
