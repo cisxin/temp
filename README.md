@@ -128,6 +128,7 @@
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
     iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8  //ISO-8859
     cat ko.txt | iconv -f GBK -t UTF-8
+    echo -e "\u4f1a\u8bdd\u8fc7\u671f\uff0c\u8bf7\u91cd\u65b0\u767b\u9646"  //会话过期，请重新登陆 //printf "\u4f1a\n"
 
     
 # ps crontab
