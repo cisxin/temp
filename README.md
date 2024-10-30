@@ -212,7 +212,7 @@
     ls -l /proc/$(ps -ef | grep -E "java -jar Saa.*\.jar" | grep -v "color=auto" | awk '{print $2}')/fd/1
     
   //crontab
-    
+
     etc/init.d/crond status
     sudo systemctl status cron.service
 
@@ -250,7 +250,6 @@
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
     set number
-
 
 # ssh su id
 
@@ -374,7 +373,6 @@
     
     //simple password
     sudo passwd test
-
 
 # for while
 
@@ -511,7 +509,7 @@
     cd /tmp/jack && echo $(pwd) && git pull http://test:123456@github.com:10080/jack.git
 
   docker pull gitlab/gitlab-ce:latest
-    
+
     docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
     docker save gitlab/gitlab-ce:12.0.3-ce.0 > ./gitlab20240516gitlab_ce12.0.3-ce.0.tar
     =>
@@ -725,7 +723,7 @@
     +---------------------------+
 
   //vscode
-    
+
     extensions
     Partial Diff  //select tow files 
 
@@ -736,7 +734,7 @@
     "Search" input ">hex editor"
 
   //rust
-    
+
     curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
     rustc --version
     rustup update
@@ -744,7 +742,6 @@
     cargo build && cargo run && cargo check
     VSCode + Rust-Analyzer, LLDB DAP, CodeLLDB,=>main.rs => run|debug
   
-
 # samba rsync
 
     sudo apt-get install samba samba-common
@@ -799,7 +796,7 @@
     sshpass -p '123456' ssh -o StrictHostKeyChecking=no john@192.168.1.100 'docker ps'
 
 # mac os
-    
+
     locate tf-keras-datasets
     sudo /usr/libexec/locate.updatedb
 
@@ -837,7 +834,7 @@
   //os
     //禁止休眠:
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
-    
+
     last -x|grep shutdown|head -1  //查看最后一次关机时间
     journalctl -xe  //查看最新的系统日志
     /var/log/syslog //包含系统日志信息
@@ -857,7 +854,7 @@
     deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-backports main restricted universe multiverse
     deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-security main restricted universe multiverse
     deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ noble-proposed main restricted universe multiverse
-    #Codename:	noble
+    #Codename: noble
 
     1.noble main restricted universe multiverse
         main：官方完全支持的软件，包含大多数常用的免费软件。
@@ -886,7 +883,7 @@
     磁盘(D:)-属性-共享-高级共享-共享此文件夹 //\\10.10.0.1
 
     powercfg -h off
-   
+
 # disk fsck ln
 
     1.对新增加的硬盘进行分区、格式化
@@ -1142,7 +1139,7 @@
     /////
 
   //windows netsh
-    
+
     1. 查询端口映射情况
     netsh interface portproxy show v4tov4
     2. 查询某一个IP的所有端口映射情况
@@ -1160,7 +1157,7 @@
     //netsh interface portproxy delete v4tov4 listenaddress=192.168.5.239 listenport=8080
 
   //tcpdump
-    
+
     tcpdump -i enp3s0 host 10.1.0.x -v
     tcpdump -ni ens160 tcp and host 10.0.0.1 and port 8080 -v
     tcpdump -ni enp3s0 udp and host 10.1 -v -w /tmp/1.cap
@@ -1182,7 +1179,7 @@
     ftp ftp://test:123456@10.10.0.2:21 => put *.tar => mput * => mput *.tar
 
   //nc
-    
+
     nc -l 127.0.0.1 5300
     nc -u -l -p 8080
     echo "hello udp!" | nc -u 10.1.0.x 8080
@@ -1327,7 +1324,7 @@
      docker network disconnect --force bridge 容器id
 
   //docker update
-    
+
     curl -fsSL https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
     sudo vim /etc/apt/sources.list.d/docker.list
     deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu noble stable
@@ -1450,9 +1447,8 @@
     lambda   /'læmdə/             Λ     λ     psi      /psaɪ/                         Ψ      ψ
     mu       /mju:/               Μ     μ     omega    /'əʊmɪɡə/ /oʊ'meɡə/            Ω      ω
 
-
 # llm
-    
+
     //Langchain-Chatchat
     sudo apt install python3-pip
     python3 -m pip install --upgrade pip
@@ -1574,7 +1570,7 @@
     LC_TIME="en_DK.UTF-8"
     
   //rhel9
-    
+
     //dnf yum
     1.挂载系统光盘到/mnt/cdrom目录
     mkdir -p /mnt/cdrom
@@ -1678,9 +1674,8 @@
 
     https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
 
-
   //fs
-    
+
     //build
     cd freeswitch/docker/master
     docker build --no-cache=true --build-arg TOKEN=pat_1X8EQXH6EvgajWaBVWSJCG51 -t freeswitch -f Dockerfile ./
@@ -1946,7 +1941,7 @@
     FLUSH PRIVILEGES;
 
   //elk
-     
+
     docker run -d -p 9200:9200 -p 9300:9300 -p 8088:8080 -v `pwd`/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v `pwd`/data:/usr/share/elasticsearch/data -e "discovery.type=single-node" --name elasticsearch0 -t elasticsearch:7.12.0
     more elasticsearch.yml
     http.host: 0.0.0.0
