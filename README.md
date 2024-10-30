@@ -1784,6 +1784,8 @@
 
     //nginx
     docker run -dit -p 80:80 -p 443:443 -p 8020:8020 -v /tmp/html:/usr/share/nginx/html -v /tmp/nginx/config:/etc/nginx --name nginx0 nginx
+    FROM nginx
+    COPY ./dist /usr/share/nginx/html
 
     sudo vim /etc/nginx/conf.d/website.conf
     server {
