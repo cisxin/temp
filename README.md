@@ -1198,35 +1198,16 @@
 
 # docker kvm
 
-    curl -k -sSl https://get.docker.com | sudo sh
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-    sudo usermod -aG ${USER} or >sudo usermod -aG docker $USER
-
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
     sudo docker images | grep none | awk '{print $3}'| xargs docker rmi
-
-    docker exec -it -u root jenkins0 /bin/bash
 
     //docker install
     curl -fsSL  https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
     sudo add-apt-repository "deb [arch=amd64]  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" 
     sudo apt-get update
     sudo apt-get install docker-ce
-
-    #!/bin/bash
-    sum=`docker images| wc -l`
-    echo images:$sum
-    COUNT=`expr $sum - 1`
-    echo count:$COUNT
-    TAG=`docker images |grep -v REPOSITORY|awk '{print $1":" $2}'|awk 'ORS=NR%"'$COUNT'"?" ":"\n"{print}'`
-    echo TAG:$TAG
-    docker save $TAG > ./test.tar
-    echo endend
-    ######################
-    #!/bin/bash
-    docker load -i test.tar
+    sudo usermod -aG ${USER} or sudo usermod -aG docker $USER
 
     //ubuntu24.04
     sudo apt-get remove snap
@@ -1263,7 +1244,7 @@
   
     #cd docker 
     #docker build --no-cache=true -t test -f Dockerfile.test ./
-    #docker save test > ./test.tar
+    #docker save test:latest > ./test.tar
     #docker load < test.tar
     #docker push test
     #docker pull test
@@ -1286,14 +1267,11 @@
     #EXPOSE 80
     #VOLUME [ "/tmp":/tmp ]
 
-    //dockerfile
     #RUN mv libcossdk.a.bak libcossdk.a
     #RUN g++ -I/usr/local/include -I/usr/include -I/usr/local/curl -L./ -std=c++14 -w -o test test.cpp ./libcossdk.a -lpthread -ldl 
     #RUN rm -f Dockerfile.* *.a *.h *.cpp *.o *.out docker.sh build.sh
     #CMD ["./test"]
     
-    CMD ["python3 test.py"]
-
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     sudo tee /etc/docker/daemon.json <<EOF
         {
@@ -1345,9 +1323,7 @@
      //Docker的其他依赖或扩展,也可以通过apt进行清除
      sudo apt-get autoremove --purge docker-ce docker-ce-cli containerd.io
 
-  //docker stop容器失败
-
-     docker rm -f 容器id
+     //docker stop容器失败
      docker network disconnect --force bridge 容器id
 
   //docker update
@@ -1807,6 +1783,9 @@
     在公众平台网站的高级功能-开发模式页，点击"成为开发者"按钮 -> 开发者帐号 -> 微信公众号的APPID(开发者ID) "设置与开发"中的"基本设置"
     公众号的AppID、小程序的AppID、开放平台的AppID、第三方平台的AppID、移动应用的AppID、网站应用的AppID、小商店的AppID
 
+    //nginx
+    docker run -dit -p 80:80 -p 443:443 -p 8020:8020 -v /tmp/html:/usr/share/nginx/html -v /tmp/nginx/config:/etc/nginx --name nginx0 nginx
+
     sudo vim /etc/nginx/conf.d/website.conf
     server {
         listen       80;
@@ -1842,6 +1821,68 @@
       }
     }
     sudo nginx -t && sudo nginx -s reload
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+
+        location /pg/app {
+            proxy_pass https://api.xxxx.com;
+            proxy_set_header Host $proxy_host;
+            #proxy_set_header X-Real-IP $remote_addr;
+            #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            #proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        location /appapi {
+            proxy_pass https://vms-test.xxxx.com;
+            proxy_set_header Host $proxy_host;
+        }
+    }
+
+    proxy_cache_path /tmp/nginx/cache keys_zone=one:10m loader_threshold=300 loader_files=200 max_size=200m;
+    upstream lightningTmp {
+        server 10.3.0.120:11000 weight=5;
+    }
+    server {
+        listen 11000;
+        server_name 10.3.0.73;
+        proxy_cache one;
+        location / {
+            #client_body_buffer_size      500M;
+        
+            #proxy_cache STATIC;
+            proxy_cache_key $host$uri$is_args$args;
+            proxy_cache_valid any 10m;
+            proxy_cache_min_uses 3;
+            proxy_cache_bypass $cookie_nocache $arg_nocache$arg_comment;
+            proxy_read_timeout 300;
+            proxy_connect_timeout 300;
+            proxy_redirect off;
+            
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header Host  $http_host;
+            proxy_set_header X-Real-IP  $remote_addr;
+            
+            rewrite /v4/(.*)$ /$1 break;
+            
+            proxy_pass http://10.3.0.120:11000;
+            expires 1d;
+        }   
+    }       
+
+    upstream lightning {
+        server 10.3.0.57:11000 weight=5;
+        server 10.3.0.57:11000 weight=10;
+    }
+    server {
+        listen 8020;
+        server_name 10.32.0.59;
+        location ~* /v4/ {
+            #rewrite ^/v4/(.*)$ http://10.3.0.57:11000/$1 break;
+            rewrite /v4/(.*)$ /$1 break;
+            proxy_pass http://lightning;
+        }
+    }
 
   //java .keystore
 
