@@ -1290,6 +1290,26 @@
     docker push 192.168.0.1:5000/debian
     docker logout 192.168.0.1:5000
 
+    FROM python:3.12-bookworm
+    ENV TZ Asia/Shanghai
+    ENV PYTHONIOENCODING utf-8
+    RUN apt-get update -y \
+        && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+        && apt-get install -y tzdata \
+        && apt-get clean \
+        && apt-get autoclean 
+    RUN apt-get install -y vim net-tools git wget curl
+    RUN pip3 install pycryptodome PyJWT rsa Flask Flask_Caching gunicorn requests Flask-RESTful Flask-SQLAlchemy Flask-Cors flask-redis cos_python_sdk_v5 Flask_SocketIO eventlet grpcio redis SQLAlchemy waitress pymysql jinja2 xlwt elasticsearch elasticsearch-dsl Flask-APScheduler pyparsing
+    docker build --no-cache=false -t python:3.12a -f Dockerfile .
+    FROM python:3.12a 
+    ENV TigaEnv production
+    ADD . /code
+    WORKDIR /code
+    RUN pip3 install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade -q pip 
+    CMD ["waitress-serve", "--threads", "4", "--port", "5050", "--call", "factory:create_app"]
+    EXPOSE 5050
+    docker run -dit --name flask0 python:3.12a
+
   //#docker fix ip
 
     docker stop nginxtest && docker rm nginxtest
