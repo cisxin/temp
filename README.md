@@ -1316,10 +1316,10 @@
     htpasswd -Bc ./passwords test
     123456
 
-    sudo vim /etc/docker/daemon.json  //host,not container
+    sudo vim /etc/docker/daemon.json  //docker login 是客户端发出
       "insecure-registries": ["10.0.0.110:5000"] 
     sudo systemctl restart docker
-
+    
     docker run -d -p 5000:5000 \
         -e REGISTRY_AUTH=htpasswd \
         -e REGISTRY_AUTH_HTPASSWD_REALM=Registry \
