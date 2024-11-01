@@ -1271,7 +1271,7 @@
     
     docker pull registry.baidubce.com/paddlepaddle/paddle:2.4.1
     sudo tee /etc/docker/daemon.json <<EOF
-        {
+      {
         "registry-mirrors": [
             "https://hub.uuuadc.top",
             "https://docker.anyhub.us.kg",
@@ -1280,7 +1280,7 @@
             "https://docker.ckyl.me",
             "https://docker.awsl9527.cn"
         ]
-    }
+      }
     sudo systemctl daemon-reload
     sudo systemctl restart docker
     docker pull docker.awsl9527.cn/gitlab/gitlab-ce
@@ -1295,9 +1295,7 @@
     ENV PYTHONIOENCODING utf-8
     RUN apt-get update -y \
         && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-        && apt-get install -y tzdata \
-        && apt-get clean \
-        && apt-get autoclean 
+        && apt-get install -y tzdata && apt-get clean && apt-get autoclean 
     RUN apt-get install -y vim net-tools git wget curl
     RUN pip3 install pycryptodome PyJWT rsa Flask Flask_Caching gunicorn requests Flask-RESTful Flask-SQLAlchemy Flask-Cors flask-redis cos_python_sdk_v5 Flask_SocketIO eventlet grpcio redis SQLAlchemy waitress pymysql jinja2 xlwt elasticsearch elasticsearch-dsl Flask-APScheduler pyparsing
     docker build --no-cache=false -t python:3.12a -f Dockerfile .
