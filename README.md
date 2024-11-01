@@ -1326,7 +1326,7 @@
         -e REGISTRY_AUTH_HTPASSWD_PATH=/etc/docker/registry/passwords \
         -v $(pwd)/passwords:/etc/docker/registry/passwords -v "$(pwd)/data":/data \
         --name registry0 registry
-    docker login -u test -p '123456' http://10.0.0.110:5000
+    docker login -u test -p '123456' http://10.0.0.110:5000  //or jenkins0 bash
 
   //#docker fix ip
 
