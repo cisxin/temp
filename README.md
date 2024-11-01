@@ -1310,6 +1310,24 @@
     EXPOSE 5050
     docker run -dit --name flask0 python:3.12a
 
+  //registry
+
+    sudo apt-get install apache2-utils
+    htpasswd -Bc ./passwords test
+    123456
+
+    sudo vim /etc/docker/daemon.json  //host,not container
+      "insecure-registries": ["10.0.0.110:5000"] 
+    sudo systemctl restart docker
+
+    docker run -d -p 5000:5000 \
+        -e REGISTRY_AUTH=htpasswd \
+        -e REGISTRY_AUTH_HTPASSWD_REALM=Registry \
+        -e REGISTRY_AUTH_HTPASSWD_PATH=/etc/docker/registry/passwords \
+        -v $(pwd)/passwords:/etc/docker/registry/passwords -v "$(pwd)/data":/data \
+        --name registry0 registry
+    docker login -u test -p '123456' http://10.0.0.110:5000
+
   //#docker fix ip
 
     docker stop nginxtest && docker rm nginxtest
