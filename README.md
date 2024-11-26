@@ -681,9 +681,10 @@
         npm run build:dev
     npm run serve //npm run serve -- --port 8080
     npm run build     npm run dev
-    vue-cli-service build --mode development
+    vue-cli-service build --mode development 
     //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
     export NODE_OPTIONS=--openssl-legacy-provider
+    //set NODE_OPTIONS=--openssl-legacy-provider && npm run build:dev
     cd usr/share/nginx/html/    //ls /var/www/html
                 +-------------------------------------+
                 |                View                 |
@@ -1709,6 +1710,33 @@
     源码管理->git->Repository URL->Credentials->jenkins->username with password             Branches to build->*/main
 
     https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
+    //Build Steps,Runs a shell script
+    #!/bin/bash
+    IMAGE_NAME="testsync"
+
+    IMAGE_SERVER="10.0.0.110:5000"
+    EXISTING_TAGS=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "$IMAGE_NAME:v")
+    MAX_VERSION=0
+    if [ -n "$EXISTING_TAGS" ]; then
+        for TAG in $EXISTING_TAGS; do
+            VERSION=$(echo $TAG | sed "s/^$IMAGE_NAME:v//")
+            if [[ "$VERSION" =~ ^[0-9]+$ ]]; then
+                if [ "$VERSION" -gt "$MAX_VERSION" ]; then
+                    MAX_VERSION=$VERSION
+                fi
+            fi
+        done
+        NEW_VERSION=$((MAX_VERSION + 1))
+    else
+        NEW_VERSION=0
+    fi
+    docker build --no-cache=false -f Dockerfile -t $IMAGE_NAME .
+    docker tag $IMAGE_NAME $IMAGE_SERVER/$IMAGE_NAME:v$NEW_VERSION
+    docker tag $IMAGE_NAME $IMAGE_SERVER/$IMAGE_NAME:latest
+    docker push $IMAGE_SERVER/$IMAGE_NAME:v$NEW_VERSION
+    docker push $IMAGE_SERVER/$IMAGE_NAME:latest
+    docker rmi $IMAGE_NAME
 
   //fs
 
