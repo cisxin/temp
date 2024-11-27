@@ -610,6 +610,8 @@
 
     sudo apt-get install libboost-all-dev
 
+    nm libcossdk.a | grep MultiUploadObject
+
   //python3
 
     apt-get install python3
