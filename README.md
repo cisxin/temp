@@ -1722,7 +1722,7 @@
     MAX_VERSION=0
     if [ -n "$EXISTING_TAGS" ]; then
         for TAG in $EXISTING_TAGS; do
-            VERSION=$(echo $TAG | sed "s/^$IMAGE_NAME:v//")
+            VERSION=$(echo $TAG | sed "s/^$IMAGE_SERVER\/$IMAGE_NAME:v//")
             if [[ "$VERSION" =~ ^[0-9]+$ ]]; then
                 if [ "$VERSION" -gt "$MAX_VERSION" ]; then
                     MAX_VERSION=$VERSION
