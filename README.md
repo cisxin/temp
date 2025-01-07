@@ -592,6 +592,14 @@
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
     source /etc/profile
 
+    //dockerfile
+    RUN apt-get -y update
+    RUN apt-get -y upgrade
+    RUN apt-get -y install gcc g++ gdb make 
+    RUN apt-get -y install pkg-config automake autoconf libtool
+    RUN apt-get -y install libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev libevent-dev libmicrohttpd-dev libjsoncpp-dev
+    RUN apt-get -y install libboost-all-dev libboost-test-dev zlib1g-dev libminizip-dev
+
     sudo apt-get install pkg-config automake autoconf libtool libssl-dev libcrypto++-dev libcurl4-gnutls-dev libzip-dev libevent-dev libmicrohttpd-dev
     //libssl-dev libboost-all-dev libevent-dev libboost-test-dev zlib1g-dev libjsoncpp-dev libminizip-dev
     sudo apt-get install mono-devel //debian  
@@ -1224,7 +1232,7 @@
     }
     EOF
     sudo systemctl daemon-reload && sudo systemctl restart docker
-  
+
   //clean logs file
 
     #!/bin/sh
