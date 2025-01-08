@@ -2067,6 +2067,22 @@
         }
     }
     --------------------------------
+    filter {
+      ruby {
+        code => '
+          message = event.get("message")
+          script_output = `bash /path/to/your_script.sh "#{message}"`
+          event.set("script_output", script_output.strip)
+        '
+      }
+    }
+    修改 Shell 脚本接收参数：
+    #!/bin/bash
+    # 接收传入的参数
+    echo "Received message: $1 at $(date)"
+
+    Logstash 的默认字段由通用字段(如 @timestamp、@version、host)和 插件特定字段(message) 组成。取决于 input 插件。可以在输出中使用 stdout { codec => rubydebug } 来调试
+    --------------------------------
 
     docker run -d -p 5601:5601 -e "ELASTICSEARCH_URL=http://10.10.0.10:9200" -e "ELASTICSEARCH_HOSTS=http://10.10.0.10:9200" --name kibana0 -t kibana:7.12.0
 
