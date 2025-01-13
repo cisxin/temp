@@ -1585,7 +1585,43 @@
     GIT_SSL_NO_VERIFY=1 git clone https://huggingface.co/google/gemma-1.1-7b-it
     huggingface-cli download --resume-download gemma-1.1-7b-it --local-dir gemma-1.1-7b-it
 
-    git pull origin    
+    git pull origin  
+
+  //flink 
+
+    docker pull flink
+    docker network create flink-network
+    docker run -itd --name=jobmanager0 --network flink-network --publish 8081:8081 --expose "6123" \
+        --env FLINK_PROPERTIES="jobmanager.rpc.address: jobmanager" \
+        -v ./jobmanager:/opt/flink/conf/ -v ./pyjob:/opt/flink/python/  \
+        flink jobmanager
+    docker run -itd --name=jobmanager0 --network flink-network --publish 8081:8081 --publish 6123:6123 \
+        --env FLINK_PROPERTIES="jobmanager.rpc.address: jobmanager0" \
+        -v ./jobmanager:/opt/flink/conf/ -v ./pyjob:/opt/flink/python/  \
+        pyflink jobmanager
+    docker run -itd --link jobmanager0:jobmanager --name=taskmanager0 --network flink-network \
+        --expose "6121" --expose "6122" --env FLINK_PROPERTIES="jobmanager.rpc.address: jobmanager0" \
+        -v ./taskmanager/:/opt/flink/conf/ \
+        pyflink taskmanager
+    
+    docker exec -it $(docker ps --filter name=jobmanager --format={{.ID}}) /bin/bash
+    apt-get update -y && apt-get install -y python3 python3-pip python3-dev
+    pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+    ln -s /usr/bin/python3 /usr/bin/python
+    python3 -m pip install apache-flink -i https://pypi.tuna.tsinghua.edu.cn/simple
+    docker rmi pyflink && docker commit jobmanager0 pyflink && docker images | grep link
+
+    pip3 show apache-beam google-cloud-bigquery-storage
+    pip3 install google-cloud-bigquery-storage==2.6.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
+    pip3 install apache-beam==2.43.0 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+    python /opt/flink/examples/python/table/word_count.py
+    docker exec -it jobmanager0 bash
+    flink run -m localhost:8081 -py /opt/flink/examples/python/table/word_count.py --output /tmp/out
+    flink run -m localhost:8081 -py /opt/flink/python/base.py --output /tmp/out
+    docker exec -it taskmanager0 bash
+    cat /tmp/out/*
+ 
 
 # kernel 时区 rhel9
 
