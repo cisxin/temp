@@ -1258,7 +1258,7 @@
     #docker pull test
     #docker commit 1825ebfd3d19 test0
     #docker tag test testtest
-    #docker run -dit --name test0 test /bin/bash //--log-opt max-size=10m --log-opt max-file=3
+    #docker run -dit -u root --name test0 test /bin/bash //--log-opt max-size=10m --log-opt max-file=3
     #docker stop test0 && docker rm test0
     du -d1 -h /var/lib/docker/containers | sort -rh
 
@@ -1621,7 +1621,44 @@
     flink run -m localhost:8081 -py /opt/flink/python/base.py --output /tmp/out
     docker exec -it taskmanager0 bash
     cat /tmp/out/*
- 
+  
+  //minio
+
+    docker minio/minio #Amazon (ARN)
+    arn:partition:service:region:account-id:resource-type/resource-id
+    arn:partition:service:region:account-id:resource-type:resource-id
+    arn:cn       :s3     :cc    :minio     :log/wework
+    docker run --name minio0 -p 9000:9000 -p 9090:9090 -dit -e "MINIO_ROOT_USER=minio" -e "MINIO_ROOT_PASSWORD=cc@123456" -v $PWD/data:/data -v $PWD/config:/root/.minio minio/minio server /data --console-address ":9090" --address ":9000"
+    administrator->identity->users
+    user:test
+    password:test123456
+    accesskey:pgpDxxxxxxxxxxxxx
+    secretkey:TXXkXRd174ajcDlJLxxxxxxxxxxxxxxxxxxxxxxxx
+    http://10.0.0.110:9000/
+
+    curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ~/minio-binaries/mc
+    chmod +x ~/minio-binaries/mc
+    export PATH=$PATH:~/minio-binaries/
+    pgpDxxxxxxxxxxxxx
+    TXXkXRd174ajcDlJLxxxxxxxxxxxxxxxxxxxxxxxx
+    mc alias set minio http://10.0.0.110:9000 pgpDxxxxxxxxxxxxx TXXkXRd174ajcDlJLxxxxxxxxxxxxxxxxxxxxxxxx
+    mc admin info minio
+    mc cp aaaa.txt minio/arn-cn-minio-cc-minio-log/file/
+    mc cp --recursive D:\doucment\200001 myminio/test/数据存储
+                      本地文件夹存储路径  别名/桶名称/存储层级定义
+    mc ls minio/arn-cn-minio-cc-minio-log/file/
+    /root/minio-binaries/mc cp aaa.txt minio/arn-cn-minio-cc-minio-log/file/aaa.txt
+
+  //milvus
+
+    wget https://raw.githubusercontent.com/milvus-io/milvus/master/scripts/standalone_embed.sh
+    bash standalone_embed.sh start
+    bash standalone_embed.sh stop
+    bash standalone_embed.sh delete
+    >pip3 install openai torch transformers pymilvus  --break-system-packages
+    pip3 install torch torchvision transformers pymilvus pillow  --break-system-packages
+    bin/logstash -f logstash-minio.conf
+    cd /data/logstash/plugins && /usr/share/logstash/bin/logstash-plugin install logstash-output-s3
 
 # kernel 时区 rhel9
 
