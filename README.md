@@ -798,6 +798,7 @@
 
     //--link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。
     rsync -a --delete --link-dest /compare/path /source/path /target/path
+    rsync -avz –delete ~/elk ~/elk.bak
 
     sudo apt-get install sshpass
     sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
@@ -1648,6 +1649,8 @@
                       本地文件夹存储路径  别名/桶名称/存储层级定义
     mc ls minio/arn-cn-minio-cc-minio-log/file/
     /root/minio-binaries/mc cp aaa.txt minio/arn-cn-minio-cc-minio-log/file/aaa.txt
+    nohup mc mirror -w --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk > mcmirror.log 2>&1 &
+    mc mirror --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk
 
   //milvus
 
