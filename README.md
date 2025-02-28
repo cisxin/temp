@@ -113,6 +113,9 @@
     sed -i "s/qh0/$qh0/g" `grep -rl 'qh0' --include="*.sh" --include="*.conf" --include="*.yml" --exclude="*.bash" ./`
     sed '/%local_ip_v4_v4%/d' $(pwd)/template/vars.xml > $(pwd)/conf/vars.xml
     sed '/%local_ip_v4_v4%/s/.*/ /' $(pwd)/template/vars.xml > $(pwd)/conf/vars.xml
+    sed -i 's/\x0B//g' test.txt
+    sed -i ':a;N;$!ba;s/\n\n//g' test.txt
+    sed -i ':a;N;$!ba;s/11%；\n/11%；/g' test.txt
 
     替换\r\n->\n
     sed -i "s/\r//g" file_name
@@ -233,6 +236,10 @@
     vim -b xx.so 二进制打开
     :set display=uhex 或者 :set dy=uhex
     :%!xxd -g 1  十六进制
+
+    %!xxd
+    %s/\%x0a\%x0a//g
+    %!xxd -r
 
     :%s/aa/bb/g  替换
     :%s/\r//g    ##\r\n->\n
@@ -1510,6 +1517,8 @@
     kappa    /'kæpə/              Κ     κ     chi      /kaɪ/                          Χ      χ
     lambda   /'læmdə/             Λ     λ     psi      /psaɪ/                         Ψ      ψ
     mu       /mju:/               Μ     μ     omega    /'əʊmɪɡə/ /oʊ'meɡə/            Ω      ω
+
+    √√√√√√√☑☑ ☑ ☑ ☑  ☒☒☒☒☒☒∩∩∩∩
 
 # llm
 
