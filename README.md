@@ -637,22 +637,8 @@
     pip3 install numpy --break-system-packages
     sudo apt-get install python3-numpy python3-scipy python3-configobj python3-sympy python3-mpmath python3-functoolsplus python3-matplotlib
     //pipx install xxxx
-
-    curl https://pyenv.run | bash
-    echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.bashrc
-    echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
-    echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
-    source ~/.bashrc
-    pyenv install 3.10.13
-    pyenv version
-    pyenv local 3.10.13
-    pyenv virtualenv 3.10.13 v31013
-    pyenv global system
-    rm .python-version
-    pyenv local v31013
-    pip install v31013
-    python -m pip install -r requirements.txt
-    python -m pip show numpy | grep -i version
+    stat -c "%a %n" .bashrc
+    export PIP_BREAK_SYSTEM_PACKAGES=1
 
     //////////////////////////////
     or windows
@@ -667,6 +653,11 @@
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
     pip install jax[cuda12-pip] -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
     pip install jaxlib==0.4.25+cuda12.cudnn89  -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+
+    remote ssh
+    debug->python debug->remote attach->edit host-> ...
+    pip3 install debugpy
+    python3 -Xfrozen_modules=off -m debugpy  --listen 0.0.0.0:5678 --wait-for-client ~/mywork/testpython/test.py --use_peft --peft_method lora --quantization
 
   //go
 
