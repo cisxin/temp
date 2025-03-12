@@ -148,6 +148,27 @@ PUT _template/check_template
   }
 }
 
+//复制记录到生成新索引
+POST _reindex
+{
+  "source": {
+    "index": "message_az_2021",
+    "size": 1000, 
+    "sort": [ 
+      { "create_time": "desc" }
+    ]
+  },
+  "dest": {
+    "index": "new_index_2021"
+  }
+}
+POST new_index_2021/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
 curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: application/json' -d'
 {
 "docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
@@ -409,6 +430,7 @@ do
 #        fi
     done
 done
+
 
 //runlwework.sh
 docker stop logstash0 || echo 'DONE'
