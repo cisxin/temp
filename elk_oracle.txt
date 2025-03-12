@@ -152,7 +152,7 @@ PUT _template/check_template
 POST _reindex
 {
   "source": {
-    "index": "message_az_2021",
+    "index": "message_2024",
     "size": 1000, 
     "sort": [ 
       { "create_time": "desc" }
