@@ -160,7 +160,8 @@ POST _reindex
   },
   "dest": {
     "index": "new_index_2021"
-  }
+  },
+  "max_docs": 1000
 }
 POST new_index_2021/_delete_by_query
 {
