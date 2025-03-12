@@ -29,6 +29,8 @@
     grep -rn "#include <assert" *
     docker ps -as | grep -E "cc-|ccc"
 
+    grep -P "[\x0b-\x0b]" 202201.txt > b.txt && grep -P "[\x14-\x14]" 202201.txt >> b.txt && sed 's/\x0b//g' b.txt > b2.txt && sed 's/[\x14]//g' b2.txt > b3.txt && sed -r 's/\}\}([0-9])+/\}\}/g' b3.txt > c.txt
+
     findstr "hello there" ".\*.*"
     findstr /s /i /c:"hello there" /f:aa.txt
 

@@ -59,6 +59,8 @@ POST /message/_delete_by_query
     }
   }
 }    
+
+curl -u 'elastic:123456' -X GET "10.10.0.1:9201/_cat/indices?v"
   
 curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: application/json' -d'
 {
@@ -130,6 +132,22 @@ curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: applica
   ]  
 }'
 
+//add _template
+PUT _template/check_template
+{
+  "index_patterns": ["test_2_202*"],
+  "mappings": {
+    "properties": {
+      "tolist": {
+        "type": "text",
+        "analyzer": "ik_smart",
+        "search_analyzer": "ik_smart",
+        "fielddata": true
+      }
+    }
+  }
+}
+
 curl -k -XPOST http://192.168.0.1:9200/message/_search -H 'Content-Type: application/json' -d'
 {
 "docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
@@ -173,6 +191,272 @@ curl -k -u 'elastic':'123456' -XPUT "https://www.test.com:9200/_reindex?pretty" 
     "index": "work_2022"
   }
 }'
+
+logstash.yml
+http.host: "0.0.0.0"
+log.level: "error"
+
+//reply.sh
+#!/bin/bash
+_db=$1
+_db2=$2
+scmd=`ps -ef | grep 'reply.sh' | grep -v "$$" | grep -v grep`
+if [ -n "$scmd" ];then
+    echo "exit:" "$scmd"
+    exit
+fi
+json=`curl -s  -XGET http://10.10.0.153:9200/$_db/_search -H 'Content-Type: application/json' -d'
+{"query":{"bool":{"must":[{"bool":{"should":[{"bool":{"must_not":{"exists":{"field":"msgtime_reply"}}}},{"range":{"msgtime_reply":{"lt": 1000}}}]}}],
+"filter":[{"match_all":{}},{"match_phrase":{"@timestamp":{"query":"now/d"}}},{"script":{"script":{"source":"doc[\"tolist\"].size()==1"}}}]}},
+"sort":[{"msgtime":{"order":"desc"}}],"size":2000,"_source":["_id","msgid","msgtype","msgtime","msgtime_reply","from","tolist","roomid"]}'`;
+list=`echo $json | jq -c '.hits.hits'`;
+length=`echo $json | jq '.hits.hits|length'`;
+
+echo $list $length
+for i in `seq 0 $length`
+do
+    s=`echo $list | jq -c ".[$i]"`;
+    if [ $s = "null" ];then
+        continue
+    fi
+    _id=`echo $s | jq "._id"`;
+    from=`echo $s | jq "._source.from"`;
+    tolist=`echo $s | jq "._source.tolist[0]"`;
+    roomid=`echo $s | jq "._source.roomid"`;
+    msgtime=`echo $s | jq "._source.msgtime"`;
+    msgtime_reply=`echo $s | jq "._source.msgtime_reply"`;
+    #echo $i $_id $from $tolist $roomid $msgtime
+    if [ "$roomid" !=  "\"\""  -o "$from" = "null" ];then
+        echo `date` $i/$length "reply1000:" $i $_id $from $tolist $roomid $msgtime
+        continue
+    fi
+
+    ts=`echo $[$(date +%s%N)/1000000]`;
+    m=$((($ts - $msgtime)/1000/60));
+    if [ $m -gt 60 -a $(($i % 2)) -eq 0 ];then  
+        echo `date` $i/$length "reply1500:" $i $j $_id $from $tolist
+        continue
+    fi
+
+    json2=`curl -s  -XGET http://10.10.0.153:9200/$_db/_search -H 'Content-Type: application/json' -d'
+{"docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
+"query":{"bool":{"must":[{"term":{"from":'$tolist'}},{"term":{"tolist":'$from'}}],
+"filter":[{"range":{"msgtime":{"gt":'$msgtime'}}},{"match_phrase":{"@timestamp":{"query":"now/d"}}}]}},
+"sort":[{"msgtime":{"order":"asc"}}],
+"size":1,"_source":["_id","msgid","msgtype","msgtime"]}'`;
+    list2=`echo $json2 | jq -c '.hits.hits'`;
+    length2=`echo $json2 | jq '.hits.hits|length'`;
+    #echo $list2 $length2
+    
+    if [ $length2 -eq 0 ];then
+        echo `date` $i/$length "reply2000:" $i $j $_id $from $tolist
+
+        if [ "$msgtime_reply" = "null" ];then
+            json22=`curl -s  -XGET http://10.10.0.153:9200/$_db/_search -H 'Content-Type: application/json' -d'
+{"docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
+"query":{"bool":{"must":[{"term":{"from":'$tolist'}},{"term":{"tolist":'$from'}}],
+"filter":[{"range":{"msgtime":{"lte":'$msgtime'}}},{"match_phrase":{"@timestamp":{"query":"now/d"}}}]}},
+"size":1,"_source":["_id","msgid","msgtype","msgtime"]}'`;
+            length22=`echo $json22 | jq '.hits.hits|length'`;
+            msgtime22=0;
+            if [ $length22 -eq 0 ];then
+                msgtime22=-1
+            fi
+            json23=`curl -s  -H 'Content-Type: application/x-ndjson' -XPOST http://10.10.0.153:9200/$_db/_update_by_query -d'
+{"script":{"inline":"ctx._source.msgtime_reply='$msgtime22'L"},
+"query":{"match_phrase":{"_id":'$_id'}}}'`;
+            if [ $(($i % 1000)) -eq 0 ];then  
+                echo `date` $i/$length "reply 22:" $json23 $i $_id > /dev/console
+            fi
+        fi
+
+        continue
+    fi
+    for j in `seq 0 $length2`
+    do
+        s2=`echo $list2 | jq -c ".[$j]"`;
+        if [ $s2 = "null" ];then
+            continue
+        fi
+        _id2=`echo $s2 | jq "._id"`;
+        msgid2=`echo $s2 | jq "._source.msgid"`;
+        msgtime2=`echo $s2 | jq "._source.msgtime"`;
+        if [ "$msgid2" =  "\"\"" ];then
+            continue
+        fi
+        json3=`curl -s  -H 'Content-Type: application/x-ndjson' -XPOST http://10.10.0.153:9200/$_db/_update_by_query -d'
+{"script":{"inline":"ctx._source.msgtime_reply='$msgtime2'L"},
+"query":{"match_phrase":{"_id":'$_id'}}}'`;
+        if [ $(($i % 1000)) -eq 0 ];then  
+            echo `date` $i/$length "reply:" $json3 $i $j $_id $_id2 $msgid2 $msgtime2 > /dev/console
+        fi
+        json4=`curl -s  -H 'Content-Type: application/x-ndjson' -XPOST http://10.10.0.153:9200/$_db2/_update_by_query -d'
+{"script":{"inline":"ctx._source.updatetime='$msgtime2'L"},
+"query":{"match_phrase":{"_id":'$_id'}}}'`;
+        if [ $(($i % 1000)) -eq 0 ];then  
+            echo `date` $i/$length "updatetime:" $json4 $i $j $_id $_id2 $msgid2 $msgtime2 > /dev/console
+        fi
+    done
+done
+
+
+//reply_asc.sh
+#!/bin/bash
+_db=$1
+_db2=$2
+scmd=`ps -ef | grep 'reply_asc.sh' | grep -v "$$" | grep -v 'grep' | grep -v 2000`
+if [ $_db2 -gt 0 ];then
+    scmd=`ps -ef | grep 'reply_asc.sh' | grep -v "$$" | grep -v 'grep' | grep $_db2`
+fi
+if [ -n "$scmd" ];then
+    echo "exit:" "$scmd"
+    exit
+fi
+json=`curl -s -u 'elastic':'123456' -XGET http://10.10.0.1:9200/$_db/_search -H 'Content-Type: application/json' -d'
+{"query":{"bool":{"must":[{"bool":{"should":[{"bool":{"must_not":{"exists":{"field":"msgtime_reply"}}}},{"range":{"msgtime_reply":{"lt": 1000}}}]}},{"wildcard":{"from.keyword": "wm*"}}],
+"filter":[{"match_all":{}},{"match_phrase":{"@timestamp":{"query":"now/d"}}},{"script":{"script":{"source":"doc[\"tolist.keyword\"].size()==1"}}}]}},
+"sort":[{"msgtime":{"order":"asc"}}],"from": '$_db2',"size":2000,"_source":["_id","msgid","msgtype","msgtime","msgtime_reply","from","tolist","roomid"]}'`;
+list=`echo $json | jq -c '.hits.hits'`;
+length=`echo $json | jq '.hits.hits|length'`;
+
+echo $list $length
+for i in `seq 0 $length`
+do
+    s=`echo $list | jq -c ".[$i]"`;
+    if [ $s = "null" ];then
+        continue
+    fi
+    _id=`echo $s | jq "._id"`;
+    from=`echo $s | jq "._source.from"`;
+    tolist=`echo $s | jq "._source.tolist[0]"`;
+    roomid=`echo $s | jq "._source.roomid"`;
+    msgtime=`echo $s | jq "._source.msgtime"`;
+    msgtime_reply=`echo $s | jq "._source.msgtime_reply"`;
+
+    #echo $i $_id $from $tolist $roomid $msgtime
+    if [ "$roomid" !=  "\"\""  -o "$from" = "null" ];then
+        echo `date` $i/$length "reply1000:" $i $_id $from $tolist $roomid $msgtime
+        continue
+    fi
+
+    ts=`echo $[$(date +%s%N)/1000000]`;
+    m=$((($ts - $msgtime)/1000/60));
+    if [ $m -gt 600 -a $(($i % 2)) -eq 0 ];then  
+        echo `date` $i/$length "reply1500: " $i $_id $from $tolist $m'm' $msgtime
+        continue
+    fi
+
+    json2=`curl -s -u 'elastic':'123456' -XGET http://10.10.0.1:9200/$_db/_search -H 'Content-Type: application/json' -d'
+{"docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
+"query":{"bool":{"must":[{"term":{"from.keyword":'$tolist'}},{"term":{"tolist.keyword":'$from'}}],
+"filter":[{"range":{"msgtime":{"gt":'$msgtime'}}},{"match_phrase":{"@timestamp":{"query":"now/d"}}}]}},
+"sort":[{"msgtime":{"order":"asc"}}],
+"size":1,"_source":["_id","msgid","msgtype","msgtime"]}'`;
+
+    list2=`echo $json2 | jq -c '.hits.hits'`;
+    length2=`echo $json2 | jq '.hits.hits|length'`;
+    #echo $json2222 $json2 $list2 $length2
+    
+    if [ $length2 -eq 0 ];then
+        echo `date` $i/$length "reply2000:" $i $_id $from $tolist $msgtime_reply `date -d @"$(($msgtime/1000))" +"%Y-%m-%d %H:%M:%S"`
+
+        if [ "$msgtime_reply" = "null" ];then
+            json22=`curl -s -u 'elastic':'123456' -XGET http://10.10.0.1:9200/$_db/_search -H 'Content-Type: application/json' -d'
+{"docvalue_fields":[{"field":"@timestamp","format":"date_time"}],
+"query":{"bool":{"must":[{"term":{"from.keyword":'$tolist'}},{"term":{"tolist.keyword":'$from'}}],
+"filter":[{"range":{"msgtime":{"lte":'$msgtime'}}},{"match_phrase":{"@timestamp":{"query":"now/d"}}}]}},
+"size":1,"_source":["_id","msgid","msgtype","msgtime"]}'`;
+            length22=`echo $json22 | jq '.hits.hits|length'`;
+            msgtime22=0;
+            if [ $length22 -eq 0 ];then
+                msgtime22=-1
+            fi
+            json23=`curl -s -u 'elastic':'123456' -H 'Content-Type: application/x-ndjson' -XPOST http://10.10.0.1:9200/$_db/_update_by_query -d'
+{"script":{"inline":"ctx._source.msgtime_reply=params.aaaa","params":{"aaaa":'$msgtime2'}},"query":{"match_phrase":{"_id":'$_id'}}}'`;
+            if [ $(($i % 1)) -eq 0 ];then  
+                echo `date` $i/$length "reply 22:" $json23 $i $_id > /dev/console
+            fi
+        fi
+
+        continue
+    fi
+    if [ $(($i % 100)) -eq 0 ];then
+        echo `date` $i/$length "updatetime3000:" $json2 $list2 $length2
+    fi
+    for j in `seq 0 $length2`
+    do
+        s2=`echo $list2 | jq -c ".[$j]"`;
+        if [ $s2 = "null" ];then
+            continue
+        fi
+        _id2=`echo $s2 | jq "._id"`;
+        msgid2=`echo $s2 | jq "._source.msgid"`;
+        msgtime2=`echo $s2 | jq "._source.msgtime"`;
+        if [ "$msgid2" =  "\"\"" ];then
+            continue
+        fi
+        json3=`curl -s -u 'elastic':'123456' -H 'Content-Type: application/x-ndjson' -XPOST http://10.10.0.1:9200/$_db/_update_by_query -d'
+{"script":{"inline":"ctx._source.msgtime_reply='$msgtime2'L"},
+"query":{"match_phrase":{"_id":'$_id'}}}'`;
+        if [ $(($i % 1000)) -eq 0 ];then  
+            echo `date` $i/$length "reply:" $json3 $i $j $_id $_id2 $msgid2 $msgtime2 > /dev/console
+        fi
+        #json4=`curl -s -u 'elastic':'123456' -H 'Content-Type: application/x-ndjson' -XPOST http://10.10.0.1:9200/$_db2/_update_by_query -d'
+#{"script":{"inline":"ctx._source.updatetime='$msgtime2'L"},
+#"query":{"match_phrase":{"_id":'$_id'}}}'`;
+#        if [ $(($i % 1)) -eq 0 ];then  
+#            echo `date` $i/$length "updatetime4000:" $json4 $i $j $_id $_id2 $msgid2 $msgtime2 > /dev/console
+#        fi
+    done
+done
+
+//runlwework.sh
+docker stop logstash0 || echo 'DONE'
+docker rm logstash0 || echo 'DONE'
+docker run -d --name logstash0 --restart=always -v `pwd`/pipeline/:/usr/share/logstash/pipeline/ -v `pwd`/logstash.yml:/usr/share/logstash/config/logstash.yml -v `pwd`/ldata:/app/data -v `pwd`/logstash:/var/log/logstash -v /etc/localtime:/etc/localtime:ro -p 9600:9600/tcp -p 5044:5044/tcp -p 5054-5099:5054-5099 -p 5114-5199:5114-5199 -e LS_JAVA_OPTS='-Xms2048m -Xmx2048m' -e ES_JAVA_OPTS='-Xms2048m -Xmx2048m' logstash:latest
+
+
+//weworkbak.bat
+@echo off & setlocal enabledelayedexpansion
+title wework
+set /p d1=startdate:
+echo %d1%
+set /a d1=%d1%
+set date_format="YYYYMMDD"
+echo !d1! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+if %errorlevel% == 1 (
+  echo 日期1格式不正确，应为 %date_format%
+  exit /b 1
+)
+set /p d2=enddate:
+echo %d2%
+set /a d2=%d2%
+set date_format="YYYYMMDD"
+echo !d2! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
+if %errorlevel% == 1 (
+  echo 日期2格式不正确，应为 %date_format%
+  exit /b 1
+)
+plink.exe -ssh -no-antispoof -P 22244 -i E:\txy_id_rsa_1024_putty.ppk ubuntu@1.114.0.1 /app/wework/runmsgbak.sh !d1! !d2!
+echo download...
+::pscp.exe -sftp -P 22244 -i E:\txy_id_rsa_1024_putty.ppk -r ubuntu@1.114.0.1:/tmp/!d2! ./
+set infile=psftp0.txt
+set outfile=psftp.txt
+set findstr=starttime
+set findstr2=endtime
+set replacestr=!d1!
+set replacestr2=!d2!
+for /f "delims=" %%a in (%infile%) do (
+    set "line=%%a"
+    call set "line=%%line:%findstr%=%replacestr%%%"
+    call set "line=%%line:%findstr2%=%replacestr2%%%"
+    echo !line!
+    echo !line! > %outfile%
+)
+psftp.exe -P 22244 -i E:\txy_id_rsa_1024_putty.ppk ubuntu@1.114.0.1 -b "psftp.txt" -bc
+echo end
+exit
+
 
 ---------------------------------------------------------------------------
 
