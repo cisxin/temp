@@ -153,17 +153,17 @@ POST _reindex
 {
   "source": {
     "index": "message_2024",
-    "size": 1000, 
+    "size": 1000,      # 这里 `size` 仅影响批处理，不是最终数量限制
     "sort": [ 
       { "create_time": "desc" }
     ]
   },
   "dest": {
-    "index": "new_index_2021"
+    "index": "new_index_2024"
   },
-  "max_docs": 1000
+  "max_docs": 1000     # 确保最终只复制 1000 条数据
 }
-POST new_index_2021/_delete_by_query
+POST new_index_2024/_delete_by_query
 {
   "query": {
     "match_all": {}
