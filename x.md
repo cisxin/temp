@@ -1,4 +1,9 @@
-# stock
+# contents
+
+- [contents](#contents)
+  - [stock](#stock)
+
+## stock
 
     MA10:MA(C,10),LINETHICK2;//10周期均线
     MA30:MA(C,20),LINETHICK2;//30周期均线

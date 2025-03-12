@@ -1,28 +1,28 @@
 # contents
 
 - [contents](#contents)
-- [grep](#grep)
-- [awk](#awk)
-- [sed](#sed)
-- [ps crontab](#ps-crontab)
-- [vim](#vim)
-- [ssh su id](#ssh-su-id)
-- [for while](#for-while)
-- [git](#git)
-- [g++ python3 go](#g-python3-go)
-- [samba rsync](#samba-rsync)
-- [mac os](#mac-os)
-- [disk fsck ln](#disk-fsck-ln)
-- [network route nftable netsh tcpdump](#network-route-nftable-netsh-tcpdump)
-- [curl nc ab pptpsetup](#curl-nc-ab-pptpsetup)
-- [docker kvm](#docker-kvm)
-- [LaTeX Σ](#latex-σ)
-- [llm](#llm)
-- [kernel 时区 rhel9](#kernel-时区-rhel9)
-- [jenkins fs](#jenkins-fs)
-- [iis \[java .keystore\] elk](#iis-java-keystore-elk)
+  - [grep](#grep)
+  - [awk](#awk)
+  - [sed](#sed)
+  - [ps crontab](#ps-crontab)
+  - [vim](#vim)
+  - [ssh su id](#ssh-su-id)
+  - [for while](#for-while)
+  - [git](#git)
+  - [g++ python3 go](#g-python3-go)
+  - [samba rsync](#samba-rsync)
+  - [mac os](#mac-os)
+  - [disk fsck ln](#disk-fsck-ln)
+  - [network route nftable netsh tcpdump](#network-route-nftable-netsh-tcpdump)
+  - [curl nc ab pptpsetup](#curl-nc-ab-pptpsetup)
+  - [docker kvm](#docker-kvm)
+  - [LaTeX Σ](#latex-σ)
+  - [llm](#llm)
+  - [kernel 时区 rhel9](#kernel-时区-rhel9)
+  - [jenkins fs](#jenkins-fs)
+  - [iis \[java .keystore\] elk](#iis-java-keystore-elk)
 
-# grep
+## grep
 
 当前目录包含字符串文件
 
@@ -85,7 +85,7 @@
       ^锚定行首
       $锚定行尾    
 
-# awk
+## awk
 
     awk -F',' '{ print $1, $3 }' filename
     //数值计算，求和...
@@ -107,7 +107,7 @@
     sudo tar -zcvf gitlab20240516.tar.gz /srv/gitlab
     tar -xzvf gitlab20240516.tar.gz
 
-# sed
+## sed
 
     sed -n 's/0.0.0.0/1.1.1.1/p' a.txt
     sed -i 's/107.25.6.7/172.20.20.1/g' *.xml
@@ -136,7 +136,7 @@
     echo -e "\u4f1a\u8bdd\u8fc7\u671f\uff0c\u8bf7\u91cd\u65b0\u767b\u9646"  //会话过期，请重新登陆 //printf "\u4f1a\n"
 
     
-# ps crontab
+## ps crontab
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
 
     bg fg jobs ctr+z nohup
@@ -225,7 +225,7 @@
     10 01 * * 6 (sh /app/0.sh; sh /app/1.sh)
 
     
-# vim
+## vim
 
     整页翻页 ctrl-f ctrl-b
     } 移动到下一个block
@@ -260,7 +260,7 @@
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
     set number
 
-# ssh su id
+## ssh su id
 
     ssh -i "test.pem" ubuntu@xxxx.cn-north-1.compute.amazonaws.com.cn
     scp -i
@@ -383,7 +383,7 @@
     //simple password
     sudo passwd test
 
-# for while
+## for while
 
     length2=`echo $json2 | jq '.hits.hits|length'`;
     if [ $length22 -eq 0 ];then
@@ -449,7 +449,7 @@
     rm -rf $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml
     sed -e "s/%gw_fix_phone%/${gw_fix_phone}/;s/%gw_username%/${gw_username}/;s/%gw_auth_username%/${gw_auth_username}/;s/%gw_realm%/${gw_realm}/;s/%gw_from_domain%/${gw_from_domain}/;s/%gw_outbound_proxy%/${gw_outbound_proxy}/" $(pwd)/template/external2_00000000.xml > $(pwd)/freeswitch_config/sip_profiles/external2/gw${gw_fix_phone}.xml;
 
-# git
+## git
 
     git show 显示最后一次的文件改变的具体内容
     git show -5 显示最后 5 次的文件改变的具体内容
@@ -595,7 +595,7 @@
     docker cp your_certificate.crt gitlab:/etc/gitlab/ssl/gitlab.crt
     docker cp your_private_key.key gitlab:/etc/gitlab/ssl/gitlab.key
 
-# g++ python3 go
+## g++ python3 go
 
     sudo vim /etc/profile
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
@@ -769,7 +769,7 @@
     cargo build && cargo run && cargo check
     VSCode + Rust-Analyzer, LLDB DAP, CodeLLDB,=>main.rs => run|debug
   
-# samba rsync
+## samba rsync
 
     sudo apt-get install samba samba-common
     sudo vim /etc/samba/smb.conf
@@ -823,7 +823,7 @@
     sshpass -p "123456" ssh  test@10.1.0.15 "docker exec -i freeswitch0 fs_cli -x 'show channels as json'"
     sshpass -p '123456' ssh -o StrictHostKeyChecking=no john@192.168.1.100 'docker ps'
 
-# mac os
+## mac os
 
     locate tf-keras-datasets
     sudo /usr/libexec/locate.updatedb
@@ -912,7 +912,7 @@
 
     powercfg -h off
 
-# disk fsck ln
+## disk fsck ln
 
     1.对新增加的硬盘进行分区、格式化
     增加空间的硬盘是 /dev/sda 
@@ -1042,7 +1042,7 @@
     ln -s ../bin/python3.8 /usr/local/bin/python3
     mklink /d C:\.nuget E:\.nuget    
 
-# network route nftable netsh tcpdump
+## network route nftable netsh tcpdump
 
     sudo apt install net-tools
 
@@ -1194,7 +1194,7 @@
     sudo tcpdump -i eno1 -A -s 0 'tcp port 11000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
     sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
     
-# curl nc ab pptpsetup
+## curl nc ab pptpsetup
 
     curl -H "Content-Type: application/json" -X POST -d '{"name":"test", "Company_name":"testtest", "mobile":"10086","status":1, "msg":"OK!" }' "http://10.1.1.5:8080/v1/api/insertdocument"
     curl --referer "tiga.ss888.com" "https://www.test.com/1616985544896.mp3" --output d:\1.mp3
@@ -1221,7 +1221,7 @@
     sudo pptpsetup --create testvpn --server 10.10.15.100 --username vpn --password vpn --encrypt --start && sudo route del -net 10.23.8.240 netmask 255.255.255.255 && sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
     sudo vim /etc/ppp/options     
 
-# docker kvm
+## docker kvm
 
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker rm
@@ -1465,7 +1465,7 @@
 
     sudo virt-clone -o virt0 -n database_devel -f /path/to/virt01.img 
 
-# LaTeX Σ
+## LaTeX Σ
 
   $H(s) = \frac{Y(s)}{X(s)}$
   $$H(z) = \frac{Y(z)}{X(z)}$$
@@ -1513,7 +1513,7 @@
 
     √√√√√√√☑☑ ☑ ☑ ☑  ☒☒☒☒☒☒∩∩∩∩
 
-# llm
+## llm
 
     //Langchain-Chatchat
     sudo apt install python3-pip
@@ -1681,7 +1681,7 @@
     bin/logstash -f logstash-minio.conf
     cd /data/logstash/plugins && /usr/share/logstash/bin/logstash-plugin install logstash-output-s3
 
-# kernel 时区 rhel9
+## kernel 时区 rhel9
 
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300-generic_6.3.0-060300.202304232030_amd64.deb
     wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.3/amd64/linux-headers-6.3.0-060300_6.3.0-060300.202304232030_all.deb
@@ -1759,7 +1759,7 @@
     chkconfig iptables off
     systemctl status iptables.service
 
-# jenkins fs
+## jenkins fs
 
     crontab  */15
                                    *      *      *        *        *
@@ -1897,7 +1897,7 @@
     sudo sngrep port 5060
     sudo sngrep host 192.168.1.100
 
-# iis [java .keystore] elk
+## iis [java .keystore] elk
 
     // 导出所有应用程序池
     C:\Windows\System32\inetsrv\appcmd.exe list apppool /config /xml > d:\temp\apppools.xml
