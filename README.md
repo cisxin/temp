@@ -661,6 +661,13 @@
     pip3 install debugpy
     python3 -Xfrozen_modules=off -m debugpy  --listen 0.0.0.0:5678 --wait-for-client ~/mywork/testpython/test.py --use_peft --peft_method lora --quantization
 
+    uv init
+    uv add --requirements .\requirements.txt
+    uv sync
+    uv remove pandas==1.3.5
+    uv add pandas torch torchdata torchtext spacy altair jupytext flake8 black GPUtil wandb
+    uv remove torch
+
   //go
 
     sudo apt-get install golang-go
