@@ -668,6 +668,25 @@
     uv add pandas torch torchdata torchtext spacy altair jupytext flake8 black GPUtil wandb
     uv remove torch
 
+    //.vscode/launch.json //debug
+    //streamlit run app.py
+    //python -m streamlit run app.py
+    {
+      "version": "0.2.0",
+      "configurations": [
+          {
+              "name": "debug streamlit",
+              "type": "debugpy",
+              "request": "launch",
+              "module": "streamlit",
+              "args": ["run", "app.py"],
+              "jinja": true,
+              "justMyCode": false,
+              "console": "integratedTerminal",
+          }
+      ]
+  }
+
   //go
 
     sudo apt-get install golang-go
