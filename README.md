@@ -674,18 +674,18 @@
     {
       "version": "0.2.0",
       "configurations": [
-          {
-              "name": "debug streamlit",
-              "type": "debugpy",
-              "request": "launch",
-              "module": "streamlit",
-              "args": ["run", "app.py"],
-              "jinja": true,
-              "justMyCode": false,
-              "console": "integratedTerminal",
-          }
+        {
+          "name": "debug streamlit",
+          "type": "debugpy",
+          "request": "launch",
+          "module": "streamlit",
+          "args": ["run", "app.py"],
+          "jinja": true,
+          "justMyCode": false,
+          "console": "integratedTerminal",
+        }
       ]
-  }
+    }
 
   //go
 
