@@ -1003,6 +1003,17 @@
     LABEL=cloudimg-rootfs   /  ext4   defaults        0 0
     /dev/sdb                /SDB1    ext4   defaults        0 0
     -----------------------------------------------------------------------------
+    sudo vgchange -an
+    sudo dmsetup remove_all
+    sudo pvscan
+    sudo vgimportclone --basevgname old-vg /dev/sdb3
+    sudo vgchange -ay old-vg
+    sudo lvs
+    sudo mkdir -p /mnt/newdisk
+    sudo mount /dev/ubuntu-vg/lv-1 /mnt/newdisk
+    恢复使用 /dev/sda3 的 ubuntu-vg：
+    sudo umount /mnt/newdisk
+    sudo vgchange -ay ubuntu-vg
 
     //rhel
     sudo lvs # 查看逻辑卷
