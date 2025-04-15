@@ -1606,7 +1606,7 @@
   //ollama
 
     //llm ollama langchain streamlit webui RAG
-    curl https://ollama.ai/install.sh | sh
+    curl -fsSL https://ollama.com/install.sh | sh
     //localhost:11434
     ollama serve
     ollama run llama2
@@ -1645,9 +1645,31 @@
     GIT_SSL_NO_VERIFY=1 git clone https://huggingface.co/google/gemma-1.1-7b-it
     huggingface-cli download --resume-download gemma-1.1-7b-it --local-dir gemma-1.1-7b-it
 
-    git pull origin  
+    git pull origin 
 
-  //flink 
+    # Use a pipeline as a high-level helper####
+    from transformers import pipeline
+    messages = [ {"role": "user", "content": "Who are you?"}, ]
+    pipe = pipeline("text-generation", model="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B")
+    pipe(messages) 
+    ############################################
+
+  //vllm
+
+    vllm serve "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+    curl -X POST "http://localhost:8000/v1/chat/completions" \
+    -H "Content-Type: application/json" \
+    --data '{
+      "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is the capital of France?"
+        }
+      ]
+    }'
+
+  //flink
 
     docker pull flink
     docker network create flink-network
