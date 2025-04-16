@@ -1756,6 +1756,9 @@
     pip3 install torch torchvision transformers pymilvus pillow  --break-system-packages
     bin/logstash -f logstash-minio.conf
     cd /data/logstash/plugins && /usr/share/logstash/bin/logstash-plugin install logstash-output-s3
+    docker pull zilliz/attu
+    docker run -idt -p 3000:3000 -e MILVUS_URL=10.23.0.10:19530 --name zilliz-attu zilliz/attu
+    10.23.0.10:3000
 
 ## kernel 时区 rhel9
 
