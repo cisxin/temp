@@ -1719,35 +1719,6 @@
   
   //minio
 
-    docker minio/minio #Amazon (ARN)
-    arn:partition:service:region:account-id:resource-type/resource-id
-    arn:partition:service:region:account-id:resource-type:resource-id
-    arn:cn       :s3     :cc    :minio     :log/wework
-    docker run --name minio0 -p 9000:9000 -p 9090:9090 -dit -e "MINIO_ROOT_USER=minio" -e "MINIO_ROOT_PASSWORD=cc@123456" -v $PWD/data:/data -v $PWD/config:/root/.minio minio/minio server /data --console-address ":9090" --address ":9000"
-    administrator->identity->users
-    user:test
-    password:test123456
-    accesskey:pgpDxxxxxxxxxxxxx
-    secretkey:TXXkXRd174ajcDlJLxxxxxxxxxxxxxxxxxxxxxxxx
-    http://10.0.0.110:9000/
-
-    curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ~/minio-binaries/mc
-    chmod +x ~/minio-binaries/mc
-    export PATH=$PATH:~/minio-binaries/
-    pgpDxxxxxxxxxxxxx
-    TXXkXRd174ajcDlJLxxxxxxxxxxxxxxxxxxxxxxxx
-    mc alias set minio http://10.0.0.110:9000 pgpDxxxxxxxxxxxxx TXXkXRd174ajcDlJLxxxxxxxxxxxxxxxxxxxxxxxx
-    mc admin info minio
-    mc cp aaaa.txt minio/arn-cn-minio-cc-minio-log/file/
-    mc cp --recursive D:\doucment\200001 myminio/test/数据存储
-                      本地文件夹存储路径  别名/桶名称/存储层级定义
-    mc ls minio/arn-cn-minio-cc-minio-log/file/
-    /root/minio-binaries/mc cp aaa.txt minio/arn-cn-minio-cc-minio-log/file/aaa.txt
-    nohup mc mirror -w --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk > mcmirror.log 2>&1 &
-    mc mirror --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk
-  
-  //minio
-
     docker pull minio/minio #Amazon 资源名称(ARN)
     arn:partition:service:region:account-id:resource-type/resource-id
     arn:partition:service:region:account-id:resource-type:resource-id
@@ -1758,6 +1729,23 @@
     password:test123456
     accesskey:xxxxxxxxxxxxxxxxx
     secretkey:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+
+    curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o ~/minio-binaries/mc
+    chmod +x ~/minio-binaries/mc
+    export PATH=$PATH:~/minio-binaries/
+    mc alias set minio http://10.23.0.10:9000 xxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    mc admin info minio
+    mc cp aaaa.txt minio/arn-cn-minio-cc-minio-log/file/
+    mc cp --recursive D:\doucment\200001 myminio/test/数据存储
+                      本地文件夹存储路径  别名/桶名称/存储层级定义
+    mc ls minio/arn-cn-minio-cc-minio-log/file/
+    nohup mc mirror -w --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk > mcmirror.log 2>&1 &
+    mc mirror --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk
+    mc mirror --overwrite "/usr/share/miniodata" minio/arn-cn-minio-cc-minio-log/wework2
+    docker run -dit --name minio0 -v /app/wework2/data:/code/data image.test.com/python:3.12a bash
+
+    mc alias set ccs3 https://cos.ap-shanghai.myqcloud.com xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    mc ls ccs3/test-cdn-123456789
 
   //milvus
 
