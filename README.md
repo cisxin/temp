@@ -369,6 +369,7 @@
     ::用户 username 的GID修改为 new_gid
     usermod -g new_gid username
 
+    sudo chown -R fs:fs fs
     chown user filename //chown user:group filename
     chgrp groupname filename
 
@@ -1648,6 +1649,7 @@
   //huggingface
   
     git lfs install
+    pip3 install huggingface_hub
     huggingface-cli login
     git init ./
     git clone https://huggingface.co/google/gemma-7b-it
