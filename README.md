@@ -1745,6 +1745,19 @@
     /root/minio-binaries/mc cp aaa.txt minio/arn-cn-minio-cc-minio-log/file/aaa.txt
     nohup mc mirror -w --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk > mcmirror.log 2>&1 &
     mc mirror --overwrite "/home/fs/elk" minio/arn-cn-minio-cc-minio-log/file/elk
+  
+  //minio
+
+    docker pull minio/minio #Amazon 资源名称(ARN)
+    arn:partition:service:region:account-id:resource-type/resource-id
+    arn:partition:service:region:account-id:resource-type:resource-id
+    arn:cn       :s3     :cc    :minio     :log/wework
+    docker run --name minio0 -p 9000:9000 -p 9090:9090 -dit -e "MINIO_ROOT_USER=minio" -e "MINIO_ROOT_PASSWORD=aa@123456" -v $PWD/data:/data -v $PWD/config:/root/.minio minio/minio server /data --console-address ":9090" --address ":9000"
+    administrator->identity->users
+    user:test
+    password:test123456
+    accesskey:xxxxxxxxxxxxxxxxx
+    secretkey:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
 
   //milvus
 
