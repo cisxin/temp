@@ -1686,6 +1686,9 @@
     git clone https://github.com/vllm-project/vllm.git
     docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
     docker run --rm --privileged=true -p 8000:8000 --name vllm-cpu-env0 vllm-cpu-env --model=Qwen/Qwen2.5-1.5B-Instruct --dtype=bfloat16
+    INFO:     Started server process [1]
+    INFO:     Waiting for application startup.
+    INFO:     Application startup complete. //console ok
     docker run --rm --user "$(id -u):$(id -g)"  --workdir /workspace --volume "$(pwd)":/workspace  --name vllm-env0 ghcr.io/patrickhoefler/dockerfilegraph:alpine --output png --dpi 200 --max-label-length 50 --filename docker/Dockerfile --legend
     curl http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" \
     -d '{
