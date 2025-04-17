@@ -1684,6 +1684,11 @@
       ]
     }'
 
+    git clone https://github.com/vllm-project/vllm.git
+    docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
+    docker run --rm --privileged=true -p 8000:8000 --name vllm-cpu-env0 vllm-cpu-env --model=meta-llama/Llama-3.2-1B-Instruct --dtype=bfloat16
+    docker run --rm --user "$(id -u):$(id -g)"  --workdir /workspace --volume "$(pwd)":/workspace  --name vllm-env0 ghcr.io/patrickhoefler/dockerfilegraph:alpine --output png --dpi 200 --max-label-length 50 --filename docker/Dockerfile --legend
+
   //flink
 
     docker pull flink
