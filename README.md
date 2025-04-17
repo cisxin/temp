@@ -1672,8 +1672,7 @@
   //vllm
 
     vllm serve "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
-    curl -X POST "http://localhost:8000/v1/chat/completions" \
-    -H "Content-Type: application/json" \
+    curl -X POST "http://localhost:8000/v1/chat/completions" -H "Content-Type: application/json" \
     --data '{
       "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
       "messages": [
@@ -1688,14 +1687,13 @@
     docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
     docker run --rm --privileged=true -p 8000:8000 --name vllm-cpu-env0 vllm-cpu-env --model=Qwen/Qwen2.5-1.5B-Instruct --dtype=bfloat16
     docker run --rm --user "$(id -u):$(id -g)"  --workdir /workspace --volume "$(pwd)":/workspace  --name vllm-env0 ghcr.io/patrickhoefler/dockerfilegraph:alpine --output png --dpi 200 --max-label-length 50 --filename docker/Dockerfile --legend
-    curl http://localhost:8000/v1/chat/completions \
-    -H "Content-Type: application/json" \
+    curl http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" \
     -d '{
-        "model": "Qwen/Qwen2.5-1.5B-Instruct",
-        "messages": [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "Who won the world series in 2020?"}
-        ]
+          "model": "Qwen/Qwen2.5-1.5B-Instruct",
+          "messages": [
+              {"role": "system", "content": "You are a helpful assistant."},
+              {"role": "user", "content": "Who won the world series in 2020?"}
+          ]
     }'
 
   //flink
