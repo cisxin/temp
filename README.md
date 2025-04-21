@@ -1683,7 +1683,7 @@
       ]
     }'
     docker pull vllm/vllm-openai
-    docker run --rm -dit --privileged=true -p 8000:8000 --name vllm-openai0 vllm/vllm-openai --model models/Qwen2.5-1.5B-Instruct --dtype bfloat16 --device cpu
+    docker run --rm -dit --privileged=true -p 8000:8000 --name vllm-openai0 vllm/vllm-openai --model Qwen/Qwen2.5-1.5B-Instruct --dtype bfloat16 --device cpu
 
     git clone https://github.com/vllm-project/vllm.git
     docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
