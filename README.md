@@ -1669,6 +1669,35 @@
     pipe(messages) 
     ############################################
 
+  //llama.cpp
+  
+    git lfs install
+    git clone https://github.com/ggerganov/llama.cpp
+    cd llama.cpp
+    cmake -B build -j 16
+    cmake -B build -DGGML_CUDA=ON -j 16
+    cmake --build build --config Release
+
+    pip3 install huggingface_hub --upgrade 
+    python3 -c "
+    from huggingface_hub import snapshot_download
+    snapshot_download(
+        repo_id='SUFE-AIFLM-Lab/Fin-R1',
+        local_dir='/home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1',
+        local_dir_use_symlinks=False
+    )"
+    python3 convert_hf_to_gguf.py /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1 --outfile /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf
+    ./llama-cli -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf \
+        -co -cnv -p "You are Qwen, created by Alibaba Cloud. You are a helpful assistant." -fa -ngl 80 -n 512
+    ./llama-server -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf
+    curl http://127.0.0.1:8080/completion -d '{"prompt":"你是谁？", "n_predict":128}'
+    curl http://127.0.0.1:8080/completion \
+      -H "Content-Type: application/json" \
+      -d '{
+        "prompt": "<|im_start|>system\\n你是一位资深的金融证券合规专家。<|im_end|>\\n<|im_start|>user\\n问题：收益承诺，主要表现在？\\nRAG的相关上下文:{context}<|im_end|>\\n<|im_start|>assistant<|im_end|>",
+        "n_predict": 512
+    }'
+
   //vllm
 
     vllm serve "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
@@ -1700,6 +1729,14 @@
               {"role": "user", "content": "Who won the world series in 2020?"}
           ]
     }'
+
+  //accelerate
+
+    accelerate estimate-memory SUFE-AIFLM-Lab/Fin-R1 --library_name transformers
+    accelerate estimate-memory SUFE-AIFLM-Lab/Fin-R1 --dtypes float16 --library_name transformers
+    pip install transformers_stream_generator
+    accelerate estimate-memory Qwen/Qwen-7B --trust_remote_cod
+    transformers-cli env
 
   //flink
 
