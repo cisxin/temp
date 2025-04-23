@@ -1697,6 +1697,8 @@
         "n_predict": 512,"n_predict": 512,"temperature":0.2,"top_p":0.9,"repeat_penalty":1.05,"eos_token_id":151645,"pad_token_id":151643
       }'
 
+    docker run -rm -v /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1:/models -p 8080:8080 --name llama.cpp ghcr.io/ggml-org/llama.cpp:server -m /models/Qwen2.5-7b-instruct-f16.gguf --port 8080 --host 0.0.0.0 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
+
   //vllm
 
     vllm serve "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
