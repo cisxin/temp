@@ -1809,6 +1809,10 @@
     bash standalone_embed.sh start
     bash standalone_embed.sh stop
     bash standalone_embed.sh delete
+    vim milvus.yaml or user.yaml
+    authorizationEnabled: true
+    user=‘root’
+    password=‘Milvus’
     >pip3 install openai torch transformers pymilvus  --break-system-packages
     pip3 install torch torchvision transformers pymilvus pillow  --break-system-packages
     bin/logstash -f logstash-minio.conf
