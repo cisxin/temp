@@ -1689,14 +1689,13 @@
     python3 convert_hf_to_gguf.py /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1 --outfile /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf
     ./llama-cli -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf \
         -co -cnv -p "You are Qwen, created by Alibaba Cloud. You are a helpful assistant." -fa -ngl 80 -n 512
-    ./llama-server -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf --host 0.0.0.0 --port 8080
+    ./llama-server -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf --host 0.0.0.0 --port 8080 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
     curl http://127.0.0.1:8080/completion -d '{"prompt":"你是谁？", "n_predict":128}'
-    curl http://127.0.0.1:8080/completion \
-      -H "Content-Type: application/json" \
+    curl http://127.0.0.1:8080/completion -H "Content-Type: application/json" 
       -d '{
-        "prompt": "<|im_start|>system\\n你是一位资深的金融证券合规专家。<|im_end|>\\n<|im_start|>user\\n问题：收益承诺，主要表现在？\\n相关上下文:{context}<|im_end|>\\n<|im_start|>assistant<|im_end|>",
+        "prompt": "<|im_start|>system \\n你是一位资深的金融证券合规专家。<|im_end|>\\n<|im_start|>user \\n问题：收益承诺，主要表现在？\\n相关上下文:\\n{context}\\n<|im_end|>\\n<|im_start|>assistant<|im_end|>",
         "n_predict": 512,"n_predict": 512,"temperature":0.2,"top_p":0.9,"repeat_penalty":1.05,"eos_token_id":151645,"pad_token_id":151643
-    }'
+      }'
 
   //vllm
 
