@@ -1008,11 +1008,16 @@
     sudo vgchange -an
     sudo dmsetup remove_all
     sudo pvscan
+    sudo vgscan
+    sudo lvscan
+    sudo lvdisplay
+    #sudo dmsetup ls     # 查看残留
+    #sudo dmsetup remove /dev/mapper/old--vg1-xxx
     sudo vgimportclone --basevgname old-vg /dev/sdb3
     sudo vgchange -ay old-vg
     sudo lvs
     sudo mkdir -p /mnt/newdisk
-    sudo mount /dev/ubuntu-vg/lv-1 /mnt/newdisk
+    sudo mount /dev/old-vg1/lv-1 /mnt/newdisk
     恢复使用 /dev/sda3 的 ubuntu-vg：
     sudo umount /mnt/newdisk
     sudo vgchange -ay ubuntu-vg
