@@ -666,6 +666,7 @@
     uv add --requirements .\requirements.txt
     uv sync
     uv remove pandas==1.3.5
+    uv venv --python=python3.12
     uv add pandas torch torchdata torchtext spacy altair jupytext flake8 black GPUtil wandb
     uv remove torch
     uv pip install flagembedding //临时调试、只想试试某个包
