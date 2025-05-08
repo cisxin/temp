@@ -315,6 +315,17 @@
     sudo vim /etc/pam.d/sshd 或 /etc/pam.d/login
     auth required pam_faillock.so deny=3 unlock_time=600 even_deny_root root_unlock_time=600
 
+    //使用 fail2ban
+    sudo apt-get install fail2ban
+    sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+    sudo vim /etc/fail2ban/jail.local
+    [sshd]
+    enabled = true
+    maxretry = 3       # 最大尝试次数
+    findtime = 10m     # 10分钟内
+    bantime = 10m      # 锁定10分钟
+    sudo systemctl restart fail2ban
+
   //putty
   
     @echo off & setlocal enabledelayedexpansion
