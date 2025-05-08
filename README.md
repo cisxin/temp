@@ -1666,6 +1666,17 @@
     GIT_SSL_NO_VERIFY=1 git clone https://huggingface.co/google/gemma-1.1-7b-it
     huggingface-cli download --resume-download gemma-1.1-7b-it --local-dir gemma-1.1-7b-it
     huggingface-cli download google/gemma-3-4b-it //accept the conditions
+    huggingface-cli login //access token
+    huggingface-cli download deepseek-ai/DeepSeek-R1-Distill-Qwen-7B ./DeepSeek-R1-Distill-Qwen-7B 
+    huggingface-cli download DevQuasar/deepseek-ai.DeepSeek-R1-Distill-Qwen-7B-GGUF
+    huggingface-cli download BAAI/bge-base-zh-v1.5
+    huggingface-cli download sentence-transformers/all-MiniLM-L6-v2
+    huggingface-cli download deepseek-ai/DeepSeek-R1-Distill-Llama-8B
+    huggingface-cli download SUFE-AIFLM-Lab/Fin-R1
+    huggingface-cli download bartowski/SUFE-AIFLM-Lab_Fin-R1-GGUF
+    deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+    huggingface-cli download Qwen/Qwen2.5-1.5B-Instruct-GGUF
+    C:\Users\Administrator\.cache\huggingface
 
     git pull origin 
 
