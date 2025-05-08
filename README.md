@@ -305,6 +305,12 @@
 
   //配置文件（~/.ssh/config）来区分和指定多个私钥文件对应的主机
 
+    sudo vim /etc/ssh/sshd_config
+    GatewayPorts yes
+    ssh -f -N -R 10.23.0.10:2222:10.10.0.8:22 -p 6022 fs@140.27.96.20
+    10.23.0.10 -> 10.23.0.10:2222 -> 140.27.96.20 -> 10.10.0.8:22
+    sudo systemctl restart ssh.service
+
     vim ~/.ssh/config
     Host host1
         HostName <hostname or IP>
