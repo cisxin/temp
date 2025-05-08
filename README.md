@@ -1657,6 +1657,7 @@
   
     git lfs install
     pip3 install huggingface_hub
+    //export PATH="$(python3 -m site --user-base)/bin:$PATH"
     huggingface-cli login //access token
     git init ./
     git clone https://huggingface.co/google/gemma-7b-it
