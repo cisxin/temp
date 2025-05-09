@@ -1709,7 +1709,9 @@
     git lfs install
     git clone https://github.com/ggerganov/llama.cpp
     cd llama.cpp
-    cmake -B build -j 16
+    cmake -B build
+    cd build
+    make -j16
     cmake -B build -DGGML_CUDA=ON -j 16
     cmake --build build --config Release
 
@@ -1724,6 +1726,17 @@
     python3 convert_hf_to_gguf.py /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1 --outfile /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf
     ./llama-cli -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf \
         -co -cnv -p "You are Qwen, created by Alibaba Cloud. You are a helpful assistant." -fa -ngl 80 -n 512
+
+    huggingface-cli download SUFE-AIFLM-Lab/Fin-R1
+    fs@elk:~/llm/llama.cpp$ ls /home/fs/.cache/huggingface/hub/models--SUFE-AIFLM-Lab--Fin-R1/snapshots/026768c4a015b591b54b240743edeac1de0970fa
+    added_tokens.json  generation_config.json  merges.txt                        model-00002-of-00004.safetensors  model-00004-of-00004.safetensors  README_en.md  special_tokens_map.json  tokenizer_config.json  vocab.json
+    config.json        Images                  model-00001-of-00004.safetensors  model-00003-of-00004.safetensors  model.safetensors.index.json      README.md     Technical_report.pdf     tokenizer.json
+    mkdir -p /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1
+    python3 convert_hf_to_gguf.py /home/fs/.cache/huggingface/hub/models--SUFE-AIFLM-Lab--Fin-R1/snapshots/026768c4a015b591b54b240743edeac1de0970fa --outfile /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1/SUFE-AIFLM-Lab--Fin-R1.gguf
+    fs@elk:~/llm/llama.cpp$ ls /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1
+    SUFE-AIFLM-Lab--Fin-R1.gguf
+    ./build/bin/llama-server -m /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1/SUFE-AIFLM-Lab--Fin-R1.gguf --host 0.0.0.0 --port 8080 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
+
     ./llama-server -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf --host 0.0.0.0 --port 8080 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
     curl http://127.0.0.1:8080/completion -d '{"prompt":"你是谁？", "n_predict":128}'
     curl http://127.0.0.1:8080/completion -H "Content-Type: application/json" 
