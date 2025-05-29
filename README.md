@@ -390,7 +390,7 @@
     chown user filename //chown user:group filename
     chgrp groupname filename
 
-    chmod
+    chmod 775 -R config
     400 -r--------     拥有者能够读 其他任何人不能进行任何操作；
     644 -rw-r--r--     拥有者都能够读，但只有拥有者可以编辑；
     666 -rw-rw-rw-     所有用户都有文件读、写权限
@@ -1252,6 +1252,8 @@
     tcpdump -ni ens160 tcp and host 10.0.0.1 and port 8080 -v
     tcpdump -ni enp3s0 udp and host 10.1 -v -w /tmp/1.cap
     tcpdump -ni enp3s0 udp and host 121.37.x.x -v -w /tmp/1.cap
+    sudo tcpdump -i enp5s0 host 10.10.1.31 -v -w /tmp/1.cap //recive client(host):10.10.0.31
+    sudo tcpdump -i enp5s0 dst host 10.10.0.9 -v -w /tmp/2.cap //send server(dst host):10.10.0.9
 
     sudo tcpdump -i eno1 -A -s 0 'tcp port 11000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
     sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
