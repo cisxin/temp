@@ -747,6 +747,8 @@
     npm install @vue/cli-plugin-babel --save-dev
     npm install -g serve
     serve -s dist
+    //npm install
+    //live/seven$ npm run build:prod
     vue -V
     vue list
     vue init webpack project-name
