@@ -1259,6 +1259,27 @@
 
     sudo tcpdump -i eno1 -A -s 0 'tcp port 11000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
     sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
+
+  //network monitoring
+
+    docker exec -it lighting_3 tcpdump -i eth0 -nn -c 100
+    sudo iftop -i eth0 #占用带宽最多的 IP
+    sudo nethogs eth0 #显示按进程分的流量使用情况
+    sudo netstat -antp | sort -k5 -n 或 sudo ss -antp | sort -k5 -n #连接数最多或状态为 ESTABLISHED
+    sudo apt install conntrack
+    sudo conntrack -L #查看连接追踪表
+    sudo tcpdump -i eth0 host 192.168.1.100 -nn -c 500 -w high_traffic.pcap
+    sudo apt install ntopng
+    sudo systemctl enable ntopng
+    sudo systemctl start ntopng
+    sudo vim /etc/ntopng/ntopng.conf
+    -i=eth0
+    -G=/var/run/ntopng.pid
+    -i=eth0
+    -w=3000
+    --local-networks="10.3.2.24/16"
+    sudo apt install bmon
+    bmon #图形化显示每个网卡流量
     
 ## curl nc ab pptpsetup
 
