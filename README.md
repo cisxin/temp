@@ -1042,6 +1042,23 @@
     sudo umount /mnt/newdisk
     sudo vgchange -ay ubuntu-vg
 
+    #add a disk on ubuntu
+    循环扫描所有 SCSI 总线：
+    for host in /sys/class/scsi_host/host*; do
+        echo "- - -" | sudo tee "$host/scan"
+    done
+    # 创建物理卷
+    sudo pvcreate /dev/sdb
+    # 扩展卷组
+    sudo vgextend ubuntu-vg /dev/sdb
+    # 扩展逻辑卷
+    sudo lvextend -l +100%FREE /dev/ubuntu-vg/lv-0
+    # 扩展文件系统 (ext4)
+    sudo resize2fs /dev/ubuntu-vg/lv-0
+    # 检查
+    df -h
+    sudo lvs
+
     //rhel
     sudo lvs # 查看逻辑卷
     sudo vgs # 查看卷组
