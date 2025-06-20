@@ -1825,6 +1825,14 @@
     docker pull public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.9.1
     docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
     docker run --rm --privileged=true -p 8000:8000 -v /home/fs/.cache/huggingface/hub:/models vllm-cpu-env --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=bfloat16
+    docker run --rm --privileged=true -p 8000:8000 -v /home/fs/.cache/huggingface/hub:/models --shm-size=8g -e VLLM_CPU_KVCACHE_SPACE=32 -e VLLM_CPU_OMP_THREADS_BIND=0-31 vllm-cpu-env --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=bfloat16
+    curl http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" \
+    -d '{
+          "messages": [
+              {"role": "system", "content": "You are a helpful assistant."},
+              {"role": "user", "content": "Who won the world series in 2020?"}
+          ]
+    }'
 
   //accelerate
 
