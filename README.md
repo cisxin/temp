@@ -1821,6 +1821,11 @@
           ]
     }'
 
+    //ok
+    docker pull public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.9.1
+    docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
+    docker run --rm --privileged=true -p 8080:8000 -v /home/fs/.cache/huggingface/hub:/models vllm-cpu-env --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=bfloat16
+
   //accelerate
 
     accelerate estimate-memory SUFE-AIFLM-Lab/Fin-R1 --library_name transformers
