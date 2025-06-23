@@ -1833,6 +1833,7 @@
               {"role": "user", "content": "Who won the world series in 2020?"}
           ]
     }'
+    docker run --rm --privileged=true -p 8000:8000 -v /app/models:/models --shm-size=8g -e VLLM_CPU_KVCACHE_SPACE=32 -e VLLM_CPU_OMP_THREADS_BIND=0-31 public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.9.1 --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=bfloat16
 
   //accelerate
 
