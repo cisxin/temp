@@ -259,6 +259,9 @@
     let &termencoding=&encoding
     set fileencodings=utf-8,gb18030,gb2312,gbk,big5
     set number
+    //or vim shell
+    :set fileencoding=utf-8
+    :set encoding=utf-8
 
 ## ssh su id
 
