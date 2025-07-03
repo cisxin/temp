@@ -2296,6 +2296,19 @@
         }
     }
 
+  //proxy
+    bash <(curl -Ls https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
+    sudo vim /etc/proxychains4.conf
+    socks5 10.10.0.1 10808 #windows socks:0.10.0.1 10808
+    proxychains4 gemini
+
+    https://github.com/v2rayA/v2rayA/releases/download/v2.2.6.7/installer_debian_x64_2.2.6.7.deb
+    sudo apt install ./installer_debian_x64_2.2.6.7.deb
+    sudo systemctl start v2raya
+    sudo systemctl enable v2raya
+    http://0.10.0.1:2017
+    admin admin123
+
   //java .keystore
 
     //生成密钥对
