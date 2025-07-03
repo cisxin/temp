@@ -1846,6 +1846,21 @@
     accelerate estimate-memory Qwen/Qwen-7B --trust_remote_cod
     transformers-cli env
 
+  //mcp
+
+    docker build -t elasticsearchmcpserver -f Dockerfile .
+    docker stop elasticsearchmcpserver0 and docker rm elasticsearchmcpserver0
+    docker run -idt -e ELASTIC_HOST="https://10.10.0.1:9200" -e ELASTIC_USERNAME="elastic" -e ELASTIC_PASSWORD="123456" -p 8000:8000 --name elasticsearchmcpserver0 elasticsearchmcpserver
+    docker logs -f --tail 1000 elasticsearchmcpserver0
+    fetch http://10.10.0.2:8000/sse
+    D:\llm\elasticsearch-mcp-server
+    //.env
+    # Elasticsearch connection settings
+    ELASTIC_HOST='https://10.10.0.1:9200'
+    ELASTIC_USERNAME='elastic'
+    ELASTIC_PASSWORD='123456'
+    uv --directory D:\llm\elasticsearch-mcp-server\src\elasticsearch_mcp_server run elasticsearch-mcp-server
+
   //flink
 
     docker pull flink
@@ -2297,7 +2312,7 @@
     }
 
   //proxy
-  
+
     bash <(curl -Ls https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     sudo vim /etc/proxychains4.conf
     socks5 10.10.0.1 10808 #windows socks:0.10.0.1 10808
