@@ -2297,6 +2297,7 @@
     }
 
   //proxy
+  
     bash <(curl -Ls https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     sudo vim /etc/proxychains4.conf
     socks5 10.10.0.1 10808 #windows socks:0.10.0.1 10808
