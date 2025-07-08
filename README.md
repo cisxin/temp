@@ -2313,6 +2313,7 @@
 
   //proxy
 
+    //v2rayN->设置->参数设置->core:基础设置->本地socks监听端口(10808(10.10.0.1))->允许来自局域网的连接
     bash <(curl -Ls https://raw.githubusercontent.com/XTLS/Xray-install/main/install-release.sh)
     sudo vim /etc/proxychains4.conf
     socks5 10.10.0.1 10808 #windows socks:0.10.0.1 10808
