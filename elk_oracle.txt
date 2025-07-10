@@ -153,7 +153,7 @@ POST _reindex
 {
   "source": {
     "index": "message_2024",
-    "size": 1000,      # 这里 `size` 仅影响批处理，不是最终数量限制
+    "size": 1000,      # 这里 `size` 仅影响批处理,不是最终数量限制
     "sort": [ 
       { "create_time": "desc" }
     ]
@@ -448,7 +448,7 @@ set /a d1=%d1%
 set date_format="YYYYMMDD"
 echo !d1! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
 if %errorlevel% == 1 (
-  echo 日期1格式不正确，应为 %date_format%
+  echo 日期1格式不正确,应为 %date_format%
   exit /b 1
 )
 set /p d2=enddate:
@@ -457,7 +457,7 @@ set /a d2=%d2%
 set date_format="YYYYMMDD"
 echo !d2! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
 if %errorlevel% == 1 (
-  echo 日期2格式不正确，应为 %date_format%
+  echo 日期2格式不正确,应为 %date_format%
   exit /b 1
 )
 plink.exe -ssh -no-antispoof -P 22244 -i E:\txy_id_rsa_1024_putty.ppk ubuntu@1.114.0.1 /app/wework/runmsgbak.sh !d1! !d2!
@@ -549,14 +549,14 @@ select username from dba_users;
 ----------------------------------
 --限制session
 alter system enable restricted session;
---查询相关参数并修改（防止有任务自动启动执行，一般不做也没关系）
+--查询相关参数并修改（防止有任务自动启动执行,一般不做也没关系）
 show parameter job_queue_processes; -- 记下这个值
 show parameter aq_tm_processes; -- 记下这个值
 alter system set job_queue_processes=0;
 alter system set aq_tm_processes=0;
 Alter database open;
 
--- 按需修改nls_characterset，其中INTERNAL_USE表示跳过字符集检查
+-- 按需修改nls_characterset,其中INTERNAL_USE表示跳过字符集检查
 alter database character set internal_use AL32UTF8;
 -- 按需修改nls_nchar_characterset
 ALTER DATABASE NATIONAL CHARACTER SET INTERNAL_USE UTF8;

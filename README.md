@@ -43,18 +43,18 @@
     (echo 'Hello $USER';echo "Hello $USER")
     {echo 'Hello $USER';echo "Hello $USER"}
 
-    $#：表示传递给脚本或函数的参数数量。
-    $*：所有参数列表，作为一个单独的字符串。参数之间使用第一个字符的值作为分隔符（通常是空格）。
-    $@：所有参数列表，每个参数都作为一个独立的字符串。每个参数都保留了它们各自的引号（如果有的话）。
-    $?：上一个命令的退出状态码。0表示成功
-    $()：命令替换语法，允许你将一个命令的输出嵌入到另一个命令中。例如：result=$(ls) 会将 ls 命令的输出存储在 result 变量中。=``
-    ${}：用于在变量名周围进行扩展和操作的语法。例如：${variable} 将会扩展为变量的值。
+    $#：表示传递给脚本或函数的参数数量.
+    $*：所有参数列表,作为一个单独的字符串.参数之间使用第一个字符的值作为分隔符（通常是空格）.
+    $@：所有参数列表,每个参数都作为一个独立的字符串.每个参数都保留了它们各自的引号（如果有的话）.
+    $?：上一个命令的退出状态码.0表示成功
+    $()：命令替换语法,允许你将一个命令的输出嵌入到另一个命令中.例如：result=$(ls) 会将 ls 命令的输出存储在 result 变量中.=``
+    ${}：用于在变量名周围进行扩展和操作的语法.例如：${variable} 将会扩展为变量的值.
 
-    []:test（0表示真，1表示假）。在方括号内，条件表达式和运算符之间需要用空格分隔。例如：
+    []:test（0表示真,1表示假）.在方括号内,条件表达式和运算符之间需要用空格分隔.例如：
     if [ "$var" = "value" ]; then
         echo "Condition is true"
     fi
-    [[]]:支持更复杂的逻辑操作，字符串比较等
+    [[]]:支持更复杂的逻辑操作,字符串比较等
     if [[ "$var"== "value" ]]; then
         echo "Condition is true"
     fi
@@ -88,7 +88,7 @@
 ## awk
 
     awk -F',' '{ print $1, $3 }' filename
-    //数值计算，求和...
+    //数值计算,求和...
     awk '{ total += $1 } END { print "Total:", total }' filename
     awk 'END { print NR, NF }' filename
 
@@ -117,7 +117,7 @@
     sed '/%local_ip_v4_v4%/s/.*/ /' $(pwd)/template/vars.xml > $(pwd)/conf/vars.xml
     sed -i 's/\x0B//g' test.txt
     sed -i ':a;N;$!ba;s/\n\n//g' test.txt
-    sed -i ':a;N;$!ba;s/11%；\n/11%；/g' test.txt
+    sed -i ':a;N;$!ba;s/11%:\n/11%:/g' test.txt
 
     替换\r\n->\n
     sed -i "s/\r//g" file_name
@@ -133,7 +133,7 @@
     iconv -f utf-16 -t utf-8 s.txt > s2.txt
     iconv -f GBK -t UTF-8 seg.txt -o seg.txt.utf8  //ISO-8859
     cat ko.txt | iconv -f GBK -t UTF-8
-    echo -e "\u4f1a\u8bdd\u8fc7\u671f\uff0c\u8bf7\u91cd\u65b0\u767b\u9646"  //会话过期，请重新登陆 //printf "\u4f1a\n"
+    echo -e "\u4f1a\u8bdd\u8fc7\u671f\uff0c\u8bf7\u91cd\u65b0\u767b\u9646"  //会话过期,请重新登陆 //printf "\u4f1a\n"
 
     
 ## ps crontab
@@ -320,7 +320,7 @@
         User <username>
         IdentityFile ~/.ssh/id_rsa1
 
-    //限制用户(包括root用户)连续输入错误密码的次数。在3次失败锁定 锁定10分钟,之后自动解锁
+    //限制用户(包括root用户)连续输入错误密码的次数.在3次失败锁定 锁定10分钟,之后自动解锁
     sudo vim /etc/pam.d/sshd 或 /etc/pam.d/login
     auth required pam_faillock.so deny=3 unlock_time=600 even_deny_root root_unlock_time=600
 
@@ -345,7 +345,7 @@
     set date_format="YYYYMMDD"
     echo !d1! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
     if %errorlevel% == 1 (
-      echo 日期1格式不正确，应为 %date_format%
+      echo 日期1格式不正确,应为 %date_format%
       exit /b 1
     )
     set /p d2=enddate:
@@ -353,7 +353,7 @@
     set date_format="YYYYMMDD"
     echo !d2! | findstr /r /c:"^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"
     if %errorlevel% == 1 (
-      echo 日期2格式不正确，应为 %date_format%
+      echo 日期2格式不正确,应为 %date_format%
       exit /b 1
     )
     plink.exe -ssh -no-antispoof -P 2244 -i E:\temp\id_rsa_putty.ppk ubuntu@x.x.x.x /tmp/run.sh !d1! !d2!
@@ -394,11 +394,11 @@
     chgrp groupname filename
 
     chmod 775 -R config
-    400 -r--------     拥有者能够读 其他任何人不能进行任何操作；
-    644 -rw-r--r--     拥有者都能够读，但只有拥有者可以编辑；
+    400 -r--------     拥有者能够读 其他任何人不能进行任何操作:
+    644 -rw-r--r--     拥有者都能够读,但只有拥有者可以编辑:
     666 -rw-rw-rw-     所有用户都有文件读、写权限
-    755 -rwxr-xr-x     所有人都能读和执行，但只有拥有者才能编辑；
-    777 -rwxrwxrwx     所有人都能读、写和执行（该设置通常不是好想法）。
+    755 -rwxr-xr-x     所有人都能读和执行,但只有拥有者才能编辑:
+    777 -rwxrwxrwx     所有人都能读、写和执行（该设置通常不是好想法）.
     文件 664 目录 775   chmod 400 密钥文件
     
     //simple password
@@ -489,12 +489,12 @@
 
     //切到master
     git pull
-    //解决冲突（解决master的冲突，保证代码最新）
+    //解决冲突（解决master的冲突,保证代码最新）
     git add .
     git merge --continue //(git update-ref -d MERGE_HEAD)
     git commit . -m "message"
     git merge develop
-    //解决冲突（解决两个分支的冲突，实现合并）
+    //解决冲突（解决两个分支的冲突,实现合并）
     git add  .
     git merge --continue //(git update-ref -d MERGE_HEAD) 
     git commit . -m "message"
@@ -635,6 +635,90 @@
     sudo apt-get install mono-devel //debian  
     sudo apt-get install libpoco-dev libmysqlclient-dev
 
+    通过 gcc -v *.c 看编译时具体过程,里面有头文件搜索路径显示
+    --------------------------------------------------------------
+    create core dump:
+    ulimit -c unlimited
+    gdb ./test core.31240
+
+    valgrind --tool=memcheck --leak-check=full ./test
+    addr2line -e ./test 0x4048DD
+    --------------------------------------------------------------
+
+    Makefile:
+    ------------
+    object=test.o 
+
+    test:$(object)
+      
+    g++ -gstabs+ -w -static -o testcpp $(object) -I$(BOOST_INCLUDE) -L$(BOOST_LIB) -lpthread -ldl /usr/local/lib/libboost_system-gcc48-mt-1_60.a /usr/local/lib/libboost_thread-gcc48-mt-1_60.a
+    #g++ -gstabs+ -w -o testcpp $(object) -I$(BOOST_INCLUDE) -L$(BOOST_LIB) -lpthread -ldl -lboost_system -lboost_thread
+
+    test.o:test.cpp
+
+    g++ -gstabs+ -c test.cpp
+
+    clean:
+      rm -rf *.o *~ testcpp
+    ------------
+
+    ldd ./testcpp
+    --------------------------------------------------------------
+
+    break 10
+    delete 10
+    break test.cpp:10
+    break *pBuf
+    info break
+    next
+    step
+    continue
+    run
+    where
+    display i
+    info registers
+    into reg rax
+    print i
+    pirnt i = 1
+    set var i = 1
+    set $rax = 1
+    set (unsigned int)0x8048a51 = 0x0
+    set *(unsigned int*)0x8048a54 = 0x55aa55aa
+    //show N stack.
+          (gdb) backtrace full
+          (gdb) backtrace full N
+          (gdb) backtrace full -N
+          frame n
+          info frame
+          info args
+          info locals
+          info catchs
+          info threads
+          thread apply all bt
+    disas/disass/disassemble functionName/start address[,end address]
+
+    break 10
+    break 20
+    info line
+    jump 20 //代码行执行跳转
+    //jump LineNo
+    //jump Position
+    //行号可以是: 1.数字 2.偏移(+/-) 3.文件名:行号
+    //位置可以是: 1.函数名 2.文件名:函数名 3.*内存地址
+    set disassemble-next-line on //assembler
+    x/1dw &i
+
+    10 i++;
+    11 i = foo();
+    12 i--;
+    (gdb) step
+    (gdb) return //function exit
+
+    ----------------------------------------------------------------
+    sudo vim /etc/profile
+    export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+    source /etc/profile
+
   //gdb
 
     strings libXX.so | grep GCC
@@ -719,11 +803,11 @@
     go env -w GOPROXY=https://goproxy.cn
 
     //debug
-    一、假设你的golang项目代码是在vscode终端以go run main.go -e dev来启动的，那么打开用vscode打开项目目录
-    二、在VSCode的侧边栏中，点击调试图标（虫子图标）打开调试视图。
-    三、点击调试视图顶部的"create a launch.json file"链接。这将创建一个名为launch.json的文件，用于配置调试任务。
-    四、在launch.json中，找到并修改 "configurations" 部分，
-    添加以下配置示例：(如果是go run main.go运行这个项目的，不需要最后一个arg参数):
+    一、假设你的golang项目代码是在vscode终端以go run main.go -e dev来启动的,那么打开用vscode打开项目目录
+    二、在VSCode的侧边栏中,点击调试图标（虫子图标）打开调试视图.
+    三、点击调试视图顶部的"create a launch.json file"链接.这将创建一个名为launch.json的文件,用于配置调试任务.
+    四、在launch.json中,找到并修改 "configurations" 部分,
+    添加以下配置示例：(如果是go run main.go运行这个项目的,不需要最后一个arg参数):
     {
         // Use IntelliSense to learn about possible attributes.
         // Hover to view descriptions of existing attributes.
@@ -863,7 +947,7 @@
 
     rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
 
-    //--link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。
+    //--link-dest参数指定基准目录/compare/path,然后源目录/source/path跟基准目录进行比较,找出变动的文件,将它们拷贝到目标目录/target/path.那些没变动的文件则会生成硬链接.这个命令的第一次备份时是全量备份,后面就都是增量备份了.
     rsync -a --delete --link-dest /compare/path /source/path /target/path
     rsync -avz –delete ~/elk ~/elk.bak
 
@@ -936,18 +1020,18 @@
     #Codename: noble
 
     1.noble main restricted universe multiverse
-        main：官方完全支持的软件，包含大多数常用的免费软件。
-        restricted：包含了非自由软件，但这些软件得到了 Ubuntu 开发团队的支持。
-        universe：社区维护的软件包，可能没有得到官方支持，但由开源社区提供。
-        multiverse：不自由的软件包，这些软件包可能受到版权或其他法律限制。
+        main：官方完全支持的软件,包含大多数常用的免费软件.
+        restricted：包含了非自由软件,但这些软件得到了 Ubuntu 开发团队的支持.
+        universe：社区维护的软件包,可能没有得到官方支持,但由开源社区提供.
+        multiverse：不自由的软件包,这些软件包可能受到版权或其他法律限制.
     2. noble-updates main restricted universe multiverse
-        这个分支包含了已经发布的 Ubuntu 版本的稳定更新，包括安全补丁和修复程序。这些更新包已经过测试，可以确保系统的稳定性和安全性。
+        这个分支包含了已经发布的 Ubuntu 版本的稳定更新,包括安全补丁和修复程序.这些更新包已经过测试,可以确保系统的稳定性和安全性.
     3. noble-backports main restricted universe multiverse
-        这个分支包含了从未来的 Ubuntu 版本中挑选出来并移植到当前版本的软件包。通常情况下，这些软件包是为了满足用户对新特性或新软件的需求。
+        这个分支包含了从未来的 Ubuntu 版本中挑选出来并移植到当前版本的软件包.通常情况下,这些软件包是为了满足用户对新特性或新软件的需求.
     4. noble-security main restricted universe multiverse
-        这个分支专门用于安全更新，提供了对系统中发现的安全漏洞的修复。这些更新包的发布速度较快，旨在尽快解决安全问题。
+        这个分支专门用于安全更新,提供了对系统中发现的安全漏洞的修复.这些更新包的发布速度较快,旨在尽快解决安全问题.
     5. noble-proposed main restricted universe multiverse
-        这个分支包含了尚未完全测试和验证的更新和新软件包。这些更新包可能还在测试阶段，供开发者和高级用户提前体验和反馈。
+        这个分支包含了尚未完全测试和验证的更新和新软件包.这些更新包可能还在测试阶段,供开发者和高级用户提前体验和反馈.
 
   //windows命令窗口中文乱码
 
@@ -972,32 +1056,32 @@
     p       查看已分区数量(我看到有两个 /dev/sda1 /dev/sda2)
     n       新增加一个分区 
     p       分区类型我们选择为主分区 
-            分区号选3(因为1,2已经用过了，见上)
+            分区号选3(因为1,2已经用过了,见上)
     回车      默认(起始扇区)
     回车      默认(结束扇区) 
     t       修改分区类型 
             选分区3 
     8e       修改为LVM（8e就是LVM） 
     w        写分区表 
-    q        完成，退出fdisk命令
+    q        完成,退出fdisk命令
 
     使用partprobe 命令 或者重启机器 
     格式化分区
     mkfs.ext4 /dev/sda3
 
-    2.添加新LVM到已有的LVM组，实现扩容
+    2.添加新LVM到已有的LVM组,实现扩容
     sudo lvm                //进入lvm管理
-    lvm>pvcreate /dev/sda3  //这是初始化刚才的分区，必须的(将物理分区创建为物理卷)(in linux lvm(ext4)) //默认安装sda1 sda2 sda3存在
+    lvm>pvcreate /dev/sda3  //这是初始化刚才的分区,必须的(将物理分区创建为物理卷)(in linux lvm(ext4)) //默认安装sda1 sda2 sda3存在
     lvm>vgextend ubuntu-vg /dev/sda3  //将初始化过的分区加入到虚拟卷组ubuntu-vg (卷和卷组的命令可以通过 vgdisplay, vgextend ubuntu-vg /dev/sda3)
     lvm>vgdisplay -v
     lvm>lvextend -l+953861 /dev/mapper/ubuntu--vg-ubuntu--lv //扩展已有卷的容量(953861 通过vgdisplay查看的Free PE / Size的大小) //redhat:lvextend -l+100%FREE /dev/mapper/rhel-opt 
-    lvm>pvdisplay                      //查看卷容量，这时你会看到一个很大的卷了
+    lvm>pvdisplay                      //查看卷容量,这时你会看到一个很大的卷了
     lvm>quit                           //退出
     //lvdisplay /dev/mapper/rhel-opt
 
-    3.以上只是卷扩容了，下面是文件系统的真正扩容，输入以下命令：
+    3.以上只是卷扩容了,下面是文件系统的真正扩容,输入以下命令：
     sudo lvdisplay /dev/mapper/ubuntu--vg-ubuntu--lv
-    sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv (系统安装后，扩容默认大小)
+    sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv (系统安装后,扩容默认大小)
     //redhat:xfs_growfs /dev/mapper/rhel-opt
 
     4.查看新的磁盘空间
@@ -1090,21 +1174,21 @@
   ubuntu disk 4TB
 
     sudo parted /dev/sda #进入parted 
-    mklabel gpt          #将磁盘设置为gpt格式，
+    mklabel gpt          #将磁盘设置为gpt格式,
     mkpart logical 0 -1  #将磁盘所有的容量设置为GPT格式
     print                #查看分区结果
     这个时候应该是默认进行分了一个/dev/sda1这个分区
     退出parted
     quit
     终端输入 sudo mkfs.ext4 -F /dev/sda1 
-    将刚刚分出来的sda1格式化为ext4的格式，然后就可以设置开机自动挂载了。
+    将刚刚分出来的sda1格式化为ext4的格式,然后就可以设置开机自动挂载了.
     sudo mount -t ext4 /dev/sda1 /app
 
     设置开机自动挂载
     查看硬盘/dev/sda1 对应的UUID
     sudo blkid   
-    注意: 唯一的sda1的UUID号。
-    再事先准备好一个地方来做挂载点，比如我这里是/DATA4T然后再用命令打开配置文件：
+    注意: 唯一的sda1的UUID号.
+    再事先准备好一个地方来做挂载点,比如我这里是/DATA4T然后再用命令打开配置文件：
     sudo vim /etc/fstab
     添加
     UUID=7941f2c5-d582-4414-85c5-6d199a701795 /app ext4    defaults 0       0
@@ -1183,7 +1267,7 @@
     netstat -an | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
     //查看和本机80端口建立连接并状态在established的所有ip
     netstat -an |grep 80 |grep ESTA |awk '{print$5 "\n"}' |awk 'BEGIN {FS=":"} {print $1 "\n"}' |sort |uniq    
-    //输出每个ip的连接数，以及总的各个状态的连接数。
+    //输出每个ip的连接数,以及总的各个状态的连接数.
     netstat -n | awk '/^tcp/ {n=split($(NF-1),array,":");if(n<=2)++S[array[(1)]];else++S[array[(4)]];++s[$NF];++N} END {for(a in S){printf("%-20s %s\n", a, S[a]);++I}printf("%-20s %s\n","TOTAL_IP",I);for(a in s) printf("%-20s %s\n",a, s[a]);printf("%-20s %s\n","TOTAL_LINK",N);}'
 
   //route
@@ -1625,7 +1709,7 @@
     gamma    /'gæmə/              Γ     γ     omicron  /əuˈmaikrən/ /ˈɑmɪˌkrɑn/       Ο      ο
     delta    /'deltə/             Δ     δ     pi       /paɪ/                          Π      π
     epsilon  /'epsɪlɒn/           Ε     ε     rho      /rəʊ/                          Ρ      ρ
-    zeta     /'zi:tə/             Ζ     ζ     sigma    /'sɪɡmə/                       Σ      σ, ς
+    zeta     /'zi:tə/             Ζ     ζ     sigma    /'sɪɡmə/                       Σ      σ,ς
     eta      /'i:tə/              Η     η     tau      /tɔ:/ 或 /taʊ/                 Τ      τ
     theta    /'θi:tə/             Θ     θ     upsilon  /ˈipsilon/ 或  /ˈʌpsɨlɒn/      Υ      υ
     iota     /aɪ'əʊtə/            Ι     ι     phi      /faɪ/                          Φ      φ
@@ -1787,7 +1871,7 @@
     curl http://127.0.0.1:8080/completion -d '{"prompt":"你是谁？", "n_predict":128}'
     curl http://127.0.0.1:8080/completion -H "Content-Type: application/json" 
       -d '{
-        "prompt": "<|im_start|>system \\n你是一位资深的金融证券合规专家。<|im_end|>\\n<|im_start|>user \\n问题：收益承诺，主要表现在？\\n相关上下文:\\n{context}\\n<|im_end|>\\n<|im_start|>assistant<|im_end|>",
+        "prompt": "<|im_start|>system \\n你是一位资深的金融证券合规专家.<|im_end|>\\n<|im_start|>user \\n问题：收益承诺,主要表现在？\\n相关上下文:\\n{context}\\n<|im_end|>\\n<|im_start|>assistant<|im_end|>",
         "n_predict": 512,"n_predict": 512,"temperature":0.2,"top_p":0.9,"repeat_penalty":1.05,"eos_token_id":151645,"pad_token_id":151643
       }'
 
@@ -1935,10 +2019,10 @@
     bash standalone_embed.sh delete
     vim milvus.yaml or user.yaml
     authorizationEnabled: true
-    user=‘root’
-    password=‘Milvus’
-    >pip3 install openai torch transformers pymilvus  --break-system-packages
-    pip3 install torch torchvision transformers pymilvus pillow  --break-system-packages
+    user='root'
+    password='Milvus'
+    >pip3 install openai torch transformers pymilvus --break-system-packages
+    pip3 install torch torchvision transformers pymilvus pillow --break-system-packages
     bin/logstash -f logstash-minio.conf
     cd /data/logstash/plugins && /usr/share/logstash/bin/logstash-plugin install logstash-output-s3
     docker pull zilliz/attu
@@ -2022,6 +2106,16 @@
     service iptables stop
     chkconfig iptables off
     systemctl status iptables.service
+
+    //只能大概控制一下消耗的内存数量, 可以自己修改脚本中的参数, 目前是占用1GB内存1个小时. 
+    #!/bin/bash
+    mkdir /tmp/memory
+    mount -t tmpfs -o size=1024M tmpfs /tmp/memory
+    dd if=/dev/zero of=/tmp/memory/block
+    sleep 3600
+    rm /tmp/memory/block
+    umount /tmp/memory
+    rmdir /tmp/memory
 
 ## jenkins fs
 
@@ -2206,7 +2300,7 @@
 
     JS接口安全域名 微信公众号上配置安全域名  https://域名/MP_verify_*.txt    public/MP_verify_*.txt
     微信公众平台官网中的「设置与开发」-「功能设置」-「网页授权域名」
-    在公众平台网站的高级功能-开发模式页，点击"成为开发者"按钮 -> 开发者帐号 -> 微信公众号的APPID(开发者ID) "设置与开发"中的"基本设置"
+    在公众平台网站的高级功能-开发模式页,点击"成为开发者"按钮 -> 开发者帐号 -> 微信公众号的APPID(开发者ID) "设置与开发"中的"基本设置"
     公众号的AppID、小程序的AppID、开放平台的AppID、第三方平台的AppID、移动应用的AppID、网站应用的AppID、小商店的AppID
 
     //nginx
@@ -2455,7 +2549,7 @@
     # 接收传入的参数
     echo "Received message: $1 at $(date)"
 
-    Logstash 的默认字段由通用字段(如 @timestamp、@version、host)和 插件特定字段(message) 组成。取决于 input 插件。可以在输出中使用 stdout { codec => rubydebug } 来调试
+    Logstash 的默认字段由通用字段(如 @timestamp、@version、host)和 插件特定字段(message) 组成.取决于 input 插件.可以在输出中使用 stdout { codec => rubydebug } 来调试
     --------------------------------
 
     docker run -d -p 5601:5601 -e "ELASTICSEARCH_URL=http://10.10.0.10:9200" -e "ELASTICSEARCH_HOSTS=http://10.10.0.10:9200" --name kibana0 -t kibana:7.12.0
