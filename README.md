@@ -1757,6 +1757,7 @@
     cmake -B build
     cd build
     make -j16
+    ./bin/llama-server --help
     cmake -B build -DGGML_CUDA=ON -j 16
     cmake --build build --config Release
 
@@ -1780,7 +1781,7 @@
     python3 convert_hf_to_gguf.py /home/fs/.cache/huggingface/hub/models--SUFE-AIFLM-Lab--Fin-R1/snapshots/026768c4a015b591b54b240743edeac1de0970fa --outfile /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1/SUFE-AIFLM-Lab--Fin-R1.gguf
     fs@elk:~/llm/llama.cpp$ ls /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1
     SUFE-AIFLM-Lab--Fin-R1.gguf
-    ./build/bin/llama-server -m /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1/SUFE-AIFLM-Lab--Fin-R1.gguf --host 0.0.0.0 --port 8080 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
+    /home/fs/llm/llama.cpp/build/bin/llama-server -m /home/fs/llm/models/SUFE-AIFLM-Lab/Fin-R1/SUFE-AIFLM-Lab--Fin-R1.gguf --host 0.0.0.0 --port 8080 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
 
     ./llama-server -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf --host 0.0.0.0 --port 8080 --n-predict 512 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --log-colors
     curl http://127.0.0.1:8080/completion -d '{"prompt":"你是谁？", "n_predict":128}'
