@@ -1761,7 +1761,9 @@
         "llm_model": {
             "chatglm2-6b": "/data/THUDM/chatglm2-6b",
             "chatglm3-6b": "/data/THUDM/chatglm3-6b",
-    }}
+        }
+      }
+    }
     python init_database.py --recreate-vs
 
     #startup.py "cpu" model_config.py "cpu" server_config.py "cpu"
