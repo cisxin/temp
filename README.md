@@ -137,6 +137,7 @@
 
     
 ## ps crontab
+
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
 
     bg fg jobs ctr+z nohup
@@ -299,7 +300,7 @@
     //~/.ssh/known_hosts 文件存储了远程主机的公钥 //编辑文件更新已知主机的公钥信息 //client 
     //第一次连接到某个远程服务器,SSH客户端会收到该远程服务器的公钥=>known_hosts//防止中间人攻击(MITM攻击)
     ssh-copy-id user@hostname //将公钥发布到服务器
-    ssh-copy-id –i id_rsa.pub administrator@IP
+    ssh-copy-id -i id_rsa.pub administrator@IP
     $rhel9
     ecdsa-sha2-nistp256
     ssh-keygen -t ecdsa
@@ -949,7 +950,7 @@
 
     //--link-dest参数指定基准目录/compare/path,然后源目录/source/path跟基准目录进行比较,找出变动的文件,将它们拷贝到目标目录/target/path.那些没变动的文件则会生成硬链接.这个命令的第一次备份时是全量备份,后面就都是增量备份了.
     rsync -a --delete --link-dest /compare/path /source/path /target/path
-    rsync -avz –delete ~/elk ~/elk.bak
+    rsync -avz --delete ~/elk ~/elk.bak
 
     sudo apt-get install sshpass
     sshpass -p "123456" rsync -av --delete /tmp/aaaa test@192.168.0.1:/tmp
