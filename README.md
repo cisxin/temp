@@ -140,7 +140,7 @@
 
     ps -ef | grep msgbak | grep -v  grep | awk '{print $2}' | xargs kill -9
 
-    bg fg jobs ctr+z nohup
+    ctr + z bg fg jobs nohup
 
     ls -l --time-style=+"%Y-%m-%dT%H:%M:%S" | grep 2023-08 | awk '{print $7}' | xargs ls -lah
     ls -l --time-style=+%Y%m%d | awk '{if (length($6) > 0 && $6 < 20230808) {print $7}}' | xargs -r ls 
