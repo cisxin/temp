@@ -1973,6 +1973,23 @@
     ELASTIC_PASSWORD='123456'
     uv --directory D:\llm\elasticsearch-mcp-server\src\elasticsearch_mcp_server run elasticsearch-mcp-server
 
+  //qwen3-coder
+
+    curl -qL https://www.npmjs.com/install.sh | sh
+    npm install nvm
+    source ~/.bashrc
+    nvm install --lts
+    nvm use --lts
+    node -v  # 应该显示 v20.x 或更高
+    npm -v   # 应该显示 10.x+
+    npm install -g npm@latest
+    nvm install 24.4.1
+    nvm use 24.4.1
+    export OPENAI_API_KEY="aliyun-key"
+    export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
+    export OPENAI_MODEL="qwen3-coder-plus"
+    
+
   //flink
 
     docker pull flink
