@@ -1170,6 +1170,43 @@
     # 检查
     df -h
     sudo lvs
+    -----------------------------------------------------------------------------
+    动态添加了一个 2TB 硬盘,但 fdisk -l 输出中只有:
+    /dev/sda(1.5T)
+    /dev/sdb(1T)
+    /dev/mapper/...(LVM 逻辑卷)
+
+    新的 2T 硬盘还没出现,请先运行:
+    lsblk
+    如果没看到新磁盘,比如 /dev/sdc,可用以下命令强制刷新:
+
+    sudo partprobe
+    # 或者更强的方式
+    echo "- - -" | sudo tee /sys/class/scsi_host/host*/scan
+    lsblk
+    确认是否出现 /dev/sdc(假设它就是新硬盘)
+
+    2. 创建 LVM 分区
+    sudo fdisk /dev/sdc
+    输入以下命令:
+    g    ← 创建 GPT 分区表(替代默认的 DOS 分区表)
+    n    ← 新建分区
+    <Enter> ← 默认分区号
+    <Enter> ← 默认起始位置
+    <Enter> ← 默认结束位置(即使用整块盘)
+    t    ← 更改分区类型
+    30   ← 输入 LVM 的 GPT 类型代码(Linux LVM)
+    w    ← 写入更改并退出
+
+    sudo partprobe
+
+    sudo pvcreate /dev/sdc1
+    sudo pvdisplay
+    sudo vgdisplay
+    sudo vgextend ubuntu-vg /dev/sdc1
+    sudo lvextend -l +100%FREE /dev/ubuntu-vg/lv-0
+    sudo resize2fs /dev/ubuntu-vg/lv-0    or    sudo xfs_growfs /dev/ubuntu-vg/lv-0
+    df -h
 
     //rhel
     sudo lvs # 查看逻辑卷
