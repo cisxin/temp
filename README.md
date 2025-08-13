@@ -885,6 +885,16 @@
     |  +---------------------+  |
     +---------------------------+
 
+    方法 1（最保险）：降级 eslint 到 6.x
+    npm uninstall eslint
+    npm install eslint@6.8.0 --save-dev
+    npm  install
+    方法 2（快速安装，跳过版本检查）如果你只是要先跑起来，而不在乎依赖警告，可以用：
+    npm install --legacy-peer-deps
+    # 卸载旧版（可选）
+    npm uninstall eslint
+    # 安装最新稳定版
+    npm install eslint@latest --save-dev
 
     npm install vue
     npm install -D @vitejs/plugin-vue
