@@ -753,6 +753,7 @@
     python3 -m pip install --upgrade pip --force-reinstall
     //////////////////////////////
     pip3 install --upgrade pip
+    pip3 freeze > requirements.txt && pip3 install --upgrade -r requirements.txt && rm -rf requirements.txt
     pip3 install pipreqs
     pipreqs /path/to/your/project
     pipreqs /path/to/your/project --force    
