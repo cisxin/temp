@@ -1435,6 +1435,7 @@
 
     sudo tcpdump -i eno1 -A -s 0 'tcp port 11000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
     sudo tcpdump -s 0 -i eth0 -A '(tcp dst port 11000 and tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420) or (tcp dst port 11000 and (tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x504f5354))'
+    tcpdump -i any -s 0 -A port 11000 | grep "GET\|POST"
 
   //network monitoring
 
