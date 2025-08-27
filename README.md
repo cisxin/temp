@@ -1078,6 +1078,7 @@
     sc create service_name2 binPath= "D:\service_name2.exe"
     sc create service_name binPath= "C:\service_name.exe"
     sc delete service_name 
+    sc description service_name "this is testing service"
 
     磁盘(D:)-属性-共享-高级共享-共享此文件夹 //\\10.10.0.1
 
