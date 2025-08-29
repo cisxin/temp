@@ -15,6 +15,7 @@
   - [disk fsck ln](#disk-fsck-ln)
   - [network route nftable netsh tcpdump](#network-route-nftable-netsh-tcpdump)
   - [curl nc ab pptpsetup](#curl-nc-ab-pptpsetup)
+  - [raspberry pi](#raspberry-pi)
   - [docker kvm](#docker-kvm)
   - [LaTeX Σ](#latex-σ)
   - [llm](#llm)
@@ -1485,7 +1486,13 @@
     sudo route del -net 10.10.8.240 netmask 255.255.255.255
     sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
     sudo pptpsetup --create testvpn --server 10.10.15.100 --username vpn --password vpn --encrypt --start && sudo route del -net 10.23.8.240 netmask 255.255.255.255 && sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
-    sudo vim /etc/ppp/options     
+    sudo vim /etc/ppp/options  
+
+## raspberry pi
+
+    sudo nmcli device wifi hotspot ssid aaaaaaaaaa password 01234567
+    sudo nmcli device disconnect wlan0
+    sudo nmcli device up wlan0       
 
 ## docker kvm
 
