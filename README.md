@@ -2375,6 +2375,11 @@
     // 导入单独站点
     C:\Windows\System32\inetsrv\appcmd.exe add site /in < c:mywebsite.xml
 
+    @echo off
+    vol D: | find "序列号"
+    pause
+    #hex
+
     --explicitly-allowed-ports=10080,9801
 
     https://docs.python.org/3/
