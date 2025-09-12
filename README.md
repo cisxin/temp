@@ -1941,6 +1941,19 @@
     ./llama-cli -m /home/qh/llm/models/SUFE-AIFLM-Lab/Fin-R1/Qwen2.5-7b-instruct-f16.gguf \
         -co -cnv -p "You are Qwen, created by Alibaba Cloud. You are a helpful assistant." -fa -ngl 80 -n 512
 
+    //windows
+    git clone https://github.com/microsoft/vcpkg
+    .\bootstrap-vcpkg.bat
+    .\vcpkg.exe search
+    vcpkg install curl        
+    cmake -B build -G "Visual Studio 17 2022" -A x64
+    cmake -B build
+    cmake -B build -DLLAMA_CUBLAS=ON -DCURL_INCLUDE_DIR="D:/vcpkg/packages/curl_x64-windows/include" -DCURL_LIBRARY="D:/vcpkg/packages/curl_x64-windows/lib/libcurl.lib" -DLLAMA_CURL=ON
+    cmake -B build -DGGML_CUDA=ON -DCURL_INCLUDE_DIR="D:/vcpkg/packages/curl_x64-windows/include" -DCURL_LIBRARY="D:/vcpkg/packages/curl_x64-windows/lib/libcurl.lib" -DLLAMA_CURL=ON
+    version:nvidia derver-cuda-vc-model
+    cmake --build build --config Release -j 12
+    dir *.sln
+
     huggingface-cli download SUFE-AIFLM-Lab/Fin-R1
     fs@elk:~/llm/llama.cpp$ ls /home/fs/.cache/huggingface/hub/models--SUFE-AIFLM-Lab--Fin-R1/snapshots/026768c4a015b591b54b240743edeac1de0970fa
     added_tokens.json  generation_config.json  merges.txt                        model-00002-of-00004.safetensors  model-00004-of-00004.safetensors  README_en.md  special_tokens_map.json  tokenizer_config.json  vocab.json
@@ -2520,6 +2533,16 @@
     sudo vim /etc/proxychains4.conf
     socks5 10.10.0.1 10808 #windows socks:0.10.0.1 10808
     proxychains4 gemini
+
+    代理在本地 127.0.0.1:7890 //windows
+    set http_proxy=http://127.0.0.1:7890
+    set https_proxy=http://127.0.0.1:7890
+    SOCKS5 代理
+    set http_proxy=socks5://127.0.0.1:1080
+    set https_proxy=socks5://127.0.0.1:1080
+    永久设置代理(所有新打开的 cmd.exe 都有效)
+    setx http_proxy "http://127.0.0.1:7890"
+    setx https_proxy "http://127.0.0.1:7890"
 
     https://github.com/v2rayA/v2rayA/releases/download/v2.2.6.7/installer_debian_x64_2.2.6.7.deb
     sudo apt install ./installer_debian_x64_2.2.6.7.deb
