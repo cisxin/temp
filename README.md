@@ -1953,6 +1953,8 @@
     version:nvidia derver-cuda-vc-model
     cmake --build build --config Release -j 12
     dir *.sln
+    //gpu
+    docker run --rm --gpus all nvidia/cuda:13.0.1-cudnn-devel-ubuntu24.04 nvidia-smi
 
     huggingface-cli download SUFE-AIFLM-Lab/Fin-R1
     fs@elk:~/llm/llama.cpp$ ls /home/fs/.cache/huggingface/hub/models--SUFE-AIFLM-Lab--Fin-R1/snapshots/026768c4a015b591b54b240743edeac1de0970fa
@@ -2623,6 +2625,19 @@
     docker exec -ti  mysql20 mysql -u root -p
     ALTER USER 'root'@'%' IDENTIFIED BY '123456';
     FLUSH PRIVILEGES;
+
+    //profiler
+    select version();
+    select * from manager_user
+    SHOW FULL PROCESSLIST;
+    SHOW VARIABLES LIKE 'slow_query_log';
+    SET GLOBAL slow_query_log = 'ON';
+    SET GLOBAL long_query_time = 1;   -- 记录执行超过 1 秒的 SQL
+
+    #MySQL 8.0 移除了 SHOW PROFILE，推荐使用 performance_schema + sys schema：
+    SELECT * FROM sys.statement_analysis ORDER BY total_latency DESC LIMIT 10;
+    SELECT * FROM sys.statement_analysis ORDER BY max_latency DESC LIMIT 10;
+    SELECT * FROM sys.statement_analysis where `query` like "%delete%";
 
   //elk
 
