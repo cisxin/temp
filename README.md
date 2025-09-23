@@ -849,6 +849,10 @@
     //opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
     export NODE_OPTIONS=--openssl-legacy-provider
     //set NODE_OPTIONS=--openssl-legacy-provider && npm run build:dev
+    ////////////////////////////
+    //node 22
+    set NODE_OPTIONS=--openssl-legacy-provider && npm install --legacy-peer-deps && npm run build:prod
+    ////////////////////////////
     cd usr/share/nginx/html/    //ls /var/www/html
                 +-------------------------------------+
                 |                View                 |
