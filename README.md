@@ -1492,7 +1492,13 @@
 
     sudo nmcli device wifi hotspot ssid aaaaaaaaaa password 01234567
     sudo nmcli device disconnect wlan0
-    sudo nmcli device up wlan0       
+    sudo nmcli device up wlan0
+    sudo nmcli connection show
+    sudo nmcli device wifi list
+    vim /etc/sudoers
+    pi ALL=(ALL) NOPASSWD:/usr/bin/nmcli
+    sudo nmcli ...
+
 
 ## docker kvm
 
