@@ -179,6 +179,7 @@
     find ./ -maxdepth 1 -type f -regextype posix-extended -regex '.*/[^/]{32,}$'
     find ./ -maxdepth 1 -type f -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{8,}'
     find ./ -maxdepth 1 -type f -mtime +30 -regextype posix-extended -regex '.*/[a-zA-Z0-9_/-/./]{32,}' -exec rm -rf {} \;
+    find /app/wework2/data/media/ -type f -newermt "2025-09-23" ! -newermt "2025-09-24" -exec cp {} /app/wework2/data/media20250923 \;
 
   不可见字符
 
