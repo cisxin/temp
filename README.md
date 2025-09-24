@@ -988,6 +988,9 @@
   //rsync
 
     rsync -av -e 'ssh -p 2234' source/ user@remote_host:/destination
+    # 先同步文件
+    rsync -av mediabak/ mediabak20250923/ && rm -rf mediabak/*
+    rsync -av --remove-source-files mediabak/ mediabak20250923/
 
     //--link-dest参数指定基准目录/compare/path,然后源目录/source/path跟基准目录进行比较,找出变动的文件,将它们拷贝到目标目录/target/path.那些没变动的文件则会生成硬链接.这个命令的第一次备份时是全量备份,后面就都是增量备份了.
     rsync -a --delete --link-dest /compare/path /source/path /target/path
