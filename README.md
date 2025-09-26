@@ -759,9 +759,9 @@
     pip3 install pipreqs
     pipreqs /path/to/your/project
     pipreqs /path/to/your/project --force
-
+    
     在安装时强制Python 使用UTF-8读取文本:
-    set PYTHONUTF8=1
+    set PYTHONUTF8=1 or pip3 install --upgrade pip setuptools wheel
     pip install --upgrade rc-server-sdk
 
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
