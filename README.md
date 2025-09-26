@@ -758,7 +758,11 @@
     pip3 freeze > requirements.txt && pip3 install --upgrade -r requirements.txt && rm -rf requirements.txt
     pip3 install pipreqs
     pipreqs /path/to/your/project
-    pipreqs /path/to/your/project --force    
+    pipreqs /path/to/your/project --force
+
+    在安装时强制Python 使用UTF-8读取文本:
+    set PYTHONUTF8=1
+    pip install --upgrade rc-server-sdk
 
     pip3 install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
     pip3 install numpy -i http://mirrors.aliyun.com/pypi/simple/
