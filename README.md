@@ -1579,6 +1579,9 @@
     RUN pip3 install --upgrade pip
     WORKDIR /app
     ADD ./ /app
+    ENV TZ=Asia/Shanghai
+    ENV LANG=C.UTF-8
+    RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
     #COPY data /app/data
     #EXPOSE 80
     #VOLUME [ "/tmp":/tmp ]
