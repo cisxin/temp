@@ -2561,8 +2561,9 @@
     set http_proxy=http://127.0.0.1:7890
     set https_proxy=http://127.0.0.1:7890
     SOCKS5 代理
-    set http_proxy=socks5://127.0.0.1:1080
-    set https_proxy=socks5://127.0.0.1:1080
+    set http_proxy=socks5://127.0.0.1:10808
+    set https_proxy=socks5://127.0.0.1:10808
+    pip3 install pysocks
     永久设置代理(所有新打开的 cmd.exe 都有效)
     setx http_proxy "http://127.0.0.1:7890"
     setx https_proxy "http://127.0.0.1:7890"
