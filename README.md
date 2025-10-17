@@ -941,6 +941,21 @@
 
     "Search" input ">hex editor"
 
+    关闭预览模式
+    打开设置快捷键 Ctrl + ,
+    workbench.editor.enablePreview
+    
+    如何自定义快捷键 打开快捷键设置
+    方法一：菜单栏选择 Code (macOS) / File (Windows) > Preferences > Keyboard Shortcuts
+    方法二：使用快捷键打开快捷键面板：
+    macOS：Cmd + K 然后 Cmd + S      Windows/Linux：Ctrl + K 然后 Ctrl + S
+    搜索对应命令
+    在搜索框输入 Bookmarks，通常你会看到：
+    Bookmarks: Toggle (切换书签)
+    Bookmarks: Jump to Next Bookmark(跳转到下一个书签)
+    Bookmarks: Jump to Previous Bookmark (跳转到上一个书签)
+    Bookmarks: List (显示书签列表)
+
   //rust
 
     curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
