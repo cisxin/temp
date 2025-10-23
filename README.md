@@ -1839,7 +1839,32 @@
 
 ## llm
 
-    //Langchain-Chatchat
+  //cuda
+
+    nvcc --version
+    nvidia-smi
+    pip install pycuda
+
+    wsl.exe --install
+    wsl.exe --list --online
+    wsl.exe --list --verbose
+    wsl.exe --install Ubuntu-24.04
+    wsl
+    wsl -d Ubuntu-24.04
+    wsl --terminate Ubuntu-24.04
+    wsl --shutdown
+    wsl cat /proc/version
+    mklink /d C:\Users\Administrator\AppData\Local\wsl D:\wsl  
+    sudo apt install nvidia-cuda-toolkit
+    sudo apt install python3.12 -y
+    sudo apt install python3-pip
+    pip3 install torch torchvision torchaudio --break-system-packages
+    import torch
+    print(torch.cuda.is_available())
+    print(torch.cuda.get_device_name(0))
+
+  //Langchain-Chatchat
+
     sudo apt install python3-pip
     python3 -m pip install --upgrade pip
     wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
