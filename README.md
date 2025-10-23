@@ -1864,6 +1864,16 @@
     print(torch.cuda.get_device_name(0))
     python3 -c "import torch; print(torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
     nvidia-smi dmon -s pucvmt
+    //wsl ssh
+    ip addr show eth0
+    sudo apt install openssh-server
+    sudo vim /etc/ssh/sshd_config
+    Port 22
+    PermitRootLogin yes
+    PasswordAuthentication yes
+    sudo service ssh start
+    sudo service ssh status
+    telnet 172.30.13.242 22
 
   //Langchain-Chatchat
 
