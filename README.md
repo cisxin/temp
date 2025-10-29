@@ -1883,6 +1883,7 @@
     wsl -d Ubuntu-24.04
     wsl --terminate Ubuntu-24.04
     wsl --shutdown
+    wsl --export Ubuntu-24.04 D:\ubuntu24.tar
     wsl cat /proc/version
     mklink /d C:\Users\Administrator\AppData\Local\wsl D:\wsl  
     sudo apt install nvidia-cuda-toolkit
@@ -2117,6 +2118,31 @@
           ]
     }'
     docker run --rm --privileged=true -p 8000:8000 -v /app/models:/models --shm-size=8g -e VLLM_CPU_KVCACHE_SPACE=32 -e VLLM_CPU_OMP_THREADS_BIND=0-31 public.ecr.aws/q9t5s3a7/vllm-cpu-release-repo:v0.9.1 --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=bfloat16
+
+    //libnvidia-container
+    # 1. 设置发行版变量为 jammy（22.04）
+    distribution=ubuntu22.04
+    # 2. 添加 NVIDIA 官方 key
+    curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey  | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+    # 3. 添加仓库列表
+    curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list \
+      | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' \
+      | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+    # 4. 更新并安装
+    sudo apt update
+    sudo apt install -y nvidia-container-toolkit
+    sudo nvidia-ctk runtime configure --runtime=docker
+    sudo service docker restart
+
+    cd llm/vllm
+    docker build -f docker/Dockerfile --target vllm-openai .
+    docker run --rm  --runtime nvidia --gpus all --privileged=true -p 8000:8000 -v /home/cis/.cache/huggingface/hub:/models vllm/vllm-openai:latest --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=bfloat16
+
+    # 8-bit quantization
+    docker run --rm --runtime nvidia --gpus all --privileged=true -p 8000:8000 -v /home/cis/.cache/huggingface/hub:/models vllm/vllm-openai:latest --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=half --quantization bitsandbytes --gpu-memory-utilization 0.5
+
+    docker run --rm --runtime nvidia --gpus all --privileged=true -p 8000:8000 -v /home/cis/.cache/huggingface/hub:/models vllm/vllm-openai:latest --model=/models/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=half --max_num_batched_tokens 256 --gpu-memory-utilization 0.5 --tensor-parallel-size 1
+    /////////////////////////////////////
 
   //accelerate
 
