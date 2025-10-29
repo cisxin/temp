@@ -1714,6 +1714,30 @@
     复制ID的后8位
     sudo apt-key export 0EBFCD88 | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/pgdg.gpg
 
+  //docker proxy
+
+    sudo mkdir -p /etc/systemd/system/docker.service.d
+    sudo vim /etc/systemd/system/docker.service.d/proxy.conf
+    [Service]
+    Environment="HTTP_PROXY=socks5h://10.23.160.44:10808"
+    Environment="HTTPS_PROXY=socks5h://10.23.160.44:10808"
+    Environment="NO_PROXY=localhost,127.0.0.1"
+    sudo systemctl daemon-reload && sudo systemctl restart docker
+    docker info | grep -i proxy
+    proxychains4 docker pull docker.io/nvidia/cuda:12.9.1-devel-ubuntu22.04
+
+    sudo apt install -y tsocks
+    sudo vim /etc/tsocks.conf
+    server = 10.23.160.44
+    server_port = 10808
+    server_type = 5
+    systemctl restart getty@tty1.service
+    systemctl restart systemd-logind.service
+    systemctl restart unattended-upgrades.service
+    curl https://google.com -I
+    sudo rm -f /etc/tsocks.conf
+ 
+
   //kvm
 
     //install
