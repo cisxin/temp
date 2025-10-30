@@ -2026,6 +2026,11 @@
     cmake -B build -DGGML_CUDA=ON //cuda
     cmake --build build --config Release //Release 模式编译
 
+    ./bin/llama-server -m /home/cis/llm/models/models--nvidia--AceReason-Nemotron-14B/models--nvidia--AceReason-Nemotron-14B.gguf --port 8080 --host 0.0.0.0 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --n-predict 2048 --ctx-size 65536 --log-colors auto
+    ./bin/llama-server -m /home/cis/llm/models/models--nvidia--AceReason-Nemotron-14B/models--nvidia--AceReason-Nemotron-14B.gguf --port 8080 --host 0.0.0.0 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --n-predict 2048 --ctx-size 65536 --log-colors auto --n-gpu-layers 10
+    D:\llm\llama.cpp\build\bin\Release\llama-server.exe -m D:\llm\models\models--openai--gpt-oss-20b\models--openai--gpt-oss-20b.gguf --port 8080 --host 0.0.0.0 --temp 0.2 --top-p 0.9 --repeat_penalty 1.05 --n-predict 2048 --ctx-size 65536 --log-colors on --n-gpu-layers 10
+    ./bin/llama-cli -m /home/cis/llm/models/models--nvidia--AceReason-Nemotron-14B/models--nvidia--AceReason-Nemotron-14B.gguf
+
     pip3 install huggingface_hub --upgrade 
     python3 -c "
     from huggingface_hub import snapshot_download
