@@ -2148,6 +2148,7 @@
     python3 -m pip install "bitsandbytes>=0.46.1"
     -e VLLM_ATTENTION_BACKEND=TORCH_SDPA --enforce-eager --disable_flashinfer
     pip3 install vllm
+    sudo pip3 install --upgrade vllm
     vllm serve /home/cis/.cache/huggingface/hub/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=float16 --quantization bitsandbytes --gpu-memory-utilization 0.6 --enforce-eager --port 8000
     curl http://localhost:8000/v1/completions -H "Content-Type: application/json" -d '{ "model": "meta-llama/Llama-2-7b-hf", "prompt": "Hello, my name is", "max_tokens": 10 }'
 
