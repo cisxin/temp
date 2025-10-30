@@ -2019,12 +2019,12 @@
     git lfs install
     git clone https://github.com/ggerganov/llama.cpp
     cd llama.cpp
-    cmake -B build
+    cmake -B build //cpu
     cd build
     make -j16
     ./bin/llama-server --help
-    cmake -B build -DGGML_CUDA=ON -j 16
-    cmake --build build --config Release
+    cmake -B build -DGGML_CUDA=ON //cuda
+    cmake --build build --config Release //Release 模式编译
 
     pip3 install huggingface_hub --upgrade 
     python3 -c "
