@@ -2005,6 +2005,9 @@
     hf download Qwen/Qwen2.5-1.5B-Instruct-GGUF
     C:\Users\Administrator\.cache\huggingface
 
+    wget https://hf-mirror.com/hfd/hfd.sh
+    HF_ENDPOINT=https://hf-mirror.com bash hfd.sh Qwen/Qwen3-VL-235B-A22B-Thinking
+
     git pull origin 
 
     # Use a pipeline as a high-level helper####
