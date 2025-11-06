@@ -782,6 +782,11 @@
     uv add pandas torch torchdata torchtext spacy altair jupytext flake8 black GPUtil wandb
     uv remove torch
     uv pip install flagembedding //临时调试、只想试试某个包
+    uv venv 
+    uv run python app.py   # 在虚拟环境中运行脚本
+    uv add requests        # 安装依赖并自动记录到 pyproject.toml
+    uv sync                # 安装 pyproject.toml 中的依赖
+    deactivate / exit    
 
     //.vscode/launch.json //debug
     //streamlit run app.py
