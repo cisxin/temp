@@ -1518,7 +1518,12 @@
     sudo route del -net 10.10.8.240 netmask 255.255.255.255
     sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
     sudo pptpsetup --create testvpn --server 10.10.15.100 --username vpn --password vpn --encrypt --start && sudo route del -net 10.23.8.240 netmask 255.255.255.255 && sudo route add -net 10.3.0.0 netmask 255.255.0.0 dev ppp0
-    sudo vim /etc/ppp/options  
+    sudo vim /etc/ppp/options
+
+  //zerotier
+
+    curl -s https://install.zerotier.com | sudo bash
+    sudo zerotier-cli join xxxx 
 
 ## raspberry pi
 
