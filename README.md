@@ -1988,6 +1988,9 @@
     docker run -d -p 3000:8080 -e OLLAMA_API_BASE_URL=http://your_host:11434/api -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
     ollama run llama2-chinese "天空为什么是蓝色的？"
 
+    curl http://10.147.19.4:11434/api/tags
+    curl http://10.147.19.4:11434/api/generate -d '{"model": "gpt-oss:120b","prompt": "who are you?","stream": false}'
+
     pip3 install chromadb langchain BeautifulSoup4 gpt4all langchainhub pypdf chainlit
 
     启动之后可以访问 http://localhost:8080
