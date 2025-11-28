@@ -1183,7 +1183,7 @@
     /dev/sdb                /SDB1    ext4   defaults        0 0
 
     磁盘读写速度
-    sudo apt install sysstat
+    sudo apt install sysstat #new
     iostat -dx 1
     sudo apt install dstat
     dstat -d --disk-util --disk-tps 1 #util 利用率
