@@ -1184,7 +1184,7 @@
 
     磁盘读写速度
     sudo apt install sysstat #new
-    iostat -dx 1
+    iostat -dx 1 #util 利用率
     sudo apt install dstat
     dstat -d --disk-util --disk-tps 1 #util 利用率
     -----------------------------------------------------------------------------
