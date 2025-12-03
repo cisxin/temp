@@ -2001,6 +2001,8 @@
 
     curl http://10.147.19.4:11434/api/tags
     curl http://10.147.19.4:11434/api/generate -d '{"model": "gpt-oss:120b","prompt": "who are you?","stream": false}'
+    docker run -dti -p 8080:8080 -v open-webui:/app/backend/data -e OLLAMA_API_BASE_URL=http://10.147.19.4:11434 --name open-webui0 ghcr.io/open-webui/open-webui
+    admin->管理员面板->设置->管理Ollama接口连接->http://10.147.19.4:11434
 
     pip3 install chromadb langchain BeautifulSoup4 gpt4all langchainhub pypdf chainlit
 
