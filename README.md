@@ -2900,3 +2900,7 @@
     {
         "indices": "message_2021"
     }
+
+redis-cli EVAL "redis.call('DEL', KEYS[1]); local vals = redis.call('LRANGE', KEYS[2], 0, -1); if #vals > 0 then redis.call('RPUSH', KEYS[1], unpack(vals)) end" 2 q_day_minute:SZ900069:20251231 q_day_minute:SZ900067:20251231
+q_day_minute:SZ900067:20251231 to q_day_minute:SZ900069:20251231
+redis-cli  lrange q_day_minute:SZ900069:20251231 0 -1
