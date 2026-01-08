@@ -2888,6 +2888,7 @@
     vim config/Kibana.yml
     elasticsearch.username: "elastic"
     elasticsearch.password: "123456"
+    nginxlog:request_time > 1 and status == 200 and uri.keyword : "/new/manager/live/textlivefilechatquery*"
 
     curl -k -XGET "http://10.10.0.10:9200/_cat/indices?v"
     curl -k -u 'elastic':'123456' -XPOST "http://10.10.0.10:9200/test_index_2024/_search?pretty" -H 'Content-Type: application/json; charset=UTF-8' -d'{  "query": {   "match_all": {}  } }'
