@@ -2686,6 +2686,82 @@
             proxy_pass http://lightning;
         }
     }
+    //////////////////////////////////////////http log
+    //cat conf/nginx.conf 
+    worker_processes auto;
+
+    error_log /var/log/nginx/error.log warn;
+    pid /var/run/nginx.pid;
+
+    events {
+    worker_connections 10240;
+    }
+
+    http {
+    lua_package_path "/usr/local/openresty/lualib/?.lua;/usr/local/openresty/lualib/resty/?.lua;/usr/local/openresty/lualib/resty/jwt/lib/?.lua;;";
+
+    include mime.types;
+    default_type application/octet-stream;
+
+    lua_need_request_body on;
+
+    log_format json_access escape=json '{"time": "$time_iso8601","remote_addr": "$remote_addr","x_forwarded_for": "$http_x_forwarded_for","user_agent": "$http_user_agent","referer": "$http_referer","origin": "$http_origin","accept_language": "$http_accept_language","accept": "$http_accept","method": "$request_method","uri": "$request_uri","url": "$scheme://$host$request_uri","status": $status,"authorization": "$http_authorization","request_body": "$lua_ctx_req_body","request_time": $request_time,"upstream_addr": "$upstream_addr","upstream_response_time": "$upstream_response_time","server_port": "$server_port"}';
+
+    sendfile on;
+    keepalive_timeout 65;
+
+    include /etc/nginx/conf.d/*.conf;
+    }
+    //conf.d/*.conf
+    upstream backend_servers2 {
+        server 127.0.0.1:9101;
+        server 127.0.0.1:9102;
+        server 127.0.0.1:9113;
+        server 127.0.0.1:9114;
+    }    
+    server {
+        listen 9001;
+        server_name _;
+        # 必须声明 nginx 变量，否则 log_format 用不了
+        set $lua_req_body "";
+        set $lua_ctx_req_body "";
+        
+        # 使用条件日志
+        access_log /var/log/nginx/9001.access.txt json_access if=$loggable;
+        
+        location / {
+          access_by_lua_block {
+            ngx.req.read_body()
+            local body = ngx.req.get_body_data()
+            if not body then
+                local file = ngx.req.get_body_file()
+                if file then
+                    local f = io.open(file, "rb")
+                    if f then
+                        body = f:read("*a")
+                        f:close()
+                    end
+                end
+            end
+
+            -- 写入 nginx 变量用于日志
+            ngx.var.lua_req_body = body or ""
+            ngx.var.lua_ctx_req_body = body or ""
+
+	          --local auth = require "jwt_auth"
+            --auth.auth()
+        }
+
+        # 代理透传
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Authorization $http_authorization;
+
+        proxy_pass http://backend_servers2;
+    }
+    }
+    //////////////////////////////////////////
 
   //proxy
 
