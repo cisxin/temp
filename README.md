@@ -276,6 +276,8 @@
     scp -r user@remote:Desktop demo
     shpass -p "123456" scp -P port 01.py user@remote:Desktop/01.py
 
+    export TMOUT=0 //timeout
+
     //Port 40022
     sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
     sudo sed -i 's/#Port 22/Port 40022/' /etc/ssh/sshd_config
