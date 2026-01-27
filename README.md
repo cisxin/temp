@@ -2707,7 +2707,7 @@
 
     lua_need_request_body on;
 
-    log_format json_access escape=json '{"time": "$time_iso8601","remote_addr": "$remote_addr","x_forwarded_for": "$http_x_forwarded_for","user_agent": "$http_user_agent","referer": "$http_referer","origin": "$http_origin","accept_language": "$http_accept_language","accept": "$http_accept","method": "$request_method","uri": "$request_uri","url": "$scheme://$host$request_uri","status": $status,"authorization": "$http_authorization","request_body": "$lua_ctx_req_body","request_time": $request_time,"upstream_addr": "$upstream_addr","upstream_response_time": "$upstream_response_time","server_port": "$server_port"}';
+    log_format json_access escape=json '{"time": "$time_iso8601","remote_addr": "$remote_addr","x_forwarded_for": "$http_x_forwarded_for","user_agent": "$http_user_agent","referer": "$http_referer","origin": "$http_origin","accept_language": "$http_accept_language","accept": "$http_accept","method": "$request_method","uri": "$request_uri","url": "$scheme://$host$request_uri","status": $status,"authorization": "$http_authorization","request_body": "$lua_ctx_req_body","response_body": "$lua_ctx_resp_body","request_time": $request_time,"upstream_addr": "$upstream_addr","upstream_response_time": "$upstream_response_time","server_port": "$server_port"}';
 
     sendfile on;
     keepalive_timeout 65;
@@ -2753,6 +2753,44 @@
 	          --local auth = require "jwt_auth"
             --auth.auth()
         }
+        body_filter_by_lua_block {
+            local chunk = ngx.arg[1]
+            local eof = ngx.arg[2]
+            if not ngx.ctx.resp_body_chunks then
+                ngx.ctx.resp_body_chunks = {}
+                ngx.ctx.resp_body_length = 0
+            end
+            local request_uri = ngx.var.request_uri
+            if string.find(request_uri, "/group/user/join") or string.find(request_uri, "quote/tick") then
+                ngx.ctx.has_target_url = true
+                -- ngx.log(ngx.ERR, "DEBUG 3333: Matched! has_target_url = true")
+            else
+                ngx.ctx.has_target_url = false
+            end
+            if chunk and #chunk > 0 then
+                table.insert(ngx.ctx.resp_body_chunks, chunk)
+                ngx.ctx.resp_body_length = ngx.ctx.resp_body_length + #chunk
+                
+                if ngx.ctx.resp_body_length > 10240 then
+                    ngx.ctx.resp_body_truncated = true
+                end
+            end
+            if eof then
+                if ngx.ctx.has_target_url then
+                    local resp_body = table.concat(ngx.ctx.resp_body_chunks)
+                    if ngx.ctx.resp_body_truncated then
+                        resp_body = string.sub(resp_body, 1, 10240) .. "...(truncated)"
+                    end
+                    ngx.var.lua_ctx_resp_body = resp_body
+                else
+                    ngx.var.lua_ctx_resp_body = "[no-target-url]"
+                end
+                ngx.ctx.resp_body_chunks = nil
+                ngx.ctx.resp_body_length = nil
+                ngx.ctx.has_target_url = nil
+                ngx.ctx.resp_body_truncated = nil
+            end
+        }
 
         # 代理透传
         proxy_set_header Host $host;
@@ -2761,7 +2799,7 @@
         proxy_set_header Authorization $http_authorization;
 
         proxy_pass http://backend_servers2;
-    }
+      }
     }
     //////////////////////////////////////////
 
