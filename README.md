@@ -440,6 +440,8 @@
     done
     echo `date` "end del ....." >> /tmp/log.txt
 
+    cat logs/11004.access.txt | jq '.response_body | fromjson'
+
   //while
 
     #!/bin/bash
