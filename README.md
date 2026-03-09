@@ -2029,6 +2029,7 @@
     hf download deepseek-ai/DeepSeek-R1-Distill-Qwen-7B ./DeepSeek-R1-Distill-Qwen-7B 
     hf download Qwen/Qwen2.5-1.5B-Instruct-GGUF
     C:\Users\Administrator\.cache\huggingface
+    pip install --upgrade transformers
 
     wget https://hf-mirror.com/hfd/hfd.sh
     HF_ENDPOINT=https://hf-mirror.com bash hfd.sh Qwen/Qwen3-VL-235B-A22B-Thinking
