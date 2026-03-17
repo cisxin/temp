@@ -1596,6 +1596,9 @@
     exit
 
     docker ps -aq | xargs docker inspect --format='{{.LogPath}}' | xargs truncate -s 0
+    sudo docker ps -aq | xargs sudo docker inspect --format='{{.LogPath}}' | xargs sudo truncate -s 0
+    sudo docker system prune -a
+    df -h
 
   //docker build
   
