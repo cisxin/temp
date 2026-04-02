@@ -2014,7 +2014,7 @@
     pip3 install chromadb langchain BeautifulSoup4 gpt4all langchainhub pypdf chainlit
 
     启动之后可以访问 http://localhost:8080
-
+  
   //huggingface
   
     git lfs install
@@ -2189,6 +2189,53 @@
     vllm serve /home/cis/.cache/huggingface/hub/models--nvidia--AceReason-Nemotron-14B/snapshots/c6233d7d1c0786daed8bd119afe695bd99513980 --dtype=float16 --quantization bitsandbytes --gpu-memory-utilization 0.6 --enforce-eager --port 8000
     curl http://localhost:8000/v1/completions -H "Content-Type: application/json" -d '{ "model": "meta-llama/Llama-2-7b-hf", "prompt": "Hello, my name is", "max_tokens": 10 }'
 
+  //open-webui
+
+    docker stop open-webui0 && docker rm open-webui0
+    docker run -dti -p 8080:8080 -v open-webui:/app/backend/data -e OLLAMA_API_BASE_URL=http://10.147.19.4:11434 --name open-webui0 ghcr.io/open-webui/open-webui
+    http://10.23.0.111:8080/
+
+  //claude code
+
+    curl -fsSL https://ollama.com/install.sh | sh
+    ollama -v
+    nohup OLLAMA_HOST=0.0.0.0 ollama serve > ollama.log 2>&1 &
+    systemctl stop ollama
+    curl http://10.23.0.111:11434/v1/models
+    ollama list
+    ollama pull gpt-oss:120b
+    ollama pull qwen3.5:35b
+    docker run -p 11434:11434 ollama/ollama
+    
+    curl -fsSL https://claude.ai/install.sh | bash
+    ollama launch claude --model qwen3.5:35b
+    export ANTHROPIC_AUTH_TOKEN=ollama
+    export ANTHROPIC_API_KEY=""
+    export ANTHROPIC_BASE_URL=http://10.147.19.4:11434
+    claude --model qwen3.5:35b
+
+  //openclaw
+
+    curl http://10.147.19.4:11434/api/tags
+    curl http://10.147.19.4:11434/api/generate -d '{"model": "gpt-oss:120b","prompt": "who are you?","stream": false}'
+    curl http://10.147.19.4:11434/api/generate -d '{"model": "qwen3.5:122b","prompt": "who are you?","stream": false}'
+    export OPENCLAW_CONFIG_DIR=$HOME/.openclaw && export OPENCLAW_WORKSPACE_DIR=$HOME/.openclaw/workspace
+    docker build -t openclaw:local .
+    docker compose run --rm openclaw-cli dashboard --no-open
+    docker compose stop
+    docker logs -f --tail 1000 openclaw-openclaw-gateway-1
+    http://127.0.0.1:18789/#token=8a84a2f2b0ee543d3a401c704aa7e87eac5632b96a34e831
+    vim ~/.openclaw/openclaw.json
+    ssh -L 18789:127.0.0.1:18789 fs@10.23.0.111
+    gateway.bind: Invalid input (allowed: "auto", "lan", "loopback", "custom", "tailnet")
+    docker exec -it openclaw-openclaw-gateway-1 bash
+    docker exec -it openclaw-openclaw-gateway-1 openclaw devices list
+    docker exec -it openclaw-openclaw-gateway-1 openclaw devices approve --latest
+    docker exec -it openclaw-openclaw-gateway-1 openclaw devices approve fff5a944-2d9f-4188-8eb6-336bba46ab80 //ok Request
+    #openclaw devices rotate --device "3ca1dbbd13906fc8df28515f9691c39e40f9862151e0d6fd964a42ccbef5d9f8" --role operator --scope #operator.read --scope operator.write
+    openclaw health
+    vim ~/openclaw/openclaw.json #del
+    "workspace": "/home/fs/.openclaw/workspace",  
 
   //accelerate
 
