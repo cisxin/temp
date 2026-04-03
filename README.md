@@ -2205,6 +2205,7 @@
     ollama list
     ollama pull gpt-oss:120b
     ollama pull qwen3.5:35b
+    ollama pull gemma4:31b
     docker run -p 11434:11434 ollama/ollama
     
     curl -fsSL https://claude.ai/install.sh | bash
@@ -2213,6 +2214,10 @@
     export ANTHROPIC_API_KEY=""
     export ANTHROPIC_BASE_URL=http://10.147.19.4:11434
     claude --model qwen3.5:35b
+    claude --cwd ~/english-learning
+    cd ~/my-project && claude
+    /cd ~/english-learning
+    prompt:切换到英语学习目录
 
   //openclaw
 
