@@ -409,6 +409,11 @@
     //simple password
     sudo passwd test
 
+    //sudo NOPASSWD
+    sudo usermod -aG sudo cis
+    sudo visudo
+    cis ALL=(ALL) NOPASSWD:ALL
+
 ## for while
 
     length2=`echo $json2 | jq '.hits.hits|length'`;
