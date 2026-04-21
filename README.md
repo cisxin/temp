@@ -2212,7 +2212,7 @@
     ollama pull qwen3.5:35b
     ollama pull gemma4:31b
     docker run -p 11434:11434 ollama/ollama
-    
+        
     curl -fsSL https://claude.ai/install.sh | bash
     ollama launch claude --model qwen3.5:35b
     export ANTHROPIC_AUTH_TOKEN=ollama
@@ -2223,6 +2223,7 @@
     cd ~/my-project && claude
     /cd ~/english-learning
     prompt:切换到英语学习目录
+    claude --model gemma4:31b --dangerously-skip-permissions
 
   //openclaw
 
