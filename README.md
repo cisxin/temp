@@ -2225,6 +2225,63 @@
     prompt:切换到英语学习目录
     claude --model gemma4:31b --dangerously-skip-permissions
 
+    -------------------------------------------------------------------------
+    claude --model gemma4:31b --dangerously-skip-permissions
+    运行起了claude-code，当前目录：~/llm/claudecode/test
+    命令设置：每5分钟执行一次，获取ssh cis@10.23.160.91 系统运行信息，ssh cis@10.23.160.91已设置免密登录，
+    如何把上述功能制作成一个智能体，定时执行任务
+    ------------------------------
+    while true; do claude --model gemma4:31b --dangerously-skip-permissions --print "执行ssh cis@10.23.160.91 'uptime && free -h && df -h && ps aux --sort=-%cpu | head -5'，分析并输出Markdown监控报告含告警判断" | tee ~/llm/claudecode/test/logs/monitor_$(date +%Y%m%d_%H%M%S).md; sleep 300; done
+    -------------------------------------------------------------------------
+    claude --model gemma4:31b --dangerously-skip-permissions --print "你是一个系统监控智能体，每5分钟执行一次以下任务并输出报告，循环执行直到手动停止：
+
+    任务：
+    1. 执行 ssh cis@10.23.160.91 'uptime && free -h && df -h && ps aux --sort=-%cpu | head -5'
+    2. 分析结果，判断 CPU>80%/内存>90%/磁盘>85% 是否告警
+    3. 输出 Markdown 格式报告（含时间戳和健康评估）
+    4. 等待300秒后重复
+
+    请立即开始第一次采集。每次循环用 Bash 工具执行命令和 sleep 300。"
+    -------------------------------------------------------------------------
+    mkdir -p ~/.claude/skills/git
+    cat > ~/.claude/skills/git/SKILL.md << 'EOF'
+    ---
+    name: git
+    description: 对指定目录执行 git add、commit、push 操作，自动生成提交信息
+    allowed-tools: Bash(git *)
+    disable-model-invocation: false
+    argument-hint: [目录路径]
+    ---
+
+    对用户指定的目录执行完整的 git 提交流程：
+
+    1. 进入目录：cd $ARGUMENTS（若未指定则使用当前目录）
+    2. 执行 `git status` 查看变更文件
+    3. 执行 `git diff` 分析具体改动内容
+    4. 根据改动内容自动生成简洁的中文 commit message（格式：类型: 描述，如 feat: 添加监控脚本）
+    5. 执行 `git add .`
+    6. 执行 `git commit -m "自动生成的message"`
+    7. 执行 `git push`
+    8. 输出提交结果摘要
+
+    注意：如果没有任何改动，告知用户无需提交。
+    EOF第二步：使用方式
+    在 Claude Code 中直接输入：
+    /git /tmp/test.git
+    Claude 会自动：分析改动 → 生成 commit message → add → commit → push。
+    第三步（可选）：限制只允许 git 命令，防止误操作
+    yaml---
+    name: git
+    description: 对指定目录执行 git add、commit、push 操作
+    allowed-tools: Bash(git add *) Bash(git commit *) Bash(git push *) Bash(git status *) Bash(git diff *)
+    disable-model-invocation: true
+    argument-hint: [目录路径]
+    ---
+
+    context: fork          # ← 关键：在独立空间里
+    -------------------------------------------------------------------------
+
+
   //openclaw
 
     curl http://10.147.19.4:11434/api/tags
