@@ -2228,6 +2228,8 @@
     prompt:切换到英语学习目录
     claude --model gemma4:31b --dangerously-skip-permissions
 
+    ssh test@10.23.160.91 "cd /tmp && ls"
+
     -------------------------------------------------------------------------
     claude --model gemma4:31b --dangerously-skip-permissions
     运行起了claude-code，当前目录：~/llm/claudecode/test
