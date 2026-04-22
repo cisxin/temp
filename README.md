@@ -2212,6 +2212,9 @@
     ollama pull qwen3.5:35b
     ollama pull gemma4:31b
     docker run -p 11434:11434 ollama/ollama
+    OllamaSetup.exe /DIR="d:\ollama"
+    ollama launch claude --model qwen3.6
+    winget upgrade ollama
         
     curl -fsSL https://claude.ai/install.sh | bash
     ollama launch claude --model qwen3.5:35b
