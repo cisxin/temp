@@ -2352,7 +2352,16 @@
     export OPENAI_API_KEY="aliyun-key"
     export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
     export OPENAI_MODEL="qwen3-coder-plus"
+
+  //n8n
+
+    docker pull n8nio/n8n
+    docker stop n8n0 && docker rm n8n0
+    docker run -dit --name n8n0 -e N8N_SECURE_COOKIE=false -p 5678:5678 -v `pwd`/n8n:/home/node/.n8n n8nio/n8n
+    http://10.23.0.111:5678/
     
+    data below
+    请分析以数据：{{ JSON.stringify($('Microsoft SQL').all().map(i => i.json), null, 2) }}
 
   //flink
 
