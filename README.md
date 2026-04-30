@@ -2019,6 +2019,10 @@
     pip3 install chromadb langchain BeautifulSoup4 gpt4all langchainhub pypdf chainlit
 
     启动之后可以访问 http://localhost:8080
+    
+    //local ip 
+    sudo vim /etc/systemd/system/ollama.service
+    sudo systemctl daemon-reload && sudo systemctl restart ollama
   
   //huggingface
   
