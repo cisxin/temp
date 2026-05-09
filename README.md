@@ -2363,6 +2363,56 @@
     data below
     请分析以数据：{{ JSON.stringify($('Microsoft SQL').all().map(i => i.json), null, 2) }}
 
+    docker run -dti --name browserless0 -p 3000:3000 --restart always browserless/chrome
+    ///////////////////////////
+    HTTP Request 配置
+    Method:post
+    URL:http://10.23.0.111:3000/content
+    Send Body:true
+    Body Content Type:json
+
+    Body Parameters(即 Specify Body 里的内容):
+    (fixed) url:https://www.toutiao.com/c/user/token/CiZ4h2fa1X5RQtPXmhGwypzLLIIxCMt-SV6mziI57QC1RuWY6Lll6BpJCjwAAAAAAAAAAAAAUF30H456cxguTMNURg6KAG2xDkdRb1gEzDXpuK7FDMU6ZJ9uj0ySuoR2H3w_zM5342cQjJmQDhjDxYPqBCIBA1w1OYs=/?
+
+    (Expression) waitFor:{{ 10000 }}
+
+    userAgent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
+    //////////
+    code in javascript:
+    // 新版 n8n Code 节点标准写法
+    const items = $input.all(); // 获取输入的所有项
+    const results = [];
+
+    for (const item of items) {
+      const html = item.json.data || ""; // 获取上一个节点传来的 HTML
+      
+      const titleMatch = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || html.match(/<title>([\s\S]*?)<\/title>/);
+      const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '').trim() : '今日头条新闻';
+
+      let body = html;
+      const articleMatch = html.match(/<article[^>]*>([\s\S]*?)<\/article>/);
+      if (articleMatch) body = articleMatch[1];
+
+      const cleanText = body
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '') 
+        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')   
+        .replace(/<[^>]+>/g, '\n')                       
+        .replace(/\n\s*\n/g, '\n\n')                    
+        .trim();
+
+      results.push({
+        json: {
+          title: title,
+          markdown: `# ${title}\n\n${cleanText.slice(0, 5000)}`,
+          source_url: item.json.url || "URL not found" 
+        }
+      });
+    }
+    return results;
+    ///////////////////////////
+    ->ai agent->ollama chat model
+    
+
   //flink
 
     docker pull flink
