@@ -1990,14 +1990,8 @@
     curl -fsSL https://ollama.com/install.sh | sh
     //localhost:11434
     ollama serve
-    ollama run llama2
-    ollama pull llama2:13b
-    ollama run codellama
-    ollama run llama2:70b
-    ollama run qwen:14b
-    ollama pull mixtral:8x7b
-    ollama run llama2-chinese
-    ollama run mistral
+    ollama pull qwen3.6:35b
+    ollama run qwen3.6:35b
 
     Downloaded from Hugging Face https://huggingface.co/TheBloke/finance-LLM-GGUF/tree/main FROM "./finance-llm-13b.Q4_K_M.gguf" PARAMETER temperature 0.001 PARAMETER top_k 20 TEMPLATE """ {{.Prompt}} """ # set the system message SYSTEM """ You are Warren Buffet. Answer as Buffet only, and do so in short sentences. """
     ollama create arjunrao87/financellm -f Modelfile
@@ -2022,6 +2016,8 @@
     
     //local ip 
     sudo vim /etc/systemd/system/ollama.service
+    [Service]
+    Environment="OLLAMA_HOST=0.0.0.0:11434"
     sudo systemctl daemon-reload && sudo systemctl restart ollama
   
   //huggingface
