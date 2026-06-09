@@ -1994,6 +1994,9 @@
     ollama serve
     ollama pull qwen3.6:35b
     ollama run qwen3.6:35b
+    ollama stop qwen3.6
+    sudo systemctl restart ollama
+    ollama ps
 
     Downloaded from Hugging Face https://huggingface.co/TheBloke/finance-LLM-GGUF/tree/main FROM "./finance-llm-13b.Q4_K_M.gguf" PARAMETER temperature 0.001 PARAMETER top_k 20 TEMPLATE """ {{.Prompt}} """ # set the system message SYSTEM """ You are Warren Buffet. Answer as Buffet only, and do so in short sentences. """
     ollama create arjunrao87/financellm -f Modelfile
@@ -2217,13 +2220,20 @@
     OllamaSetup.exe /DIR="d:\ollama"
     ollama launch claude --model qwen3.6
     winget upgrade ollama
-        
+
+    proxychains4 curl -fsSL --retry 5 --retry-delay 2 https://claude.ai/install.sh -o install-claude.sh
+    export HTTP_PROXY=http://10.23.160.44:10808
+    export HTTPS_PROXY=http://10.23.160.44:10808
+    export http_proxy=http://10.23.160.44:10808
+    export https_proxy=http://10.23.160.44:10808 
+    bash install-claude.sh
+
     curl -fsSL https://claude.ai/install.sh | bash
     ollama launch claude --model qwen3.5:35b
     export ANTHROPIC_AUTH_TOKEN=ollama
     export ANTHROPIC_API_KEY=""
     export ANTHROPIC_BASE_URL=http://10.147.19.4:11434
-    claude --model qwen3.5:35b
+    claude --model qwen3.6:27b --dangerously-skip-permissions
     claude --cwd ~/english-learning
     cd ~/my-project && claude
     /cd ~/english-learning
