@@ -1995,13 +1995,14 @@
     ollama pull qwen3.6:35b
     ollama run qwen3.6:35b
     ollama stop qwen3.6
+    sudo systemctl status ollama
     sudo systemctl restart ollama
     ollama ps
+    journalctl -u ollama -n 100 -f
 
     Downloaded from Hugging Face https://huggingface.co/TheBloke/finance-LLM-GGUF/tree/main FROM "./finance-llm-13b.Q4_K_M.gguf" PARAMETER temperature 0.001 PARAMETER top_k 20 TEMPLATE """ {{.Prompt}} """ # set the system message SYSTEM """ You are Warren Buffet. Answer as Buffet only, and do so in short sentences. """
     ollama create arjunrao87/financellm -f Modelfile
 
-    sudo systemctl status ollama
     pip3 install langchain
     //docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
     //docker exec -it ollama ollama run <參數>
