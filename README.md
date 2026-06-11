@@ -2025,6 +2025,11 @@
     Environment="OLLAMA_HOST=0.0.0.0:11434"
     sudo systemctl daemon-reload && sudo systemctl restart ollama
   
+    [Service]
+    Environment="OLLAMA_CONTEXT_LENGTH=32768"
+    Environment="OLLAMA_KEEP_ALIVE=-1"
+    Environment="OLLAMA_NUM_PARALLEL=1"
+
   //huggingface
   
     git lfs install
