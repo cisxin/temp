@@ -1936,56 +1936,6 @@
     sudo service ssh status
     telnet 172.30.13.242 22
 
-  //Langchain-Chatchat
-
-    sudo apt install python3-pip
-    python3 -m pip install --upgrade pip
-    wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
-    bash Anaconda3-2024.02-1-Linux-x86_64.sh
-    vim ~/.bashrc
-    export PATH="~/anaconda3/bin":$PATH
-    source ~/anaconda3/bin/activate
-    >source ~/.bashrc
-
-    conda update -n base conda #update最新版本的conda
-    #source activate #conda deactivate
-    conda create -n langchain python==3.11.7
-    conda activate langchain
-    conda deactivate langchain
-    conda remove --name langchain --all
-    conda env list
-    conda info --envs
-
-    git clone https://github.com/chatchat-space/Langchain-Chatchat.git
-    cd Langchain-Chatchat
-    python3 -m pip install -r requirements.txt
-    python3 -m pip install -r requirements_api.txt
-    python3 -m pip install -r requirements_webui.txt
-
-    sudo apt-get install git-lfs
-    git lfs install
-    $ git clone https://huggingface.co/THUDM/chatglm3-6b
-    $ git clone https://huggingface.co/BAAI/bge-large-zh
-
-    python copy_config_example.py
-
-    vim configs/model_config.py
-    MODEL_PATH = {
-        "embed_model": {
-            "bge-large-zh": "/data/BAAI/bge-large-zh",
-            "m3e-base": "/data/datasets/m3e-base"}, 
-        "llm_model": {
-            "chatglm2-6b": "/data/THUDM/chatglm2-6b",
-            "chatglm3-6b": "/data/THUDM/chatglm3-6b",
-        }
-      }
-    }
-    python init_database.py --recreate-vs
-
-    #startup.py "cpu" model_config.py "cpu" server_config.py "cpu"
-    python startup.py -a
-    http://127.0.0.1:8501
-
   //ollama
 
     //llm ollama langchain streamlit webui RAG
@@ -2350,22 +2300,6 @@
     ELASTIC_USERNAME='elastic'
     ELASTIC_PASSWORD='123456'
     uv --directory D:\llm\elasticsearch-mcp-server\src\elasticsearch_mcp_server run elasticsearch-mcp-server
-
-  //qwen3-coder
-
-    curl -qL https://www.npmjs.com/install.sh | sh
-    npm install nvm
-    source ~/.bashrc
-    nvm install --lts
-    nvm use --lts
-    node -v  # 应该显示 v20.x 或更高
-    npm -v   # 应该显示 10.x+
-    npm install -g npm@latest
-    nvm install 24.4.1
-    nvm use 24.4.1
-    export OPENAI_API_KEY="aliyun-key"
-    export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
-    export OPENAI_MODEL="qwen3-coder-plus"
 
   //n8n
 
@@ -2769,12 +2703,6 @@
     C:\Users\Administrator\.config\clash-verge
     C:\Users\Administrator\.config\clash-verge\config.yaml
 
-    腾讯云->账号中心->项目管理
-    域名申请->ssl证书申请->DNS验证(CNAME)->ssl证书验证确认->云解析DNS/CLB  ... SSL证书-主动配置到->CLB CLB->选择SSL证书
-    腾讯云->域名注册->我的域名->域名注册
-    腾讯云->域名注册->我的域名->域名注册->解析=>云解析 DNS->我的解析->ss888.com->记录管理->添加记录->www/@ 0.0.0.179(重庆1)
-    腾讯云->ICP备案->我的备案->新增/接入服务
-    腾讯云->SSL证书->我的证书->购买证书/上传证书->部署    证书验证->证书验证(确认)
     DNS:腾讯云->负载均衡->实例管理->"实例"->监听器管理->HTTP/HTTPS监听器(已配置1个)->"-"->'+'->"ss888.cn"->已绑定后端服务->D/名称->IP地址  (域名解析到一个腾讯云的负载均衡实例上)
     腾讯云->云解析DNS->我的解析->"ss888.com"->解析(新手快速解析)->负载均衡(付费) （可解析到非腾讯云服务器）(DNS验证:特定邮箱,CNAME,网站控制权验证/txt文件验证)
     腾讯云->访问管理->访问密钥->API密钥管理  (API 请求的重要凭证)
