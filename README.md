@@ -1215,7 +1215,7 @@
     sudo umount /mnt/newdisk
     sudo vgchange -ay ubuntu-vg
 
-    #add a disk on ubuntu
+    # add a disk on ubuntu
     循环扫描所有 SCSI 总线：
     for host in /sys/class/scsi_host/host*; do
         echo "- - -" | sudo tee "$host/scan"
