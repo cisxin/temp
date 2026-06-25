@@ -32,6 +32,11 @@
 
     grep -P "[\x0b-\x0b]" 202201.txt > b.txt && grep -P "[\x14-\x14]" 202201.txt >> b.txt && sed 's/\x0b//g' b.txt > b2.txt && sed 's/[\x14]//g' b2.txt > b3.txt && sed -r 's/\}\}([0-9])+/\}\}/g' b3.txt > c.txt
 
+    //查找所有包含 NUL (\x00) 的行，并显示行号 (-n)
+    grep -a -n -P "\x00" log20260625.txt
+    //如果你想精准定位包含 "^E^@^@^@^@" 的那一行
+    grep -a -n -P "\x05\x00{4}" log20260625.txt
+
     findstr "hello there" ".\*.*"
     findstr /s /i /c:"hello there" /f:aa.txt
 
