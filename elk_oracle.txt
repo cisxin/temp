@@ -604,3 +604,62 @@ conn root/123456@pdbtt;
 10.0.0.110:1521/pdbtt
 
 ---------------------------------------------------------------------------------------------------------
+
+curl -u 'elastic:123' -X GET "10.10.0.153:9200/_cat/master?v"
+curl -u 'elastic:123' -X GET "10.10.0.153:9200/_cat/nodes?v"
+curl -u 'elastic:123' -X GET "10.10.0.153:9200"
+curl -u 'elastic:123' -X GET "http://10.10.0.153:9200/_security/user?pretty"
+
+1.vim /app/elk/esnode/elasticsearch.yml:
+path.repo: ["/usr/share/elasticsearch/data/nfsshare"]
+2.reboot elasticsearch
+3.curl -u 'elastic:123' -X PUT "10.10.0.153:9200/_snapshot/nfs_repo" -H 'Content-Type: application/json' -d '
+{
+  "type": "fs",
+  "settings": {
+    "location": "/usr/share/elasticsearch/data/nfsshare",
+    "compress": true
+  }
+}'
+curl -u 'elastic:123' "10.10.0.153:9200/_snapshot/nfs_repo"
+curl -u 'elastic:elastic:123' "10.10.0.153:9200/_cluster/state/metadata?pretty"
+4.curl -u 'elastic:123' -X PUT "10.10.0.153:9200/_snapshot/nfs_repo/snapshot_20260618" -H 'Content-Type: application/json' -d '
+{
+  "wait_for_completion": true,
+  "indices": "*",
+  "ignore_unavailable": true,
+  "include_global_state": false
+}'
+curl -u 'elastic:123' -X PUT "10.10.0.153:9200/_snapshot/nfs_repo/snapshot_20260618" -H 'Content-Type: application/json' -d '
+{
+  "indices": "*",
+  "ignore_unavailable": true,
+  "include_global_state": false
+}'
+curl -u 'elastic:123' "10.10.0.153:9200/_snapshot/nfs_repo/snapshot_20260618/_status"
+curl -u 'elastic:123' -X GET "10.10.0.153:9200/_snapshot/nfs_repo/snapshot_20260618?pretty"
+curl -u 'elastic:123' -X GET "10.10.0.153:9200/_cat/snapshots/nfs_repo?v"
+
+curl -u 'elastic:123' -X PUT "10.10.0.85:9200/_snapshot/nfs_repo" -H "Content-Type: application/json" -d '{
+  "type": "fs",  "settings": {    "location": "/usr/share/elasticsearch/data/nfsshare"  }}'
+curl -u 'elastic:123' -X POST "10.10.0.85:9200/_snapshot/nfs_repo/_verify?pretty"
+curl -u 'elastic:123' -X GET "10.10.0.85:9200/_cat/snapshots/nfs_repo?v"
+docker exec -it elasticsearch0 bash
+bin/elasticsearch-setup-passwords interactive
+docker stop elasticsearch0 && docker logs -f --tail 1000 elasticsearch0
+curl -u 'elastic:123' -X DELETE "http://10.10.0.85:9200/*"
+curl -u 'elastic:123' -X POST "http://10.10.0.85:9200/_snapshot/nfs_repo/snapshot_20260618/_restore" -H "Content-Type: application/json" -d '{
+  "indices": "*,-.security-7",
+  "include_global_state": false
+}'
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/wework_qk_8_2025/_search" -H "Content-Type: application/json" -d '{
+  "query": {
+    "match_all": {}
+  }
+}'
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/_snapshot/nfs_repo/snapshot_20260618"
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/_cat/recovery?v"
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/_cat/indices?v"
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/_snapshot/nfs_repo/snapshot_20260618/_status?pretty"
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/_cluster/health?pretty"
+curl -u 'elastic:123' -X GET "http://10.10.0.85:9200/_snapshot/nfs_repo/snapshot_20260618"
