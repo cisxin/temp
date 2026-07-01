@@ -2201,6 +2201,11 @@
     /cd ~/english-learning
     prompt:切换到英语学习目录
     claude --model gemma4:31b --dangerously-skip-permissions
+    windows:
+    set ANTHROPIC_AUTH_TOKEN=ollama
+    set ANTHROPIC_API_KEY=""
+    set ANTHROPIC_BASE_URL=http://10.23.0.111:11434
+    D:\llm\claude-code\claude.exe --model qwen3.6:latest --dangerously-skip-permissions
 
     ssh test@10.23.160.91 "cd /tmp && ls"
 
