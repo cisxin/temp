@@ -1942,6 +1942,10 @@
     sudo service ssh status
     telnet 172.30.13.242 22
 
+  //ffmpeg
+
+    & "D:\tools\ffmpeg-2026-07-16\bin\ffmpeg.exe" -i "D:\temp\审核视频\违规\2\微信视频_20260715101033.mp4" -c copy -f segment -segment_time 160 -reset_timestamps 1 "D:\temp\审核视频\违规\2\微信视频_20260715101033_part_%03d.mp4"
+
   //ollama
 
     //llm ollama langchain streamlit webui RAG
@@ -2454,6 +2458,12 @@
     docker pull zilliz/attu
     docker run -idt -p 3000:3000 -e MILVUS_URL=10.23.0.10:19530 --name zilliz-attu zilliz/attu
     10.23.0.10:3000
+
+    docker exec -it milvus-standalone /bin/bash
+    vim /milvus/configs/milvus.yaml //启身份验证
+    common:
+      security:
+        authorizationEnabled: true
 
 ## kernel 时区 rhel9
 
