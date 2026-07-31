@@ -555,7 +555,11 @@
 
     cd /tmp/jack && echo $(pwd) && git pull http://test:123456@github.com:10080/jack.git
 
-  docker pull gitlab/gitlab-ce:latest
+    git lfs migrate import --include="data/BAAI--bge-base-zh-v1.5/*.bin"
+    git lfs migrate import --include="data/BAAI--bge-base-zh-v1.5/**"
+    git push --force origin main
+
+    docker pull gitlab/gitlab-ce:latest
 
     docker commit ce35cab8103b gitlab/gitlab-ce:12.0.3-ce.0
     docker save gitlab/gitlab-ce:12.0.3-ce.0 > ./gitlab20240516gitlab_ce12.0.3-ce.0.tar
