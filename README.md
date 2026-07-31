@@ -1950,6 +1950,8 @@
 
     & "D:\tools\ffmpeg-2026-07-16\bin\ffmpeg.exe" -i "D:\temp\审核视频\违规\2\微信视频_20260715101033.mp4" -c copy -f segment -segment_time 160 -reset_timestamps 1 "D:\temp\审核视频\违规\2\微信视频_20260715101033_part_%03d.mp4"
 
+    "D:\tools\ffmpeg-2026-07-16\bin\ffmpeg.exe" -i "D:\temp\审核视频\违规\2\微信视频_20260715101033.mp4" -vn -acodec libmp3lame -q:a 2 "D:\temp\审核视频\违规\2\微信视频_20260715101033.mp3"
+
   //ollama
 
     //llm ollama langchain streamlit webui RAG
