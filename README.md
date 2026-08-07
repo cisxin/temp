@@ -557,6 +557,8 @@
 
     git lfs migrate import --include="data/BAAI--bge-base-zh-v1.5/*.bin"
     git lfs migrate import --include="data/BAAI--bge-base-zh-v1.5/**"
+    git lfs migrate import --above=100MB --include-ref=data/BAAI--bge-m3
+    git lfs migrate import --include="*.onnx_data,*.onnx,*.bin,*.safetensors" --include-ref=refs/heads/main
     git push --force origin main
 
     docker pull gitlab/gitlab-ce:latest
@@ -1945,6 +1947,8 @@
     sudo service ssh start
     sudo service ssh status
     telnet 172.30.13.242 22
+    //windows gpu
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
   //ffmpeg
 
