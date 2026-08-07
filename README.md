@@ -827,6 +827,17 @@
       ]
     }
 
+    //VS Code 安装 Jupyter 插件
+    # %% 
+    # 【代码块 1：环境加载】这部分只需运行一次
+    import time
+    print("开始加载 PyTorch 和模型...")
+    t0 = time.time()
+    import torch
+    # %% 
+    # 【代码块 2】
+    from datetime import datetime
+
   //go
 
     sudo apt-get install golang-go
