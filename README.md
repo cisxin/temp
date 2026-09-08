@@ -1575,7 +1575,15 @@
     vim /etc/sudoers
     pi ALL=(ALL) NOPASSWD:/usr/bin/nmcli
     sudo nmcli ...
+    
+    //SRS
 
+    docker run --rm -it -p 1935:1935 -p 1985:1985 -p 8080:8080 --name srs0 registry.cn-hangzhou.aliyuncs.com/ossrs/srs
+    docker run --rm -it registry.cn-hangzhou.aliyuncs.com/ossrs/srs:encoder ffmpeg -stream_loop -1 -re -i aaaa.flv -c copy -f flv rtmp://host.docker.internal/live/livestream
+    docker run --rm -it registry.cn-hangzhou.aliyuncs.com/ossrs/srs:encoder ffmpeg -stream_loop -1 -re -i aaaa.mp4 -c:v libx264 -c:a aac -f flv rtmp://host.docker.internal/live/livestream
+    http://10.10.0.69:8080/live/livestream.flv
+    docker run --rm -it -v "$PWD:/data" registry.cn-hangzhou.aliyuncs.com/ossrs/srs:encoder ffmpeg -stream_loop -1 -re -i /data/aaaa.mp4 -c:v libx264 -c:a aac -f flv rtmp://10.10.0.69:1935/live/livestream
+    docker run --rm -it -v "$PWD:/data" registry.cn-hangzhou.aliyuncs.com/ossrs/srs:encoder ffmpeg -stream_loop -1 -re -i /data/bbbb.mp4 -c:v libx264 -c:a aac -f flv rtmp://10.10.0.69:1935/live/livestream2
 
 ## docker kvm
 
