@@ -1584,6 +1584,10 @@
     http://10.10.0.69:8080/live/livestream.flv
     docker run --rm -it -v "$PWD:/data" registry.cn-hangzhou.aliyuncs.com/ossrs/srs:encoder ffmpeg -stream_loop -1 -re -i /data/aaaa.mp4 -c:v libx264 -c:a aac -f flv rtmp://10.10.0.69:1935/live/livestream
     docker run --rm -it -v "$PWD:/data" registry.cn-hangzhou.aliyuncs.com/ossrs/srs:encoder ffmpeg -stream_loop -1 -re -i /data/bbbb.mp4 -c:v libx264 -c:a aac -f flv rtmp://10.10.0.69:1935/live/livestream2
+    推流地址:rtmp://10.10.0.69:1935/live/livestream2 //直播->自定义->服务器,推流码:0909 ->开始直播
+    观看地址:http://10.10.0.69:8080/live/livestream2.flv
+    观看地址:http://push-test.xx.com/live/livestream.flv
+    观看地址:http://push-test.xx.com/live/livestream2/0909.flv //推流码:0909
 
 ## docker kvm
 
