@@ -161,7 +161,7 @@
     //mv所有media下2天前文件
     find /app/media -type f -mtime +2 |xargs -i mv -f {} /app/media.bak
     
-    sudo mv -f /app/msg/`date -d "2 days ago" +%Y%m%d`.txt /app//msg.bak/
+    sudo mv -n -f /app/msg/`date -d "2 days ago" +%Y%m%d`.txt /app//msg.bak/
 
     -------------------------
     #!/bin/bash
