@@ -1598,9 +1598,9 @@
     http://domain/AppName/StreamName_转码模板名.m3u8?txSecret=Md5(key+StreamName_转码模板名+hex(time))&txTime=hex(time)
     域名 appname(live,test,pk) StreamName(流名称/推流码 主播/房间)
 
-    cd "D:\Program Files\obs-studio\bin\64bit\"
+    cd /d "D:\Program Files\obs-studio\bin\64bit\"
     obs64.exe --portable
-    cd "D:\Program Files\obs-studio2\bin\64bit\"
+    cd /d "D:\Program Files\obs-studio2\bin\64bit\"
     obs642.exe --portable
 
 ## docker kvm
