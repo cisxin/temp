@@ -1592,6 +1592,12 @@
     观看地址:http://push-test.xx.com/live/livestream.flv
     观看地址:http://push-test.xx.com/live/livestream2/0909.flv //推流码:0909
 
+    webrtc://domain/AppName/StreamName_转码模板名?txSecret=Md5(key+StreamName_转码模板名+hex(time))&txTime=hex(time)
+    http://domain/AppName/StreamName_转码模板名.flv?txSecret=Md5(key+StreamName_转码模板名+hex(time))&txTime=hex(time)
+    rtmp://domain/AppName/StreamName_转码模板名?txSecret=Md5(key+StreamName_转码模板名+hex(time))&txTime=hex(time)
+    http://domain/AppName/StreamName_转码模板名.m3u8?txSecret=Md5(key+StreamName_转码模板名+hex(time))&txTime=hex(time)
+    域名 appname(live,test,pk) StreamName(流名称/推流码 主播/房间)
+
 ## docker kvm
 
     sudo docker ps -a | grep "Exited" | awk '{print $1}'| xargs docker stop
